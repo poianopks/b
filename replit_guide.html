@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Replit 앱 사용법 따라하기</title>
+  <style>
+    body { font-family: sans-serif; background-color: #f0f8ff; margin: 0; padding: 0; }
+    header { background-color: #2d3748; color: white; text-align: center; padding: 1rem; }
+    nav { background: #4a5568; padding: 1rem; }
+    nav a { color: white; margin: 0 1rem; text-decoration: none; font-weight: bold; }
+    section { padding: 1rem; display: none; background: white; margin: 1rem; border-radius: 8px; }
+    section.active { display: block; }
+    h2 { border-bottom: 2px solid #ccc; padding-bottom: 0.5rem; }
+    pre { background: #edf2f7; padding: 1rem; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Replit - 앱 사용법 따라하기</h1>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showSection('start')">시작하기</a>
+    <a href="#" onclick="showSection('html')">HTML 코딩</a>
+    <a href="#" onclick="showSection('python')">Python 코딩</a>
+    <a href="#" onclick="showSection('run')">코드 실행</a>
+    <a href="#" onclick="showSection('share')">공유 방법</a>
+  </nav>
+
+  <section id="start">
+    <h2>Replit 시작하기</h2>
+    <p>1. Replit 앱 또는 웹사이트(replit.com)를 엽니다.</p>
+    <p>2. 구글 계정 등으로 로그인합니다.</p>
+    <p>3. <strong>Create Repl</strong>을 눌러 새 프로젝트를 시작합니다.</p>
+  </section>
+
+  <section id="html">
+    <h2>HTML 코딩</h2>
+    <p>1. 언어에서 HTML, CSS, JS 템플릿을 선택해요.</p>
+    <p>2. <code>index.html</code> 파일에 HTML 코드를 입력합니다.</p>
+    <pre>&lt;h1&gt;안녕하세요!&lt;/h1&gt;
+&lt;p&gt;Replit에서 만든 첫 웹페이지예요.&lt;/p&gt;</pre>
+  </section>
+
+  <section id="python">
+    <h2>Python 코딩</h2>
+    <p>1. Create Repl → Python을 선택합니다.</p>
+    <p>2. <code>main.py</code>에 아래처럼 코딩해요.</p>
+    <pre>print("Hello, Replit!")</pre>
+  </section>
+
+  <section id="run">
+    <h2>코드 실행</h2>
+    <p>코드를 다 쓴 후, 상단의 <strong>Run</strong> 버튼을 누르면 코드가 실행돼요!</p>
+  </section>
+
+  <section id="share">
+    <h2>공유 방법</h2>
+    <p>Replit 프로젝트를 친구와 공유하려면:</p>
+    <ol>
+      <li>우측 상단의 <strong>Share</strong> 버튼 클릭</li>
+      <li>링크 복사해서 친구에게 보내기</li>
+    </ol>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
