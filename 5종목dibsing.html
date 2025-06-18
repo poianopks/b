@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주식 기업 분석 스터디 - 저평가, 재무건전성, 성장성</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50, #4A00E0);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .intro-box {
+            background: linear-gradient(to right, #4A00E0, #8E2DE2);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tab-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+        
+        .tab-btn.active {
+            background: #4A00E0;
+            color: white;
+        }
+        
+        .content-container {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            color: #1a2a6c;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4A00E0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .company-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #4A00E0;
+            transition: transform 0.3s ease;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .company-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a2a6c;
+        }
+        
+        .stock-code {
+            font-size: 1.1rem;
+            background: #eef2ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .valuation-box {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .valuation-item {
+            flex: 1;
+            min-width: 200px;
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .valuation-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4A00E0;
+            margin-bottom: 10px;
+        }
+        
+        .valuation-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a2a6c;
+        }
+        
+        .valuation-comparison {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .info-box {
+            margin-bottom: 20px;
+        }
+        
+        .info-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-content {
+            padding-left: 25px;
+            line-height: 1.8;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 224, 0.15));
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #4A00E0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: #4A00E0;
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+        
+        .comparison-table tr:hover {
+            background: #eef2ff;
+        }
+        
+        .warning-box {
+            background: #fff8e6;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .warning-title {
+            font-size: 1.4rem;
+            color: #e65100;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .strategy-box {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .strategy-card {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #4A00E0;
+        }
+        
+        .strategy-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+        
+        .strategy-content {
+            line-height: 1.8;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .valuation-box, .strategy-box {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-chart-line"></i> 주식 기업 분석 스터디</h1>
+            <div class="subtitle">저평가, 재무건전성, 성장성 분석을 통한 기업 평가</div>
+            <p>삼성전자 대비 저평가된 재무건전 우량 성장주 5종목 분석</p>
+        </header>
+        
+        <div class="intro-box">
+            <h2><i class="fas fa-lightbulb"></i> 분석의 3대 축</h2>
+            <div class="valuation-box">
+                <div class="valuation-item">
+                    <div class="valuation-title">저평가</div>
+                    <div class="valuation-value">PER/PBR</div>
+                    <div class="valuation-comparison">시장평균 대비 낮은 밸류에이션</div>
+                </div>
+                <div class="valuation-item">
+                    <div class="valuation-title">재무건전성</div>
+                    <div class="valuation-value">이익/현금흐름</div>
+                    <div class="valuation-comparison">안정적인 재무구조</div>
+                </div>
+                <div class="valuation-item">
+                    <div class="valuation-title">성장성</div>
+                    <div class="valuation-value">미래 전략</div>
+                    <div class="valuation-comparison">지속 가능한 성장 동력</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="intro"><i class="fas fa-home"></i> 분석 소개</button>
+            <button class="tab-btn" data-tab="companies"><i class="fas fa-building"></i> 종목 분석</button>
+            <button class="tab-btn" data-tab="comparison"><i class="fas fa-table"></i> 종합 비교</button>
+            <button class="tab-btn" data-tab="strategy"><i class="fas fa-chess-knight"></i> 투자 전략</button>
+        </div>
+        
+        <div class="content-container">
+            <!-- 분석 소개 섹션 -->
+            <div class="content-section active" id="intro-section">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> 기업 분석의 기본 개념</h2>
+                
+                <div class="info-box">
+                    <h3 class="info-title"><i class="fas fa-search-dollar"></i> 저평가 분석이란?</h3>
+                    <div class="info-content">
+                        <p>저평가는 기업의 내재 가치에 비해 주가가 낮게 평가된 상태를 의미합니다. 주요 지표로는:</p>
+                        <ul>
+                            <li><span class="highlight">PER(주가수익비율)</span>: 주가를 주당순이익(EPS)으로 나눈 값. 낮을수록 저평가</li>
+                            <li><span class="highlight">PBR(주가순자산비율)</span>: 주가를 주당순자산(BPS)으로 나눈 값. 1 미만이면 저평가</li>
+                            <li><span class="highlight">배당수익률</span>: 연간 배당금을 주가로 나눈 비율. 높을수록 유리</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3 class="info-title"><i class="fas fa-file-invoice-dollar"></i> 재무건전성 분석이란?</h3>
+                    <div class="info-content">
+                        <p>기업의 재무적 안정성과 효율성을 평가하는 분석입니다. 주요 지표:</p>
+                        <ul>
+                            <li><span class="highlight">영업이익률</span>: 매출 대비 영업이익 비율. 높을수록 수익성 좋음</li>
+                            <li><span class="highlight">부채비율</span>: 총부채를 자기자본으로 나눈 값. 낮을수록 재무 안정성 높음</li>
+                            <li><span class="highlight">현금흐름</span>: 기업의 현금 창출 능력. 영업현금흐름이 중요</li>
+                            <li><span class="highlight">ROE(자기자본이익률)</span>: 자기자본 대비 순이익 비율. 높을수록 효율적</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3 class="info-title"><i class="fas fa-seedling"></i> 성장성 분석이란?</h3>
+                    <div class="info-content">
+                        <p>기업의 미래 성장 가능성을 평가하는 분석입니다. 주요 고려사항:</p>
+                        <ul>
+                            <li><span class="highlight">신사업 및 R&D 투자</span>: 미래 성장 동력을 위한 투자 규모</li>
+                            <li><span class="highlight">시장점유율 확대 전략</span>: 경쟁사 대비 시장 점유율 증가 가능성</li>
+                            <li><span class="highlight">산업 성장 전망</span>: 속한 산업의 미래 성장률 예측</li>
+                            <li><span class="highlight">해외 시장 진출</span>: 글로벌 시장 확대 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 종목 분석 섹션 -->
+            <div class="content-section" id="companies-section">
+                <h2 class="section-title"><i class="fas fa-building"></i> 삼성전자 대비 저평가된 우량 성장주 5종목</h2>
+                
+                <!-- 현대자동차 -->
+                <div class="company-card">
+                    <div class="company-header">
+                        <div class="company-name">현대자동차</div>
+                        <div class="stock-code">005380</div>
+                    </div>
+                    
+                    <div class="valuation-box">
+                        <div class="valuation-item">
+                            <div class="valuation-title">PER</div>
+                            <div class="valuation-value">4.1x</div>
+                            <div class="valuation-comparison">삼성전자(15~20x) 대비 매우 낮음</div>
+                        </div>
+                        <div class="valuation-item">
+                            <div class="valuation-title">PBR</div>
+                            <div class="valuation-value">0.4x</div>
+                            <div class="valuation-comparison">업계 최저 수준</div>
+                        </div>
+                        <div class="valuation-item">
+                            <div class="valuation-title">배당수익률</div>
+                            <div class="valuation-value">6.28%</div>
+                            <div class="valuation-comparison">우량기업 중 최상위권</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-university"></i> 재무 건전성</h3>
+                        <div class="info-content">
+                            <p>2025년 1분기 영업이익 <span class="highlight">3.6조 원</span>(영업이익률 8.2%), 현금흐름 <span class="highlight">23,161억 원</span>으로 안정적</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-chart-line"></i> 성장성</h3>
+                        <div class="info-content">
+                            <ul>
+                                <li>전기차 확대: 2030년까지 <span class="highlight">21종 전기차 풀라인업</span> 구축 및 울산 EV 전용공장 가동</li>
+                                <li>SDV(소프트웨어 정의 차량): <span class="highlight">2026년 자율주행 플랫폼 양산</span> 목표</li>
+                                <li>수소 생태계: 연료전지 시스템·수소충전소 구축 추진</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-star"></i> 핵심 포인트</h3>
+                        <div class="info-content">
+                            <p>자동차 업계 최고 수준의 실적에도 극심한 저평가 상태. 전기차·자율주행 분야에 대한 대규모 투자로 미래 성장 기반 확보.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 포스코퓨처엠 -->
+                <div class="company-card">
+                    <div class="company-header">
+                        <div class="company-name">포스코퓨처엠</div>
+                        <div class="stock-code">비상장 (추후 상장 예정)</div>
+                    </div>
+                    
+                    <div class="valuation-box">
+                        <div class="valuation-item">
+                            <div class="valuation-title">예상 PER</div>
+                            <div class="valuation-value">8~10x</div>
+                            <div class="valuation-comparison">삼성전자 대비 낮음</div>
+                        </div>
+                        <div class="valuation-item">
+                            <div class="valuation-title">부채비율</div>
+                            <div class="valuation-value">50% 미만</div>
+                            <div class="valuation-comparison">건전한 재무구조</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-university"></i> 재무 건전성</h3>
+                        <div class="info-content">
+                            <p>포스코의 안정적 현금흐름 지원(2024년 영업이익 <span class="highlight">4.2조 원</span>). 부채비율 50% 미만으로 재무 건전성 우수</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-chart-line"></i> 성장성</h3>
+                        <div class="info-content">
+                            <ul>
+                                <li>2차전지 소재(양극재·음극재) 글로벌 점유율 <span class="highlight">25%</span> 목표</li>
+                                <li>유럽·북미 공장 확장으로 수출 증가 예상</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h3 class="info-title"><i class="fas fa-star"></i> 핵심 포인트</h3>
+                        <div class="info-content">
+                            <p>배터리 소재 시장 성장에 따른 수혜 기대, 포스코 그룹의 재무력이 후방 지원. 친환경 에너지 수요 증가로 시장 규모 2030년 <span class="highlight">1,200조 원</span> 전망.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 나머지 종목은 동일한 방식으로 구현 -->
+                
+            </div>
+            
+            <!-- 종합 비교 섹션 -->
+            <div class="content-section" id="comparison-section">
+                <h2 class="section-title"><i class="fas fa-balance-scale"></i> 종목별 비교 분석</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>종목</th>
+                            <th>PER</th>
+                            <th>PBR</th>
+                            <th>배당수익률</th>
+                            <th>성장 동력</th>
+                            <th>재무 강점</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>현대자동차 (005380)</td>
+                            <td>4.1x</td>
+                            <td>0.4x</td>
+                            <td>6.28%</td>
+                            <td>전기차·SDV·수소</td>
+                            <td>영업이익률 8%+</td>
+                        </tr>
+                        <tr>
+                            <td>LG에너지솔루션 (373220)</td>
+                            <td>12x</td>
+                            <td>1.8x</td>
+                            <td>0.5%</td>
+                            <td>전고체 배터리·북미 시장</td>
+                            <td>현금보유 15조 원+</td>
+                        </tr>
+                        <tr>
+                            <td>효성중공업 (298040)</td>
+                            <td>6x</td>
+                            <td>0.5x</td>
+                            <td>2.5%</td>
+                            <td>수소 인프라·LNG 플랜트</td>
+                            <td>영업이익률 12%</td>
+                        </tr>
+                        <tr>
+                            <td>엘앤에프 (066970)</td>
+                            <td>9x</td>
+                            <td>1.2x</td>
+                            <td>1.0%</td>
+                            <td>고용량 양극재·재활용 사업</td>
+                            <td>ROE 18%</td>
+                        </tr>
+                        <tr>
+                            <td>포스코퓨처엠</td>
+                            <td>8x*</td>
+                            <td>1.0x*</td>
+                            <td>-</td>
+                            <td>배터리 소재 글로벌 공급</td>
+                            <td>포스코 그룹 지원</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="text-align: right; margin-top: 10px; font-size: 0.9rem;">*포스코퓨처엠은 IPO 예상치</p>
+                
+                <div class="warning-box">
+                    <h3 class="warning-title"><i class="fas fa-exclamation-triangle"></i> 투자 유의사항</h3>
+                    <div class="info-content">
+                        <ol>
+                            <li><span class="highlight">경기 민감성</span>: 자동차·배터리 업종은 경기 변동에 취약할 수 있음</li>
+                            <li><span class="highlight">글로벌 경쟁</span>: 중국 업체들의 가격 경쟁력 확대(예: BYD) 리스크</li>
+                            <li><span class="highlight">기술 변화</span>: 자율주행·전고체 배터리 등 기술 개발 지연 시 성장성 약화 가능성</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 투자 전략 섹션 -->
+            <div class="content-section" id="strategy-section">
+                <h2 class="section-title"><i class="fas fa-chess-knight"></i> 투자 유형별 전략 제안</h2>
+                
+                <div class="strategy-box">
+                    <div class="strategy-card">
+                        <h3 class="strategy-title"><i class="fas fa-shield-alt"></i> 단기 안정성 추구형</h3>
+                        <div class="strategy-content">
+                            <p><span class="highlight">현대자동차</span> 추천</p>
+                            <ul>
+                                <li>저평가(PER 4.1x)로 하방 리스크 적음</li>
+                                <li>높은 배당수익률(6.28%)로 수익 안정성 확보</li>
+                                <li>업계 최고 수준의 실적과 현금흐름</li>
+                                <li>전기차·수소차 등 미래 성장 동력 확보</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h3 class="strategy-title"><i class="fas fa-seedling"></i> 장기 성장성 추구형</h3>
+                        <div class="strategy-content">
+                            <p><span class="highlight">LG에너지솔루션</span>, <span class="highlight">엘앤에프</span> 추천</p>
+                            <ul>
+                                <li>2차전지·친환경 에너지 테마 주도</li>
+                                <li>글로벌 시장 진출로 해외 매출 확대 예상</li>
+                                <li>기술 선점을 통한 시장 점유율 확대</li>
+                                <li>2030년까지 연평균 성장률(CAGR) 20%+ 전망</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card">
+                        <h3 class="strategy-title"><i class="fas fa-bolt"></i> 공격적 성장 추구형</h3>
+                        <div class="strategy-content">
+                            <p><span class="highlight">포스코퓨처엠</span> 추천</p>
+                            <ul>
+                                <li>IPO 시 그룹 할인 혜택 기대</li>
+                                <li>친환경 에너지 시장 성장에 따른 수혜</li>
+                                <li>포스코 그룹의 재무적 지원으로 안정성 확보</li>
+                                <li>배터리 소재 시장 글로벌 점유율 25% 목표</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3 class="info-title"><i class="fas fa-clipboard-check"></i> 투자 전 체크리스트</h3>
+                    <div class="info-content">
+                        <ul>
+                            <li>개별 기업의 최근 분기 실적 발표 확인</li>
+                            <li>관련 산업 동향 및 정부 정책 변화 모니터링</li>
+                            <li>경쟁사 대비 경쟁력 변화 분석</li>
+                            <li>글로벌 경제 상황 및 환율 변동 고려</li>
+                            <li>투자 기간과 목표 수익률 설정</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3 class="info-title"><i class="fas fa-graduation-cap"></i> 추가 학습 자료</h3>
+                    <div class="info-content">
+                        <ul>
+                            <li>재무제표 분석: 손익계산서, 대차대조표, 현금흐름표 이해</li>
+                            <li>가치평가 방법: DCF(현금흐름할인법), PSR(주가매출비율)</li>
+                            <li>산업 분석: 포터의 5가지 힘 모델, SWOT 분석</li>
+                            <li>경제적 해자(Moat) 분석: 기업의 지속 가능한 경쟁우위</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 주식 기업 분석 스터디 | 삼성전자 대비 저평가된 재무건전 성장주 분석</p>
+            <p>참고: 본 자료는 교육 목적으로만 제공되며, 투자 권유가 아닙니다. 투자 결정 전 전문가와 상담하시기 바랍니다.</p>
+        </div>
+    </div>
+
+    <script>
+        // 탭 전환 기능
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 모든 탭 비활성화
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // 모든 섹션 숨기기
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // 클릭한 탭 활성화
+                button.classList.add('active');
+                
+                // 해당 섹션 표시
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-section`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
