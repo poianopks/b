@@ -34,11 +34,19 @@
         .content {
             margin: 20px;
             font-size: 20px;
+            text-align: left;
         }
         .content img {
             width: 300px;
             height: auto;
             margin: 10px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -78,155 +86,113 @@
         <div class="lesson"><a href="#lesson29">29. 간단한 블로그 만들기</a></div>
         <div class="lesson"><a href="#lesson30">30. 포트폴리오 만들기</a></div>
     </div>
+
+    <!-- 주제별 자세한 따라하기 내용 -->
     <div id="lesson1" class="content">
         <h2>1. HTML이란 무엇일까?</h2>
         <p>HTML은 웹페이지를 만드는 언어예요. 마치 레고 블록처럼, 여러 가지 조각을 쌓아서 멋진 페이지를 만들 수 있어요!</p>
         <img src="html-example.png" alt="HTML 예시">
+        <h3>따라하기</h3>
+        <p>HTML은 "HyperText Markup Language"의 약자예요. 컴퓨터가 이해할 수 있는 말로, 웹페이지를 만드는 데 사용해요. 예를 들어, 제목과 문단을 만들 수 있어요.</p>
+        <pre>
+&lt;h1&gt;안녕!&lt;/h1&gt;
+&lt;p&gt;이건 문단이야.&lt;/p&gt;
+        </pre>
+        <p>위 코드를 쓰면 "안녕!"이라는 큰 제목과 "이건 문단이야."라는 문장이 나타나요!</p>
     </div>
+
     <div id="lesson2" class="content">
         <h2>2. 첫 웹페이지 만들기</h2>
         <p>첫 번째 웹페이지를 만들어보아요. 간단한 코드로 "안녕하세요!"라고 써보는 거예요.</p>
         <img src="first-page.png" alt="첫 웹페이지">
+        <h3>따라하기</h3>
+        <p>웹페이지를 만들려면 기본 구조가 필요해요. 아래 코드를 따라 써보세요:</p>
+        <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;내 첫 페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;안녕하세요!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </pre>
+        <p>이 코드를 파일로 저장해서 열어보면 "안녕하세요!"라는 제목이 나타나요!</p>
     </div>
+
     <div id="lesson3" class="content">
         <h2>3. 텍스트 추가하기</h2>
         <p>웹페이지에 더 많은 텍스트를 추가해보아요. 제목과 문단을 만드는 방법을 배워봐요.</p>
         <img src="text-add.png" alt="텍스트 추가">
+        <h3>따라하기</h3>
+        <p>제목은 &lt;h1&gt; 태그, 문단은 &lt;p&gt; 태그로 만들어요. 아래를 따라 해보세요:</p>
+        <pre>
+&lt;h1&gt;내가 좋아하는 것&lt;/h1&gt;
+&lt;p&gt;나는 사과를 좋아해요.&lt;/p&gt;
+&lt;p&gt;바나나도 좋아해요!&lt;/p&gt;
+        </pre>
+        <p>이렇게 하면 큰 제목과 두 개의 문단이 생겨요!</p>
     </div>
+
     <div id="lesson4" class="content">
         <h2>4. 글씨 크기 바꾸기</h2>
         <p>글씨를 더 크게 또는 작게 만들 수 있어요. 제목은 크게, 설명은 작게 해보아요.</p>
         <img src="font-size.png" alt="글씨 크기">
+        <h3>따라하기</h3>
+        <p>CSS라는 도구로 글씨 크기를 바꿀 수 있어요. 아래 코드를 써보세요:</p>
+        <pre>
+&lt;style&gt;
+    h1 { font-size: 40px; }
+    p { font-size: 20px; }
+&lt;/style&gt;
+&lt;h1&gt;큰 제목&lt;/h1&gt;
+&lt;p&gt;작은 문단&lt;/p&gt;
+        </pre>
+        <p>이 코드는 제목을 40px, 문단을 20px 크기로 만들어줘요!</p>
     </div>
+
     <div id="lesson5" class="content">
         <h2>5. 글씨 색깔 바꾸기</h2>
         <p>글씨에 색깔을 입혀보아요. 빨간색, 파란색, 노란색 등 좋아하는 색을 골라봐요.</p>
         <img src="font-color.png" alt="글씨 색깔">
+        <h3>따라하기</h3>
+        <p>CSS로 글씨 색깔을 바꿀 수 있어요. 아래를 따라 해보세요:</p>
+        <pre>
+&lt;style&gt;
+    h1 { color: red; }
+    p { color: blue; }
+&lt;/style&gt;
+&lt;h1&gt;빨간 제목&lt;/h1&gt;
+&lt;p&gt;파란 문단&lt;/p&gt;
+        </pre>
+        <p>이렇게 하면 제목은 빨간색, 문단은 파란색으로 변해요!</p>
     </div>
+
     <div id="lesson6" class="content">
         <h2>6. 그림 넣기</h2>
         <p>웹페이지에 그림을 넣는 방법을 배워봐요. 좋아하는 사진을 올려보세요!</p>
         <img src="image-add.png" alt="그림 넣기">
+        <h3>따라하기</h3>
+        <p>&lt;img&gt; 태그로 그림을 넣어요. 아래 코드를 써보세요:</p>
+        <pre>
+&lt;img src="cat.jpg" alt="고양이 사진"&gt;
+        </pre>
+        <p>"cat.jpg" 대신 좋아하는 그림 파일 이름을 넣으면 그림이 나타나요!</p>
     </div>
+
     <div id="lesson7" class="content">
         <h2>7. 목록 만들기</h2>
         <p>목록을 만들어보아요. 좋아하는 음식이나 장난감을 나열해봐요.</p>
         <img src="list.png" alt="목록">
-    </div>
-    <div id="lesson8" class="content">
-        <h2>8. 표 만들기</h2>
-        <p>표를 만들어보아요. 친구들의 이름과 나이를 표로 정리해봐요.</p>
-        <img src="table.png" alt="표">
-    </div>
-    <div id="lesson9" class="content">
-        <h2>9. 링크 추가하기</h2>
-        <p>다른 웹페이지로 이동하는 링크를 만들어봐요. 좋아하는 웹사이트로 연결해봐요.</p>
-        <img src="link.png" alt="링크">
-    </div>
-    <div id="lesson10" class="content">
-        <h2>10. 버튼 만들기</h2>
-        <p>클릭할 수 있는 버튼을 만들어봐요. 버튼을 누르면 무슨 일이 일어날까요?</p>
-        <img src="button.png" alt="버튼">
-    </div>
-    <div id="lesson11" class="content">
-        <h2>11. 동영상 넣기</h2>
-        <p>웹페이지에 동영상을 넣는 방법을 배워봐요. 좋아하는 동영상을 올려보세요!</p>
-        <img src="video.png" alt="동영상">
-    </div>
-    <div id="lesson12" class="content">
-        <h2>12. 소리 넣기</h2>
-        <p>웹페이지에 소리를 넣는 방법을 배워봐요. 음악이나 효과음을 추가해봐요.</p>
-        <img src="audio.png" alt="소리">
-    </div>
-    <div id="lesson13" class="content">
-        <h2>13. 간단한 게임 만들기</h2>
-        <p>간단한 게임을 만들어보아요. 예를 들어, 클릭 게임을 만들어봐요.</p>
-        <img src="game.png" alt="게임">
-    </div>
-    <div id="lesson14" class="content">
-        <h2>14. HTML로 그림 그리기</h2>
-        <p>HTML을 사용해 간단한 그림을 그려보아요. 원, 사각형 등을 만들어봐요.</p>
-        <img src="drawing.png" alt="그림 그리기">
-    </div>
-    <div id="lesson15" class="content">
-        <h2>15. 이야기책 만들기</h2>
-        <p>웹페이지로 이야기책을 만들어봐요. 그림과 텍스트를 함께 넣어봐요.</p>
-        <img src="storybook.png" alt="이야기책">
-    </div>
-    <div id="lesson16" class="content">
-        <h2>16. 사진 앨범 만들기</h2>
-        <p>사진 앨범을 만들어봐요. 가족이나 친구들의 사진을 모아보세요.</p>
-        <img src="photo-album.png" alt="사진 앨범">
-    </div>
-    <div id="lesson17" class="content">
-        <h2>17. 간단한 웹사이트 만들기</h2>
-        <p>여러 페이지를 가진 간단한 웹사이트를 만들어봐요. 홈, 소개, 연락처 페이지를 만들어봐요.</p>
-        <img src="website.png" alt="웹사이트">
-    </div>
-    <div id="lesson18" class="content">
-        <h2>18. 애니메이션 추가하기</h2>
-        <p>웹페이지에 간단한 애니메이션을 추가해봐요. 움직이는 그림을 만들어봐요.</p>
-        <img src="animation.png" alt="애니메이션">
-    </div>
-    <div id="lesson19" class="content">
-        <h2>19. 퀴즈 만들기</h2>
-        <p>간단한 퀴즈를 만들어봐요. 질문과 답을 넣고, 정답을 확인해봐요.</p>
-        <img src="quiz.png" alt="퀴즈">
-    </div>
-    <div id="lesson20" class="content">
-        <h2>20. 달력 만들기</h2>
-        <p>웹페이지에 달력을 넣는 방법을 배워봐요. 중요한 날짜를 표시해봐요.</p>
-        <img src="calendar.png" alt="달력">
-    </div>
-    <div id="lesson21" class="content">
-        <h2>21. 시계 만들기</h2>
-        <p>웹페이지에 시계를 넣는 방법을 배워봐요. 현재 시간을 보여줘요.</p>
-        <img src="clock.png" alt="시계">
-    </div>
-    <div id="lesson22" class="content">
-        <h2>22. 지도 넣기</h2>
-        <p>웹페이지에 지도를 넣는 방법을 배워봐요. 집이나 학교 위치를 표시해봐요.</p>
-        <img src="map.png" alt="지도">
-    </div>
-    <div id="lesson23" class="content">
-        <h2>23. 날씨 정보 추가하기</h2>
-        <p>웹페이지에 날씨 정보를 넣는 방법을 배워봐요. 오늘의 날씨를 보여줘요.</p>
-        <img src="weather.png" alt="날씨">
-    </div>
-    <div id="lesson24" class="content">
-        <h2>24. 간단한 계산기 만들기</h2>
-        <p>간단한 계산기를 만들어봐요. 더하기, 빼기 등을 할 수 있어요.</p>
-        <img src="calculator.png" alt="계산기">
-    </div>
-    <div id="lesson25" class="content">
-        <h2>25. 채팅 상자 만들기</h2>
-        <p>간단한 채팅 상자를 만들어봐요. 친구와 메시지를 주고받아봐요.</p>
-        <img src="chat.png" alt="채팅">
-    </div>
-    <div id="lesson26" class="content">
-        <h2>26. 그림판 만들기</h2>
-        <p>웹페이지에서 그림을 그릴 수 있는 그림판을 만들어봐요.</p>
-        <img src="drawing-board.png" alt="그림판">
-    </div>
-    <div id="lesson27" class="content">
-        <h2>27. 음악 플레이어 만들기</h2>
-        <p>음악을 재생할 수 있는 플레이어를 만들어봐요. 좋아하는 노래를 들어봐요.</p>
-        <img src="music-player.png" alt="음악 플레이어">
-    </div>
-    <div id="lesson28" class="content">
-        <h2>28. 틱택토 게임 만들기</h2>
-        <p>틱택토 게임을 만들어봐요. 친구와 함께 놀아봐요.</p>
-        <img src="tic-tac-toe.png" alt="틱택토">
-    </div>
-    <div id="lesson29" class="content">
-        <h2>29. 간단한 블로그 만들기</h2>
-        <p>나만의 블로그를 만들어봐요. 일기나 이야기를 써보세요.</p>
-        <img src="blog.png" alt="블로그">
-    </div>
-    <div id="lesson30" class="content">
-        <h2>30. 포트폴리오 만들기</h2>
-        <p>지금까지 만든 것들을 모아 포트폴리오를 만들어봐요. 자랑스러운 작품을 보여줘요!</p>
-        <img src="portfolio.png" alt="포트폴리오">
-    </div>
-</body>
-</html>
+        <h3>따라하기</h3>
+        <p>&lt;ul&gt;와 &lt;li&gt; 태그로 목록을 만들어요. 아래를 따라 해보세요:</p>
+        <pre>
+&lt;ul&gt;
+    &lt;li&gt;피자&lt;/li&gt;
+    &lt;li&gt;아이스크림&lt;/li&gt;
+    &lt;li&gt;케이크&lt;/li&gt;
+&lt;/ul&gt;
+        </pre>
+        <p>이렇게 하면 맛있는 음식 목록이 생겨
