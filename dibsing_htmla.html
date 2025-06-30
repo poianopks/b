@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 왕초보를 위한 30일 완성 기초 공부</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f);
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.7;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .progress-item {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4facfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-item.completed {
+            background: #00c853;
+            transform: scale(1.1);
+        }
+        
+        .progress-item.current {
+            background: #ff9800;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px #ff9800;
+        }
+        
+        .topic-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .topic {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            border: 1px solid #eaeaea;
+            position: relative;
+        }
+        
+        .topic:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+        
+        .topic-header {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .topic-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .topic-header .number {
+            background: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .topic-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        
+        .topic.active .topic-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+        
+        .topic-content h3 {
+            color: #4facfe;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-content h3 i {
+            margin-right: 10px;
+            background: #e3f2fd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .explanation {
+            margin-bottom: 25px;
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #4facfe;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .example::before {
+            content: "예제 코드";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #2c3e50;
+            color: #3498db;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .result {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        
+        .result::before {
+            content: "실행 결과";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #fff;
+            color: #27ae60;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .note {
+            background: linear-gradient(to right, #fffde7, #fff9c4);
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        
+        .note::before {
+            content: "💡";
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .note-content {
+            margin-left: 35px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0 20px;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 1rem;
+            border-top: 1px solid #eee;
+            position: relative;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn i {
+            margin-left: 8px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .topic-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .progress-item {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-graduation-cap"></i> HTML 왕초보를 위한 30일 완성 코스</h1>
+            <p class="subtitle">하루에 하나씩! 30개 주제를 클릭하여 HTML 기초를 차근차근 배워보세요</p>
+            
+            <div class="progress-container" id="progress-container">
+                <!-- 프로그레스 바는 자바스크립트로 생성 -->
+            </div>
+        </header>
+        
+        <div class="controls">
+            <button class="btn" id="prev-btn"><i class="fas fa-arrow-left"></i> 이전 주제</button>
+            <button class="btn" id="next-btn">다음 주제 <i class="fas fa-arrow-right"></i></button>
+        </div>
+        
+        <div class="topic-container" id="topics">
+            <!-- 주제 1: HTML이란? -->
+            <div class="topic active">
+                <div class="topic-header">
+                    <div class="number">1</div>
+                    HTML이란?
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-question-circle"></i> HTML이란 무엇인가요?</h3>
+                    <div class="explanation">
+                        <p>HTML(HyperText Markup Language)은 웹 페이지를 만들기 위한 표준 마크업 언어입니다. 웹 브라우저에 표시되는 텍스트, 이미지, 링크 등의 구조를 정의합니다.</p>
+                        <p>HTML은 태그(tag)로 구성되며, 각 태그는 웹 페이지의 다양한 요소를 나타냅니다. 태그는 꺾쇠 괄호(&lt; &gt;)로 둘러싸여 있습니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;나의 첫 웹페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;안녕하세요!&lt;/h1&gt;
+    &lt;p&gt;이것은 제 첫 HTML 페이지입니다.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h1>안녕하세요!</h1>
+                        <p>이것은 제 첫 HTML 페이지입니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 모든 HTML 문서는 &lt;!DOCTYPE html&gt; 선언으로 시작해야 합니다. 이 선언은 문서가 HTML5 문서임을 브라우저에 알려줍니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 2: 기본 구조 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">2</div>
+                    기본 구조 (html, head, body)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-sitemap"></i> HTML 기본 구조 이해하기</h3>
+                    <div class="explanation">
+                        <p>모든 HTML 문서는 다음과 같은 기본 구조를 가집니다:</p>
+                        <ul>
+                            <li><strong>&lt;html&gt;</strong>: 전체 문서를 감싸는 루트 요소</li>
+                            <li><strong>&lt;head&gt;</strong>: 문서의 메타데이터(제목, 문자셋, 스타일 등)를 포함</li>
+                            <li><strong>&lt;body&gt;</strong>: 실제 웹 페이지에 표시되는 내용</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;문서 제목&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;웹 페이지 내용&lt;/h1&gt;
+    &lt;p&gt;여기에 웹 페이지의 내용이 들어갑니다.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h1>웹 페이지 내용</h1>
+                        <p>여기에 웹 페이지의 내용이 들어갑니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> &lt;meta charset="UTF-8"&gt; 태그는 한글을 포함한 다양한 문자를 올바르게 표시하기 위해 필요합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 3: 제목 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">3</div>
+                    제목 태그 (h1~h6)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-heading"></i> 제목 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>제목 태그는 h1에서 h6까지 6단계로 제공됩니다. h1이 가장 중요한 제목(가장 크게 표시)이며, h6로 갈수록 중요도가 낮아집니다.</p>
+                        <p>제목 태그는 웹 페이지의 구조를 구성하고, 검색 엔진 최적화(SEO)에도 중요한 역할을 합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;h1&gt;주요 제목 (레벨 1)&lt;/h1&gt;
+&lt;h2&gt;부제목 (레벨 2)&lt;/h2&gt;
+&lt;h3&gt;소제목 (레벨 3)&lt;/h3&gt;
+&lt;h4&gt;레벨 4 제목&lt;/h4&gt;
+&lt;h5&gt;레벨 5 제목&lt;/h5&gt;
+&lt;h6&gt;레벨 6 제목&lt;/h6&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h1>주요 제목 (레벨 1)</h1>
+                        <h2>부제목 (레벨 2)</h2>
+                        <h3>소제목 (레벨 3)</h3>
+                        <h4>레벨 4 제목</h4>
+                        <h5>레벨 5 제목</h5>
+                        <h6>레벨 6 제목</h6>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 일반적으로 한 페이지에 h1 태그는 하나만 사용하는 것이 좋습니다. 이는 페이지의 주요 주제를 나타내기 때문입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 4: 단락 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">4</div>
+                    단락 태그 (p)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-paragraph"></i> 단락 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;p&gt; 태그는 단락(paragraph)을 정의할 때 사용합니다. 단락은 텍스트의 블록을 나타내며, 브라우저는 각 단락 앞뒤에 자동으로 여백을 추가합니다.</p>
+                        <p>단락 태그는 웹 페이지에서 텍스트 내용을 구조화하는 데 필수적입니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;이것은 첫 번째 단락입니다. HTML에서 단락은 &lt;p&gt; 태그를 사용하여 정의합니다.&lt;/p&gt;
+&lt;p&gt;이것은 두 번째 단락입니다. 각 단락은 새로운 줄에서 시작되며, 단락 사이에는 약간의 간격이 있습니다.&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>이것은 첫 번째 단락입니다. HTML에서 단락은 &lt;p&gt; 태그를 사용하여 정의합니다.</p>
+                        <p>이것은 두 번째 단락입니다. 각 단락은 새로운 줄에서 시작되며, 단락 사이에는 약간의 간격이 있습니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 단락 안에서 줄바꿈을 하려면 &lt;br&gt; 태그를 사용할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 5: 줄바꿈 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">5</div>
+                    줄바꿈 태그 (br)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-text-height"></i> 줄바꿈 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;br&gt; 태그는 줄바꿈(line break)을 삽입할 때 사용합니다. 닫는 태그가 없는 빈 태그입니다.</p>
+                        <p>이 태그는 시, 주소 등에서 줄을 바꿔야 할 때 유용하게 사용할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;
+    첫 번째 줄&lt;br&gt;
+    두 번째 줄&lt;br&gt;&lt;br&gt;
+    (빈 줄 추가)&lt;br&gt;
+    세 번째 줄
+&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>
+                            첫 번째 줄<br>
+                            두 번째 줄<br><br>
+                            (빈 줄 추가)<br>
+                            세 번째 줄
+                        </p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> 단락을 구분할 때는 &lt;br&gt; 태그보다 &lt;p&gt; 태그를 사용하는 것이 더 적절합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 6: 텍스트 서식 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">6</div>
+                    텍스트 서식 (strong, em, mark 등)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-bold"></i> 텍스트 서식 태그</h3>
+                    <div class="explanation">
+                        <p>HTML에는 텍스트에 다양한 효과를 주는 태그들이 있습니다:</p>
+                        <ul>
+                            <li><strong>&lt;strong&gt;</strong>: 중요한 텍스트 (굵게 표시)</li>
+                            <li><strong>&lt;em&gt;</strong>: 강조 텍스트 (기울임체)</li>
+                            <li><strong>&lt;mark&gt;</strong>: 하이라이트 표시</li>
+                            <li><strong>&lt;small&gt;</strong>: 작은 텍스트</li>
+                            <li><strong>&lt;del&gt;</strong>: 삭제된 텍스트</li>
+                            <li><strong>&lt;ins&gt;</strong>: 삽입된 텍스트</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;
+    &lt;strong&gt;중요한 내용&lt;/strong&gt;은 이렇게 표시합니다.&lt;br&gt;
+    &lt;em&gt;강조할 내용&lt;/em&gt;은 기울임체로 표시됩니다.&lt;br&gt;
+    &lt;mark&gt;하이라이트 표시&lt;/mark&gt;도 가능합니다.&lt;br&gt;
+    &lt;small&gt;작은 텍스트&lt;/small&gt;도 사용할 수 있습니다.&lt;br&gt;
+    &lt;del&gt;삭제된 텍스트&lt;/del&gt;와 &lt;ins&gt;추가된 텍스트&lt;/ins&gt;를 표현할 수 있습니다.
+&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>
+                            <strong>중요한 내용</strong>은 이렇게 표시합니다.<br>
+                            <em>강조할 내용</em>은 기울임체로 표시됩니다.<br>
+                            <mark>하이라이트 표시</mark>도 가능합니다.<br>
+                            <small>작은 텍스트</small>도 사용할 수 있습니다.<br>
+                            <del>삭제된 텍스트</del>와 <ins>추가된 텍스트</ins>를 표현할 수 있습니다.
+                        </p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> &lt;b&gt;와 &lt;i&gt; 태그도 있지만, 의미론적으로는 &lt;strong&gt;과 &lt;em&gt;을 사용하는 것이 더 좋습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 7: 링크 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">7</div>
+                    링크 태그 (a)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-link"></i> 링크 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;a&gt; 태그는 하이퍼링크를 정의할 때 사용합니다. href 속성으로 이동할 주소를 지정합니다.</p>
+                        <p>링크는 웹의 핵심 기능으로, 페이지와 페이지를 연결하는 역할을 합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;
+    &lt;a href="https://www.google.com"&gt;구글 방문하기&lt;/a&gt;&lt;br&gt;
+    &lt;a href="https://www.naver.com" target="_blank"&gt;새 탭에서 네이버 열기&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>
+                            <a href="https://www.google.com" style="color: #1a73e8;">구글 방문하기</a><br>
+                            <a href="https://www.naver.com" target="_blank" style="color: #03c75a;">새 탭에서 네이버 열기</a>
+                        </p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> target="_blank" 속성을 사용하면 링크를 새 탭에서 열 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 8: 이미지 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">8</div>
+                    이미지 태그 (img)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-image"></i> 이미지 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;img&gt; 태그는 웹 페이지에 이미지를 삽입할 때 사용합니다. src 속성에 이미지 파일 경로를 지정하고, alt 속성에 대체 텍스트를 제공해야 합니다.</p>
+                        <p>alt 속성은 시각 장애인을 위한 스크린 리더나, 이미지를 불러올 수 없는 상황에서 중요합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;img src="https://via.placeholder.com/300x150" alt="예제 이미지"&gt;
+&lt;img src="https://via.placeholder.com/200x100?text=이미지" alt="작은 이미지"&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <img src="https://via.placeholder.com/300x150" alt="예제 이미지" style="max-width: 100%; margin: 10px 0;">
+                        <img src="https://via.placeholder.com/200x100?text=이미지" alt="작은 이미지" style="max-width: 100%; margin: 10px 0;">
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> alt 속성은 항상 의미 있는 설명을 제공해야 하며, 단순 장식용 이미지에는 빈 alt 속성(alt="")을 사용할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 9: 리스트 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">9</div>
+                    리스트 태그 (ul, ol, li)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-list"></i> 리스트 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>HTML에서는 세 가지 유형의 리스트를 만들 수 있습니다:</p>
+                        <ul>
+                            <li><strong>&lt;ul&gt;</strong>: 순서 없는 리스트 (불릿 포인트)</li>
+                            <li><strong>&lt;ol&gt;</strong>: 순서 있는 리스트 (번호)</li>
+                            <li><strong>&lt;dl&gt;</strong>: 설명 리스트 (용어와 설명)</li>
+                        </ul>
+                        <p>각 항목은 &lt;li&gt; 태그로 정의합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;h4&gt;순서 없는 리스트&lt;/h4&gt;
+&lt;ul&gt;
+    &lt;li&gt;사과&lt;/li&gt;
+    &lt;li&gt;바나나&lt;/li&gt;
+    &lt;li&gt;오렌지&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4&gt;순서 있는 리스트&lt;/h4&gt;
+&lt;ol&gt;
+    &lt;li&gt;첫 번째 단계&lt;/li&gt;
+    &lt;li&gt;두 번째 단계&lt;/li&gt;
+    &lt;li&gt;세 번째 단계&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h4>순서 없는 리스트</h4>
+                        <ul>
+                            <li>사과</li>
+                            <li>바나나</li>
+                            <li>오렌지</li>
+                        </ul>
+
+                        <h4>순서 있는 리스트</h4>
+                        <ol>
+                            <li>첫 번째 단계</li>
+                            <li>두 번째 단계</li>
+                            <li>세 번째 단계</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 리스트는 내비게이션 메뉴를 만들 때도 자주 사용됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 10: 테이블 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">10</div>
+                    테이블 태그 (table, tr, th, td)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-table"></i> 테이블 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>테이블은 행과 열로 데이터를 표시할 때 사용합니다. 주요 태그:</p>
+                        <ul>
+                            <li><strong>&lt;table&gt;</strong>: 테이블 정의</li>
+                            <li><strong>&lt;tr&gt;</strong>: 테이블 행 정의</li>
+                            <li><strong>&lt;th&gt;</strong>: 테이블 헤더 셀 정의</li>
+                            <li><strong>&lt;td&gt;</strong>: 테이블 데이터 셀 정의</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;이름&lt;/th&gt;
+        &lt;th&gt;나이&lt;/th&gt;
+        &lt;th&gt;직업&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;김철수&lt;/td&gt;
+        &lt;td&gt;30&lt;/td&gt;
+        &lt;td&gt;개발자&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;이영희&lt;/td&gt;
+        &lt;td&gt;25&lt;/td&gt;
+        &lt;td&gt;디자이너&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <table border="1" style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                            <tr>
+                                <th style="padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">이름</th>
+                                <th style="padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">나이</th>
+                                <th style="padding: 8px; border: 1px solid #ddd; background-color: #f2f2f2;">직업</th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">김철수</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">30</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">개발자</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">이영희</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">25</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">디자이너</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> 테이블은 레이아웃을 만드는 용도가 아니라 데이터 표시에만 사용해야 합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 11: 폼 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">11</div>
+                    폼 태그 (form)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-window-restore"></i> 폼 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;form&gt; 태그는 사용자 입력을 수집하기 위한 컨테이너입니다. 폼은 입력 필드, 버튼, 체크박스 등을 포함할 수 있습니다.</p>
+                        <p>폼 데이터는 action 속성에 지정된 서버 페이지로 전송됩니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;form action="/submit" method="post"&gt;
+    &lt;label for="name"&gt;이름:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name"&gt;&lt;br&gt;
+    
+    &lt;label for="email"&gt;이메일:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email"&gt;&lt;br&gt;
+    
+    &lt;input type="submit" value="제출"&gt;
+&lt;/form&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <form style="border: 1px dashed #ccc; padding: 15px; margin: 15px 0;">
+                            <label for="name">이름:</label>
+                            <input type="text" id="name" name="name"><br><br>
+                            
+                            <label for="email">이메일:</label>
+                            <input type="email" id="email" name="email"><br><br>
+                            
+                            <input type="submit" value="제출" style="padding: 5px 15px;">
+                        </form>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> method 속성은 폼 데이터 전송 방식을 지정합니다 (GET 또는 POST).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 12: 입력 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">12</div>
+                    입력 태그 (input)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-keyboard"></i> 입력 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;input&gt; 태그는 사용자 입력을 받는 필드를 생성합니다. type 속성으로 다양한 입력 유형을 지정할 수 있습니다.</p>
+                        <p>주요 입력 유형: text, password, email, number, date, checkbox, radio, file 등</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;label&gt;텍스트: &lt;input type="text"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;비밀번호: &lt;input type="password"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;이메일: &lt;input type="email"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;체크박스: &lt;input type="checkbox"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;라디오: &lt;input type="radio"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;파일: &lt;input type="file"&gt;&lt;/label&gt;&lt;br&gt;
+&lt;label&gt;날짜: &lt;input type="date"&gt;&lt;/label&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div style="border: 1px dashed #ccc; padding: 15px; margin: 15px 0;">
+                            <label>텍스트: <input type="text"></label><br><br>
+                            <label>비밀번호: <input type="password"></label><br><br>
+                            <label>이메일: <input type="email"></label><br><br>
+                            <label>체크박스: <input type="checkbox"></label><br><br>
+                            <label>라디오: <input type="radio"></label><br><br>
+                            <label>파일: <input type="file"></label><br><br>
+                            <label>날짜: <input type="date"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 입력 필드에는 name 속성을 지정해야 서버로 데이터가 전송됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 13: 버튼 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">13</div>
+                    버튼 태그 (button)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-hand-pointer"></i> 버튼 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;button&gt; 태그는 클릭 가능한 버튼을 만듭니다. 폼 제출이나 페이지 기능 실행에 사용됩니다.</p>
+                        <p>type 속성으로 버튼의 동작을 지정할 수 있습니다 (submit, reset, button).</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;button type="button"&gt;일반 버튼&lt;/button&gt;
+&lt;button type="submit"&gt;제출 버튼&lt;/button&gt;
+&lt;button type="reset"&gt;리셋 버튼&lt;/button&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <button type="button" style="padding: 8px 16px; margin: 5px;">일반 버튼</button>
+                        <button type="submit" style="padding: 8px 16px; margin: 5px; background: #4CAF50; color: white; border: none;">제출 버튼</button>
+                        <button type="reset" style="padding: 8px 16px; margin: 5px; background: #f44336; color: white; border: none;">리셋 버튼</button>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 버튼은 CSS를 사용해 스타일링할 수 있으며, 다양한 디자인으로 만들 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 14: 레이블 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">14</div>
+                    레이블 태그 (label)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-tag"></i> 레이블 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;label&gt; 태그는 입력 요소에 대한 설명을 제공합니다. 접근성을 높이고 사용자 경험을 개선합니다.</p>
+                        <p>for 속성을 사용해 특정 입력 요소와 연결하거나, 입력 요소를 label 내에 포함시킬 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!-- 방법 1: for 속성 사용 --&gt;
+&lt;label for="username"&gt;사용자 이름:&lt;/label&gt;
+&lt;input type="text" id="username"&gt;
+
+&lt;!-- 방법 2: 입력 요소 포함 --&gt;
+&lt;label&gt;
+    &lt;input type="checkbox"&gt; 이용약관 동의
+&lt;/label&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div style="border: 1px dashed #ccc; padding: 15px; margin: 15px 0;">
+                            <label for="username">사용자 이름:</label>
+                            <input type="text" id="username"><br><br>
+                            
+                            <label>
+                                <input type="checkbox"> 이용약관 동의
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 레이블을 사용하면 체크박스나 라디오 버튼을 클릭하기 쉬워집니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 15: 텍스트 영역 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">15</div>
+                    텍스트 영역 태그 (textarea)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-align-left"></i> 텍스트 영역 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;textarea&gt; 태그는 여러 줄의 텍스트 입력을 받을 때 사용합니다. 댓글, 설명, 메시지 등 긴 텍스트 입력에 적합합니다.</p>
+                        <p>rows와 cols 속성으로 크기를 지정할 수 있습니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;label for="message"&gt;메시지:&lt;/label&gt;&lt;br&gt;
+&lt;textarea id="message" rows="4" cols="50"&gt;기본 메시지...&lt;/textarea&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <label for="message">메시지:</label><br>
+                        <textarea id="message" rows="4" cols="50" style="margin: 10px 0;">기본 메시지...</textarea>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> CSS를 사용해 텍스트 영역의 크기를 조절할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 16: 선택 상자 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">16</div>
+                    선택 상자 태그 (select, option)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-caret-square-down"></i> 선택 상자 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;select&gt; 태그는 드롭다운 목록을 생성합니다. &lt;option&gt; 태그로 선택 항목을 정의합니다.</p>
+                        <p>multiple 속성을 사용하면 다중 선택이 가능합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;label for="fruit"&gt;좋아하는 과일:&lt;/label&gt;
+&lt;select id="fruit"&gt;
+    &lt;option value="apple"&gt;사과&lt;/option&gt;
+    &lt;option value="banana" selected&gt;바나나&lt;/option&gt;
+    &lt;option value="orange"&gt;오렌지&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;label for="cars"&gt;차종 (다중 선택):&lt;/label&gt;
+&lt;select id="cars" multiple&gt;
+    &lt;option value="sedan"&gt;세단&lt;/option&gt;
+    &lt;option value="suv"&gt;SUV&lt;/option&gt;
+    &lt;option value="truck"&gt;트럭&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div style="border: 1px dashed #ccc; padding: 15px; margin: 15px 0;">
+                            <label for="fruit">좋아하는 과일:</label>
+                            <select id="fruit" style="padding: 5px;">
+                                <option value="apple">사과</option>
+                                <option value="banana" selected>바나나</option>
+                                <option value="orange">오렌지</option>
+                            </select><br><br>
+                            
+                            <label for="cars">차종 (다중 선택):</label>
+                            <select id="cars" multiple style="padding: 5px; height: 80px;">
+                                <option value="sedan">세단</option>
+                                <option value="suv">SUV</option>
+                                <option value="truck">트럭</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> 다중 선택 시 Ctrl 키(Windows) 또는 Command 키(Mac)를 누른 상태로 항목을 선택합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 17: 구분선 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">17</div>
+                    구분선 태그 (hr)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-horizontal-rule"></i> 구분선 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;hr&gt; 태그는 주제 변경을 나타내는 수평선을 삽입합니다. 닫는 태그가 없는 빈 태그입니다.</p>
+                        <p>웹 페이지의 섹션을 시각적으로 구분할 때 유용합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;첫 번째 섹션&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;두 번째 섹션&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>첫 번째 섹션</p>
+                        <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+                        <p>두 번째 섹션</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> CSS를 사용해 구분선의 스타일을 변경할 수 있습니다 (색상, 두께 등).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 18: 주석 처리 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">18</div>
+                    주석 처리 (<!-- -->)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-comment"></i> 주석 처리 방법</h3>
+                    <div class="explanation">
+                        <p>HTML 주석은 코드에 설명을 추가하거나 일시적으로 코드를 비활성화할 때 사용합니다.</p>
+                        <p>주석은 브라우저에 표시되지 않으며, &lt;!-- 주석 내용 --&gt; 형식으로 작성합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!-- 이 부분은 주석입니다. 브라우저에 표시되지 않습니다. --&gt&gt;
+&lt;p&gt;이 문단은 표시됩니다.&lt;/p&gt;
+
+&lt;!-- 
+    여러 줄에 걸친
+    긴 주석도 가능합니다.
+--&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>이 문단은 표시됩니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 주석은 코드를 이해하기 쉽게 만들고 협업 시 유용합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 19: div 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">19</div>
+                    div 태그
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-square"></i> div 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;div&gt; 태그는 문서의 구역(division)을 정의하는 데 사용됩니다. 주로 CSS 스타일을 적용하거나 JavaScript로 조작하기 위한 컨테이너로 사용됩니다.</p>
+                        <p>div는 블록 레벨 요소로, 새로운 줄에서 시작하며 가능한 전체 너비를 차지합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;div style="background: lightblue; padding: 20px;"&gt;
+    &lt;h2&gt;섹션 제목&lt;/h2&gt;
+    &lt;p&gt;이것은 div 안의 내용입니다.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div style="background: lightblue; padding: 20px; margin: 15px 0;">
+                            <h2>섹션 제목</h2>
+                            <p>이것은 div 안의 내용입니다.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> div는 의미론적인 가치가 없기 때문에, HTML5에서는 시맨틱 태그를 사용하는 것이 더 좋습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 20: span 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">20</div>
+                    span 태그
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-i-cursor"></i> span 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;span&gt; 태그는 인라인 요소의 그룹화를 위해 사용됩니다. 텍스트의 일부에 스타일을 적용하거나 JavaScript로 조작할 때 유용합니다.</p>
+                        <p>span은 인라인 요소로, 텍스트 흐름 내에서 필요한 만큼만 공간을 차지합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;이 문장에서 &lt;span style="color: red;"&gt;이 부분&lt;/span&gt;은 빨간색으로 표시됩니다.&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>이 문장에서 <span style="color: red;">이 부분</span>은 빨간색으로 표시됩니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> span은 단독으로는 아무런 시각적 변화를 주지 않기 때문에 주로 CSS나 JavaScript와 함께 사용됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 21: 시맨틱 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">21</div>
+                    시맨틱 태그 (header, nav, section, article, aside, footer)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-code"></i> 시맨틱 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>시맨틱 태그는 HTML5에서 도입되었으며, 웹 페이지의 구조와 의미를 명확히 표현합니다:</p>
+                        <ul>
+                            <li><strong>&lt;header&gt;</strong>: 페이지나 섹션의 헤더</li>
+                            <li><strong>&lt;nav&gt;</strong>: 네비게이션 링크</li>
+                            <li><strong>&lt;section&gt;</strong>: 문서의 독립적인 섹션</li>
+                            <li><strong>&lt;article&gt;</strong>: 독립적인 콘텐츠 항목</li>
+                            <li><strong>&lt;aside&gt;</strong>: 사이드바 또는 관련 콘텐츠</li>
+                            <li><strong>&lt;footer&gt;</strong>: 페이지나 섹션의 푸터</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;header&gt;
+    &lt;h1&gt;웹사이트 제목&lt;/h1&gt;
+    &lt;nav&gt;
+        &lt;a href="#"&gt;홈&lt;/a&gt; | 
+        &lt;a href="#"&gt;소개&lt;/a&gt; | 
+        &lt;a href="#"&gt;연락처&lt;/a&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;section&gt;
+    &lt;article&gt;
+        &lt;h2&gt;기사 제목&lt;/h2&gt;
+        &lt;p&gt;기사 내용...&lt;/p&gt;
+    &lt;/article&gt;
+&lt;/section&gt;
+
+&lt;aside&gt;
+    &lt;h3&gt;관련 링크&lt;/h3&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;링크 1&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;링크 2&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/aside&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;© 2023 웹사이트. 모든 권리 보유.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div style="border: 1px solid #ccc; padding: 15px; margin: 15px 0;">
+                            <header style="background: #f0f0f0; padding: 10px; margin-bottom: 15px;">
+                                <h1 style="margin: 0;">웹사이트 제목</h1>
+                                <nav style="margin-top: 10px;">
+                                    <a href="#" style="margin: 0 5px;">홈</a> | 
+                                    <a href="#" style="margin: 0 5px;">소개</a> | 
+                                    <a href="#" style="margin: 0 5px;">연락처</a>
+                                </nav>
+                            </header>
+
+                            <section style="margin-bottom: 15px;">
+                                <article style="background: #f9f9f9; padding: 10px;">
+                                    <h2 style="margin-top: 0;">기사 제목</h2>
+                                    <p>기사 내용...</p>
+                                </article>
+                            </section>
+
+                            <aside style="background: #e9e9e9; padding: 10px; margin-bottom: 15px;">
+                                <h3 style="margin-top: 0;">관련 링크</h3>
+                                <ul>
+                                    <li><a href="#">링크 1</a></li>
+                                    <li><a href="#">링크 2</a></li>
+                                </ul>
+                            </aside>
+
+                            <footer style="background: #333; color: white; padding: 10px; text-align: center;">
+                                <p style="margin: 0;">© 2023 웹사이트. 모든 권리 보유.</p>
+                            </footer>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 시맨틱 태그는 검색 엔진 최적화(SEO)와 웹 접근성 향상에 도움이 됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 22: 미디어 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">22</div>
+                    미디어 태그 (audio, video)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-play-circle"></i> 미디어 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>HTML5는 오디오와 비디오 재생을 위한 내장 태그를 제공합니다:</p>
+                        <ul>
+                            <li><strong>&lt;audio&gt;</strong>: 오디오 콘텐츠 재생</li>
+                            <li><strong>&lt;video&gt;</strong>: 비디오 콘텐츠 재생</li>
+                        </ul>
+                        <p>controls 속성을 추가하면 재생, 일시정지, 볼륨 조절 등의 컨트롤이 표시됩니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;h4&gt;오디오 재생&lt;/h4&gt;
+&lt;audio controls&gt;
+    &lt;source src="audio.mp3" type="audio/mpeg"&gt;
+    브라우저가 오디오를 지원하지 않습니다.
+&lt;/audio&gt;
+
+&lt;h4&gt;비디오 재생&lt;/h4&gt;
+&lt;video width="320" height="240" controls&gt;
+    &lt;source src="movie.mp4" type="video/mp4"&gt;
+    브라우저가 비디오를 지원하지 않습니다.
+&lt;/video&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h4>오디오 재생</h4>
+                        <audio controls style="width: 100%; margin-bottom: 20px;">
+                            <source src="#" type="audio/mpeg">
+                            브라우저가 오디오를 지원하지 않습니다.
+                        </audio>
+
+                        <h4>비디오 재생</h4>
+                        <video width="320" height="240" controls style="max-width: 100%;">
+                            <source src="#" type="video/mp4">
+                            브라우저가 비디오를 지원하지 않습니다.
+                        </video>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 여러 source 태그를 사용해 다양한 포맷을 제공할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 23: 아이프레임 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">23</div>
+                    아이프레임 태그 (iframe)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-window-maximize"></i> 아이프레임 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;iframe&gt; 태그는 현재 문서 안에 다른 HTML 문서를 삽입합니다. 주로 외부 콘텐츠(지도, 동영상 등)를 삽입할 때 사용합니다.</p>
+                        <p>src 속성으로 삽입할 문서의 URL을 지정합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;h4&gt;구글 맵 삽입&lt;/h4&gt;
+&lt;iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.66617477607!2d126.9778884156471!3d37.5665352798003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e80a9a0bcd%3A0x4f0a2d2e9f0d6d0d!2sSeoul%20City%20Hall!5e0!3m2!1sen!2skr!4v1620000000000!5m2!1sen!2skr" 
+    width="600" 
+    height="450" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy"&gt;
+&lt;/iframe&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h4>구글 맵 삽입</h4>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.66617477607!2d126.9778884156471!3d37.5665352798003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e80a9a0bcd%3A0x4f0a2d2e9f0d6d0d!2sSeoul%20City%20Hall!5e0!3m2!1sen!2skr!4v1620000000000!5m2!1sen!2skr" 
+                            width="100%" 
+                            height="300" 
+                            style="border:0; margin-bottom: 20px;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> 일부 웹사이트는 iframe으로 삽입되는 것을 방지할 수 있습니다(X-Frame-Options 헤더).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 24: 엔티티 코드 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">24</div>
+                    엔티티 코드 (특수 문자)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-font"></i> 엔티티 코드 사용하기</h3>
+                    <div class="explanation">
+                        <p>HTML에서 특수 문자를 표시하려면 엔티티 코드(entity code)를 사용해야 합니다.</p>
+                        <p>주요 엔티티 코드:</p>
+                        <ul>
+                            <li>&amp;lt; - &lt; (보다 작음)</li>
+                            <li>&amp;gt; - &gt; (보다 큼)</li>
+                            <li>&amp;amp; - &amp; (앰퍼샌드)</li>
+                            <li>&amp;nbsp; - 공백(non-breaking space)</li>
+                            <li>&amp;copy; - © (저작권)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;p&gt;5 &amp;lt; 10 → 5 &lt; 10&lt;/p&gt;
+&lt;p&gt;HTML &amp;amp; CSS → HTML &amp; CSS&lt;/p&gt;
+&lt;p&gt;저작권 &amp;copy; 2023 → 저작권 © 2023&lt;/p&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>5 &lt; 10 → 5 &lt; 10</p>
+                        <p>HTML &amp; CSS → HTML &amp; CSS</p>
+                        <p>저작권 &copy; 2023 → 저작권 © 2023</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> HTML 코드를 표시할 때는 &amp;lt;와 &amp;gt;를 사용해야 합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 25: 메타 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">25</div>
+                    메타 태그 (meta)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-info-circle"></i> 메타 태그 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;meta&gt; 태그는 문서에 대한 메타데이터를 제공합니다. head 섹션에 위치하며, 브라우저나 검색 엔진에 정보를 전달합니다.</p>
+                        <p>주요 메타 태그:</p>
+                        <ul>
+                            <li>문자 인코딩 지정: &lt;meta charset="UTF-8"&gt;</li>
+                            <li>뷰포트 설정: &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</li>
+                            <li>설명 추가: &lt;meta name="description" content="페이지 설명"&gt;</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="description" content="HTML 학습 가이드"&gt;
+    &lt;title&gt;HTML 학습&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>메타 태그는 브라우저에 직접 표시되지 않지만, 페이지의 동작과 정보에 영향을 줍니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> 메타 태그는 검색 엔진 최적화(SEO)에 매우 중요합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 26: 링크 태그 (CSS) -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">26</div>
+                    링크 태그 (link) - CSS 연결
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-paint-brush"></i> CSS 연결하기</h3>
+                    <div class="explanation">
+                        <p>&lt;link&gt; 태그는 외부 리소스(주로 CSS 파일)를 현재 문서에 연결합니다.</p>
+                        <p>rel 속성은 관계(relationship)를, href 속성은 파일 경로를 지정합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>외부 CSS 파일을 연결하면 문서에 스타일이 적용됩니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> 여러 CSS 파일을 연결할 수 있으며, 순서에 따라 스타일 우선순위가 결정됩니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 27: 스타일 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">27</div>
+                    스타일 태그 (style)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-css3"></i> 내부 스타일 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;style&gt; 태그는 HTML 문서 내부에 CSS 스타일을 정의할 때 사용합니다. head 섹션에 위치시킵니다.</p>
+                        <p>소규모 프로젝트나 간단한 스타일링에 유용하지만, 대규모 프로젝트에서는 외부 CSS 파일 사용을 권장합니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: navy;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <p>내부 스타일은 현재 문서에만 적용됩니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>주의:</strong> HTML 문서가 길어질수록 내부 스타일은 관리가 어려워집니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 28: 스크립트 태그 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">28</div>
+                    스크립트 태그 (script)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-code"></i> JavaScript 사용하기</h3>
+                    <div class="explanation">
+                        <p>&lt;script&gt; 태그는 클라이언트 측 JavaScript를 정의하거나 외부 JavaScript 파일을 참조할 때 사용합니다.</p>
+                        <p>문서 어디에나 위치할 수 있지만, 일반적으로 body 태그의 맨 끝에 위치시킵니다.</p>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!-- 내부 스크립트 --&gt;
+&lt;script&gt;
+    function showMessage() {
+        alert('안녕하세요!');
+    }
+&lt;/script&gt;
+
+&lt;!-- 외부 스크립트 --&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <button onclick="alert('안녕하세요!')" style="padding: 8px 16px;">메시지 보기</button>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>팁:</strong> defer 또는 async 속성을 사용해 스크립트 로딩 방식을 제어할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 29: HTML 속성 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">29</div>
+                    HTML 속성 (id, class, style 등)
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-tag"></i> HTML 속성 이해하기</h3>
+                    <div class="explanation">
+                        <p>HTML 속성은 요소에 대한 추가 정보를 제공하며, 항상 시작 태그에 위치합니다.</p>
+                        <p>주요 속성:</p>
+                        <ul>
+                            <li><strong>id</strong>: 요소에 고유한 식별자 지정</li>
+                            <li><strong>class</strong>: 요소에 하나 이상의 클래스 지정</li>
+                            <li><strong>style</strong>: 요소에 인라인 CSS 스타일 지정</li>
+                            <li><strong>src</strong>: 외부 리소스의 경로 지정 (이미지, 스크립트 등)</li>
+                            <li><strong>href</strong>: 링크된 리소스의 URL 지정</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;div id="header" class="main-header" style="background: blue; color: white;"&gt;
+    헤더 내용
+&lt;/div&gt;
+
+&lt;img src="image.jpg" alt="설명"&gt;
+
+&lt;a href="https://example.com"&gt;링크&lt;/a&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <div id="header" class="main-header" style="background: blue; color: white; padding: 10px; margin-bottom: 15px;">
+                            헤더 내용
+                        </div>
+                        
+                        <img src="https://via.placeholder.com/150" alt="예제 이미지" style="margin-bottom: 15px;">
+                        
+                        <a href="#" style="display: block;">링크</a>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> id 값은 문서 내에서 고유해야 하며, class 값은 여러 요소에 동일하게 사용할 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주제 30: HTML 유효성 검사 -->
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="number">30</div>
+                    HTML 유효성 검사
+                </div>
+                <div class="topic-content">
+                    <h3><i class="fas fa-check-circle"></i> HTML 유효성 검사</h3>
+                    <div class="explanation">
+                        <p>HTML 유효성 검사는 작성한 HTML 코드가 표준 규칙을 따르는지 확인하는 과정입니다. 유효성 검사는 다음과 같은 이점이 있습니다:</p>
+                        <ul>
+                            <li>브라우저 간 호환성 향상</li>
+                            <li>검색 엔진 최적화(SEO) 개선</li>
+                            <li>웹 접근성 향상</li>
+                            <li>유지보수 용이성 향상</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example">
+                        <pre><code>&lt;!-- 유효한 HTML 예제 --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;유효성 검사 예제&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;유효한 HTML 페이지&lt;/h1&gt;
+    &lt;p&gt;이 페이지는 HTML 표준을 따릅니다.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    </div>
+                    
+                    <div class="result">
+                        <h1>유효한 HTML 페이지</h1>
+                        <p>이 페이지는 HTML 표준을 따릅니다.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-content">
+                            <p><strong>알아두기:</strong> W3C의 온라인 유효성 검사기를 사용해보세요: <a href="https://validator.w3.org/" target="_blank">https://validator.w3.org/</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>HTML 왕초보를 위한 30일 완성 코스 &copy; 2023</p>
+            <p>하루에 하나씩 차근차근 배워보세요! <i class="fas fa-heart" style="color: #e91e63;"></i></p>
+            <button class="btn" id="reset-btn"><i class="fas fa-redo"></i> 처음부터 다시 시작하기</button>
+        </footer>
+    </div>
+
+    <script>
+        // 주제 데이터
+        const topics = [
+            "HTML이란?",
+            "기본 구조 (html, head, body)",
+            "제목 태그 (h1~h6)",
+            "단락 태그 (p)",
+            "줄바꿈 태그 (br)",
+            "텍스트 서식 (strong, em, mark 등)",
+            "링크 태그 (a)",
+            "이미지 태그 (img)",
+            "리스트 태그 (ul, ol, li)",
+            "테이블 태그 (table, tr, th, td)",
+            "폼 태그 (form)",
+            "입력 태그 (input)",
+            "버튼 태그 (button)",
+            "레이블 태그 (label)",
+            "텍스트 영역 태그 (textarea)",
+            "선택 상자 태그 (select, option)",
+            "구분선 태그 (hr)",
+            "주석 처리 (<!-- -->)",
+            "div 태그",
+            "span 태그",
+            "시맨틱 태그 (header, nav, section, article, aside, footer)",
+            "미디어 태그 (audio, video)",
+            "아이프레임 태그 (iframe)",
+            "엔티티 코드 (특수 문자)",
+            "메타 태그 (meta)",
+            "링크 태그 (link) - CSS 연결",
+            "스타일 태그 (style)",
+            "스크립트 태그 (script)",
+            "HTML 속성 (id, class, style 등)",
+            "HTML 유효성 검사"
+        ];
+        
+        // 프로그레스 바 생성
+        const progressContainer = document.getElementById('progress-container');
+        topics.forEach((_, index) => {
+            const progressItem = document.createElement('div');
+            progressItem.className = 'progress-item';
+            progressItem.textContent = index + 1;
+            progressItem.dataset.index = index;
+            
+            if (index === 0) {
+                progressItem.classList.add('current');
+            }
+            
+            progressItem.addEventListener('click', function() {
+                setActiveTopic(parseInt(this.dataset.index));
+            });
+            
+            progressContainer.appendChild(progressItem);
+        });
+        
+        // 주제 요소 가져오기
+        const topicElements = document.querySelectorAll('.topic');
+        
+        // 현재 활성화된 주제 인덱스
+        let currentTopicIndex = 0;
+        
+        // 주제 설정 함수
+        function setActiveTopic(index) {
+            // 모든 주제 비활성화
+            topicElements.forEach(topic => topic.classList.remove('active'));
+            document.querySelectorAll('.progress-item').forEach(item => {
+                item.classList.remove('current');
+            });
+            
+            // 선택한 주제 활성화
+            topicElements[index].classList.add('active');
+            document.querySelector(`.progress-item[data-index="${index}"]`).classList.add('current');
+            
+            // 완료 표시 업데이트
+            for (let i = 0; i <= index; i++) {
+                document.querySelector(`.progress-item[data-index="${i}"]`).classList.add('completed');
+            }
+            
+            currentTopicIndex = index;
+        }
+        
+        // 다음 버튼
+        document.getElementById('next-btn').addEventListener('click', function() {
+            if (currentTopicIndex < topics.length - 1) {
+                setActiveTopic(currentTopicIndex + 1);
+            }
+        });
+        
+        // 이전 버튼
+        document.getElementById('prev-btn').addEventListener('click', function() {
+            if (currentTopicIndex > 0) {
+                setActiveTopic(currentTopicIndex - 1);
+            }
+        });
+        
+        // 리셋 버튼
+        document.getElementById('reset-btn').addEventListener('click', function() {
+            setActiveTopic(0);
+            document.querySelectorAll('.progress-item').forEach(item => {
+                item.classList.remove('completed');
+            });
+        });
+        
+        // 주제 클릭 시 확장/축소 기능
+        document.querySelectorAll('.topic-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const topic = this.parentElement;
+                const index = Array.from(topic.parentNode.children).indexOf(topic);
+                setActiveTopic(index);
+            });
+        });
+        
+        // 첫 번째 주제를 기본으로 열기
+        setActiveTopic(0);
+    </script>
+</body>
+</html>
