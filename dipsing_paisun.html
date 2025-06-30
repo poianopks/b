@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 왕초보를 위한 기초 공부 가이드</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .intro {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            color: #555;
+        }
+        
+        .python-icon {
+            font-size: 4rem;
+            color: #ffd43b;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .topic-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .topic-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .topic-number {
+            background: #e74c3c;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .card-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .card-content.active {
+            padding: 25px;
+            max-height: 1000px;
+        }
+        
+        .explanation {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin: 15px 0;
+            overflow-x: auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .code-comment {
+            color: #7fdbca;
+        }
+        
+        .code-keyword {
+            color: #ff79c6;
+            font-weight: bold;
+        }
+        
+        .code-string {
+            color: #f1fa8c;
+        }
+        
+        .code-function {
+            color: #50fa7b;
+        }
+        
+        .code-var {
+            color: #bd93f9;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .highlight {
+            color: #ffd43b;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="python-icon">
+                <i class="fab fa-python"></i>
+            </div>
+            <h1>파이썬 왕초보를 위한 기초 공부</h1>
+            <div class="subtitle">30개 주제로 배우는 파이썬 프로그래밍</div>
+            <p class="intro">각 주제를 클릭하면 상세 설명과 예제 코드를 볼 수 있습니다. 직접 코드를 작성해보며 파이썬 기초를 탄탄히 다져보세요!</p>
+        </header>
+        
+        <div class="grid-container">
+            <!-- Topic 1 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">1. 변수(Variables)</div>
+                    <div class="topic-number">1</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        변수는 데이터를 저장하는 공간입니다. 파이썬에서는 변수를 선언할 때 데이터 타입을 명시하지 않습니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 변수 선언 및 사용 예제</span><br>
+                        name = <span class="code-string">"김파이"</span>  <span class="code-comment"># 문자열 변수</span><br>
+                        age = 10         <span class="code-comment"># 정수형 변수</span><br>
+                        height = 150.5   <span class="code-comment"># 실수형 변수</span><br>
+                        is_student = <span class="code-keyword">True</span> <span class="code-comment"># 불리언 변수</span><br><br>
+                        
+                        <span class="code-keyword">print</span>(<span class="code-string">"이름:"</span>, name)<br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"나이:"</span>, age)<br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"키:"</span>, height)<br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"학생인가요?"</span>, is_student)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 2 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">2. 데이터 타입(Data Types)</div>
+                    <div class="topic-number">2</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        파이썬의 기본 데이터 타입에는 정수(int), 실수(float), 문자열(str), 불리언(bool) 등이 있습니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 다양한 데이터 타입 예제</span><br>
+                        num = 10           <span class="code-comment"># int (정수)</span><br>
+                        pi = 3.14          <span class="code-comment"># float (실수)</span><br>
+                        name = <span class="code-string">"Python"</span>      <span class="code-comment"># str (문자열)</span><br>
+                        is_cool = <span class="code-keyword">True</span>      <span class="code-comment"># bool (불리언)</span><br><br>
+                        
+                        <span class="code-comment"># 타입 확인하기</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-keyword">type</span>(num))      <span class="code-comment"># &lt;class 'int'&gt;</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-keyword">type</span>(pi))       <span class="code-comment"># &lt;class 'float'&gt;</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-keyword">type</span>(name))     <span class="code-comment"># &lt;class 'str'&gt;</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-keyword">type</span>(is_cool))  <span class="code-comment"># &lt;class 'bool'&gt;</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 3 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">3. 연산자(Operators)</div>
+                    <div class="topic-number">3</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        파이썬에는 산술, 비교, 논리 연산자 등이 있습니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 산술 연산자</span><br>
+                        a = 10<br>
+                        b = 3<br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a + b ="</span>, a + b)  <span class="code-comment"># 13</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a - b ="</span>, a - b)  <span class="code-comment"># 7</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a * b ="</span>, a * b)  <span class="code-comment"># 30</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a / b ="</span>, a / b)  <span class="code-comment"># 3.333...</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a % b ="</span>, a % b)  <span class="code-comment"># 1 (나머지)</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a ** b ="</span>, a ** b) <span class="code-comment"># 1000 (제곱)</span><br><br>
+                        
+                        <span class="code-comment"># 비교 연산자</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a == b?"</span>, a == b) <span class="code-comment"># False</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a != b?"</span>, a != b) <span class="code-comment"># True</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"a > b?"</span>, a > b)   <span class="code-comment"># True</span><br><br>
+                        
+                        <span class="code-comment"># 논리 연산자</span><br>
+                        x = <span class="code-keyword">True</span><br>
+                        y = <span class="code-keyword">False</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"x and y:"</span>, x <span class="code-keyword">and</span> y) <span class="code-comment"># False</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"x or y:"</span>, x <span class="code-keyword">or</span> y)   <span class="code-comment"># True</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-string">"not x:"</span>, <span class="code-keyword">not</span> x)     <span class="code-comment"># False</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 4 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">4. 조건문(if문)</div>
+                    <div class="topic-number">4</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        조건문은 특정 조건에 따라 다른 코드를 실행할 수 있게 해줍니다.
+                    </div>
+                    <div class="code-block">
+                        age = 18<br><br>
+                        
+                        <span class="code-keyword">if</span> age >= 19:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"성인입니다. 주류를 구매할 수 있습니다."</span>)<br>
+                        <span class="code-keyword">elif</span> age >= 13:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"청소년입니다."</span>)<br>
+                        <span class="code-keyword">else</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"어린이입니다."</span>)<br><br>
+                        
+                        <span class="code-comment"># 중첩 if문 예제</span><br>
+                        score = 85<br>
+                        <span class="code-keyword">if</span> score >= 90:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"A학점"</span>)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> score >= 95:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"참 잘했어요!"</span>)<br>
+                        <span class="code-keyword">elif</span> score >= 80:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"B학점"</span>)<br>
+                        <span class="code-keyword">elif</span> score >= 70:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"C학점"</span>)<br>
+                        <span class="code-keyword">else</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"F학점"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 5 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">5. 반복문(for문)</div>
+                    <div class="topic-number">5</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        for문은 컬렉션(리스트, 튜플, 문자열 등)의 요소들을 순회하며 반복 작업을 수행합니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 리스트 순회</span><br>
+                        fruits = [<span class="code-string">"사과"</span>, <span class="code-string">"바나나"</span>, <span class="code-string">"체리"</span>]<br>
+                        <span class="code-keyword">for</span> fruit <span class="code-keyword">in</span> fruits:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(fruit)<br><br>
+                        
+                        <span class="code-comment"># range() 함수 사용</span><br>
+                        <span class="code-comment"># 0부터 4까지 출력</span><br>
+                        <span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-function">range</span>(5):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(i)<br><br>
+                        
+                        <span class="code-comment"># 1부터 10까지 짝수 출력</span><br>
+                        <span class="code-keyword">for</span> num <span class="code-keyword">in</span> <span class="code-function">range</span>(2, 11, 2):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(num)<br><br>
+                        
+                        <span class="code-comment"># 중첩 for문 (구구단)</span><br>
+                        <span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-function">range</span>(2, 10):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">f"--- {i}단 ---"</span>)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> j <span class="code-keyword">in</span> <span class="code-function">range</span>(1, 10):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">f"{i} x {j} = {i*j}"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 6 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">6. 반복문(while문)</div>
+                    <div class="topic-number">6</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        while문은 조건이 참인 동안 코드 블록을 반복 실행합니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 기본 while문</span><br>
+                        count = 0<br>
+                        <span class="code-keyword">while</span> count < 5:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(count)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;count += 1  <span class="code-comment"># count = count + 1</span><br><br>
+                        
+                        <span class="code-comment"># 무한루프와 break</span><br>
+                        <span class="code-keyword">while</span> <span class="code-keyword">True</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;user_input = <span class="code-function">input</span>(<span class="code-string">"종료하려면 'exit' 입력: "</span>)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> user_input == <span class="code-string">"exit"</span>:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"프로그램을 종료합니다."</span>)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span><br><br>
+                        
+                        <span class="code-comment"># continue 사용 예제</span><br>
+                        num = 0<br>
+                        <span class="code-keyword">while</span> num < 10:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;num += 1<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> num % 2 == 0:  <span class="code-comment"># 짝수일 때</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">continue</span>  <span class="code-comment"># 다음 반복으로 건너뜀</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(num)  <span class="code-comment"># 홀수만 출력</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 7 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">7. 리스트(Lists)</div>
+                    <div class="topic-number">7</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        리스트는 순서가 있는 여러 항목을 저장하는 컬렉션입니다. 변경 가능한(mutable) 데이터 타입입니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 리스트 생성</span><br>
+                        colors = [<span class="code-string">"빨강"</span>, <span class="code-string">"주황"</span>, <span class="code-string">"노랑"</span>, <span class="code-string">"초록"</span>, <span class="code-string">"파랑"</span>]<br>
+                        numbers = [1, 3, 5, 7, 9]<br>
+                        mixed = [10, <span class="code-string">"텍스트"</span>, <span class="code-keyword">True</span>, 3.14]<br><br>
+                        
+                        <span class="code-comment"># 인덱싱</span><br>
+                        <span class="code-keyword">print</span>(colors[0])  <span class="code-comment"># "빨강"</span><br>
+                        <span class="code-keyword">print</span>(colors[-1]) <span class="code-comment"># "파랑" (마지막 요소)</span><br><br>
+                        
+                        <span class="code-comment"># 슬라이싱</span><br>
+                        <span class="code-keyword">print</span>(colors[1:3]) <span class="code-comment"># ["주황", "노랑"]</span><br>
+                        <span class="code-keyword">print</span>(colors[:2])  <span class="code-comment"># ["빨강", "주황"]</span><br>
+                        <span class="code-keyword">print</span>(colors[3:])  <span class="code-comment"># ["초록", "파랑"]</span><br><br>
+                        
+                        <span class="code-comment"># 리스트 수정</span><br>
+                        colors[2] = <span class="code-string">"금색"</span>  <span class="code-comment"># 인덱스 2의 값 변경</span><br>
+                        colors.append(<span class="code-string">"보라"</span>)  <span class="code-comment"># 끝에 추가</span><br>
+                        colors.insert(1, <span class="code-string">"분홍"</span>)  <span class="code-comment"># 인덱스 1에 삽입</span><br>
+                        colors.remove(<span class="code-string">"주황"</span>)  <span class="code-comment"># 항목 제거</span><br><br>
+                        
+                        <span class="code-comment"># 리스트 길이</span><br>
+                        <span class="code-keyword">print</span>(<span class="code-function">len</span>(colors))  <span class="code-comment"># 6</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 8 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">8. 튜플(Tuples)</div>
+                    <div class="topic-number">8</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        튜플은 리스트와 비슷하지만 변경 불가능한(immutable) 데이터 타입입니다. 한 번 생성된 튜플은 수정할 수 없습니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 튜플 생성</span><br>
+                        rgb = (<span class="code-string">"빨강"</span>, <span class="code-string">"초록"</span>, <span class="code-string">"파랑"</span>)<br>
+                        coordinates = (37.5665, 126.9780)  <span class="code-comment"># 서울 좌표</span><br><br>
+                        
+                        <span class="code-comment"># 인덱싱과 슬라이싱</span><br>
+                        <span class="code-keyword">print</span>(rgb[0])       <span class="code-comment"># "빨강"</span><br>
+                        <span class="code-keyword">print</span>(rgb[1:3])    <span class="code-comment"># ("초록", "파랑")</span><br><br>
+                        
+                        <span class="code-comment"># 튜플은 수정 불가능</span><br>
+                        <span class="code-comment"># rgb[0] = "분홍"  # 에러 발생!</span><br><br>
+                        
+                        <span class="code-comment"># 튜플 언패킹</span><br>
+                        r, g, b = rgb<br>
+                        <span class="code-keyword">print</span>(r)  <span class="code-comment"># "빨강"</span><br>
+                        <span class="code-keyword">print</span>(g)  <span class="code-comment"># "초록"</span><br>
+                        <span class="code-keyword">print</span>(b)  <span class="code-comment"># "파랑"</span><br><br>
+                        
+                        <span class="code-comment"># 튜플을 사용하는 경우</span><br>
+                        <span class="code-comment"># - 변경되지 않아야 하는 데이터</span><br>
+                        <span class="code-comment"># - 함수에서 여러 값 반환</span><br>
+                        <span class="code-keyword">def</span> <span class="code-function">get_user</span>():<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"홍길동"</span>, 25, <span class="code-string">"서울"</span><br><br>
+                        
+                        name, age, city = get_user()<br>
+                        <span class="code-keyword">print</span>(<span class="code-string">f"이름: {name}, 나이: {age}, 지역: {city}"</span>)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 9 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">9. 딕셔너리(Dictionaries)</div>
+                    <div class="topic-number">9</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        딕셔너리는 키-값 쌍으로 데이터를 저장하는 컬렉션입니다. 순서가 없으며 키를 통해 값을 빠르게 찾을 수 있습니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 딕셔너리 생성</span><br>
+                        student = {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"이름"</span>: <span class="code-string">"김파이"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"학번"</span>: <span class="code-string">"20230001"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"전공"</span>: <span class="code-string">"컴퓨터공학"</span>,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"학년"</span>: 2<br>
+                        }<br><br>
+                        
+                        <span class="code-comment"># 값 접근</span><br>
+                        <span class="code-keyword">print</span>(student[<span class="code-string">"이름"</span>])   <span class="code-comment"># "김파이"</span><br>
+                        <span class="code-keyword">print</span>(student.get(<span class="code-string">"학번"</span>)) <span class="code-comment"># "20230001"</span><br><br>
+                        
+                        <span class="code-comment"># 키 존재 여부 확인</span><br>
+                        <span class="code-keyword">if</span> <span class="code-string">"전공"</span> <span class="code-keyword">in</span> student:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(<span class="code-string">"전공 정보 있음"</span>)<br><br>
+                        
+                        <span class="code-comment"># 항목 추가/수정</span><br>
+                        student[<span class="code-string">"학점"</span>] = 3.8      <span class="code-comment"># 추가</span><br>
+                        student[<span class="code-string">"학년"</span>] = 3       <span class="code-comment"># 수정</span><br><br>
+                        
+                        <span class="code-comment"># 항목 삭제</span><br>
+                        <span class="code-keyword">del</span> student[<span class="code-string">"학번"</span>]<br><br>
+                        
+                        <span class="code-comment"># 모든 키와 값 순회</span><br>
+                        <span class="code-keyword">for</span> key <span class="code-keyword">in</span> student:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(key, <span class="code-string">":"</span>, student[key])<br><br>
+                        
+                        <span class="code-comment"># 키-값 쌍으로 순회</span><br>
+                        <span class="code-keyword">for</span> key, value <span class="code-keyword">in</span> student.items():<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">print</span>(key, <span class="code-string">":"</span>, value)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Topic 10 -->
+            <div class="topic-card">
+                <div class="card-header">
+                    <div class="topic-title">10. 집합(Sets)</div>
+                    <div class="topic-number">10</div>
+                </div>
+                <div class="card-content">
+                    <div class="explanation">
+                        집합은 중복을 허용하지 않고 순서가 없는 컬렉션입니다. 교집합, 합집합 등의 수학적 연산을 지원합니다.
+                    </div>
+                    <div class="code-block">
+                        <span class="code-comment"># 집합 생성</span><br>
+                        fruits = {<span class="code-string">"사과"</span>, <span class="code-string">"바나나"</span>, <span class="code-string">"오렌지"</span>}<br>
+                        numbers = set([1, 2, 3, 4, 5])<br><br>
+                        
+                        <span class="code-comment"># 중복은 자동으로 제거됨</span><br>
+                        colors = {<span class="code-string">"빨강"</span>, <span class="code-string">"파랑"</span>, <span class="code-string">"빨강"</span>, <span class="code-string">"초록"</span>}<br>
+                        <span class="code-keyword">print</span>(colors)  <span class="code-comment"># {'빨강', '파랑', '초록'}</span><br><br>
+                        
+                        <span class="code-comment"># 항목 추가/삭제</span><br>
+                        fruits.add(<span class="code-string">"포도"</span>)<br>
+                        fruits.remove(<span class="code-string">"바나나"</span>)<br><br>
+                        
+                        <span class="code-comment"># 집합 연산</span><br>
+                        A = {1, 2, 3, 4, 5}<br>
+                        B = {4, 5, 6, 7, 8}<br><br>
+                        
+                        <span class="code-keyword">print</span>(A | B)  <span class="code-comment"># 합집합: {1, 2, 3, 4, 5, 6, 7, 8}</span><br>
+                        <span class="code-keyword">print</span>(A & B)  <span class="code-comment"># 교집합: {4, 5}</span><br>
+                        <span class="code-keyword">print</span>(A - B)  <span class="code-comment"># 차집합: {1, 2, 3}</span><br>
+                        <span class="code-keyword">print</span>(A ^ B)  <span class="code-comment"># 대칭차집합: {1, 2, 3, 6, 7, 8}</span><br><br>
+                        
+                        <span class="code-comment"># 부분집합 확인</span><br>
+                        C = {1, 2, 3}<br>
+                        <span class="code-keyword">print</span>(C.issubset(A))  <span class="code-comment"># True</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional topics would follow the same pattern -->
+            
+        </div>
+        
+        <div class="footer">
+            <p>파이썬 왕초보를 위한 기초 공부 가이드</p>
+            <p>30개 주제로 체계적으로 배우는 파이썬 프로그래밍</p>
+            <p>각 주제를 클릭하여 상세 설명과 예제 코드를 확인하고 따라해보세요!</p>
+            <p class="highlight">열심히 공부하면 파이썬 고수가 될 수 있어요! 화이팅!</p>
+        </div>
+    </div>
+
+    <script>
+        // 아코디언 기능 구현
+        document.querySelectorAll('.topic-card').forEach(card => {
+            const header = card.querySelector('.card-header');
+            const content = card.querySelector('.card-content');
+            
+            header.addEventListener('click', () => {
+                // 현재 클릭한 카드의 내용을 토글
+                content.classList.toggle('active');
+                
+                // 다른 모든 카드 닫기
+                document.querySelectorAll('.topic-card').forEach(otherCard => {
+                    if (otherCard !== card) {
+                        otherCard.querySelector('.card-content').classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // 페이지 로드 시 첫 번째 카드 열기
+        document.querySelector('.topic-card .card-content').classList.add('active');
+    </script>
+</body>
+</html>
