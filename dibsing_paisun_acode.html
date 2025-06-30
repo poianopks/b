@@ -1,0 +1,602 @@
+dibsing_paisun_acode.html
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 왕초보를 위한 기초 공부 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #f8f9fa;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        .header-text {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            padding: 20px;
+        }
+        
+        .header-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .header-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tabs {
+            display: flex;
+            background: #34495e;
+            justify-content: center;
+        }
+        
+        .tab-button {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .tab-button:hover {
+            background-color: #2c3e50;
+        }
+        
+        .tab-button.active {
+            background-color: #3498db;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .python-topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .topic-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #3498db;
+            cursor: pointer;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid #e74c3c;
+        }
+        
+        .topic-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-card h3:before {
+            content: "•";
+            color: #e74c3c;
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        
+        .topic-card p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        .code-example {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+        }
+        
+        .acode-guide {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .acode-guide h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .guide-step {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .guide-step h3 {
+            display: flex;
+            align-items: center;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        
+        .guide-step h3:before {
+            content: "✓";
+            background: #e74c3c;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 200px;
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: scale(1.03);
+            background: #2980b9;
+        }
+        
+        .feature h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .python-topics {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>파이썬 왕초보를 위한 기초 공부 가이드</h1>
+            <p class="subtitle">30개 주제로 배우는 파이썬 프로그래밍 & Acode 앱 활용법</p>
+            
+            <div class="header-content">
+                <div class="header-text">
+                    <p>이 가이드는 파이썬 프로그래밍을 처음 배우는 분들을 위해 제작되었습니다. 30개의 핵심 주제로 파이썬 기초를 체계적으로 학습하고, 모바일 환경에서 파이썬을 작성하고 실행할 수 있는 Acode 앱의 사용법까지 모두 배울 수 있습니다.</p>
+                    <p style="margin-top: 15px;">각 주제를 클릭하면 상세 설명과 예제 코드를 볼 수 있습니다. 직접 코드를 작성해보며 파이썬 기초를 탄탄히 다져보세요!</p>
+                </div>
+                <div class="header-image">
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600" alt="Python Code">
+                </div>
+            </div>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('python')">파이썬 기초</button>
+            <button class="tab-button" onclick="openTab('acode')">Acode 앱 사용법</button>
+            <button class="tab-button" onclick="openTab('resources')">추가 자료</button>
+        </div>
+        
+        <div id="python" class="tab-content active">
+            <h2>파이썬 기초 30개 주제</h2>
+            <p>파이썬 프로그래밍의 핵심 개념을 30개의 주제로 나누어 학습합니다. 각 주제를 클릭하면 상세 설명과 예제 코드를 확인할 수 있습니다.</p>
+            
+            <div class="python-topics">
+                <div class="topic-card" onclick="showTopic(1)">
+                    <h3>1. 변수(Variables)</h3>
+                    <p>데이터를 저장하는 공간. 파이썬에서는 변수를 선언할 때 데이터 타입을 명시하지 않습니다.</p>
+                    <div class="code-example">
+                        <pre>name = "김파이"  # 문자열 변수
+age = 10        # 정수형 변수
+height = 150.5  # 실수형 변수
+is_student = True  # 불리언 변수</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(2)">
+                    <h3>2. 데이터 타입(Data Types)</h3>
+                    <p>파이썬의 기본 데이터 타입: 정수(int), 실수(float), 문자열(str), 불리언(bool)</p>
+                    <div class="code-example">
+                        <pre># 데이터 타입 확인
+print(type(10))       # &lt;class 'int'&gt;
+print(type(3.14))     # &lt;class 'float'&gt;
+print(type("Hello"))  # &lt;class 'str'&gt;
+print(type(True))     # &lt;class 'bool'&gt;</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(3)">
+                    <h3>3. 연산자(Operators)</h3>
+                    <p>산술, 비교, 논리 연산자 등 파이썬의 다양한 연산자 사용법</p>
+                    <div class="code-example">
+                        <pre># 산술 연산자
+result = 10 + 3 * 2  # 16
+
+# 비교 연산자
+is_adult = age >= 20  # True or False
+
+# 논리 연산자
+can_drive = has_license and age >= 18</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(4)">
+                    <h3>4. 조건문(if문)</h3>
+                    <p>조건에 따라 다른 코드를 실행하는 분기문</p>
+                    <div class="code-example">
+                        <pre>score = 85
+
+if score >= 90:
+    grade = 'A'
+elif score >= 80:
+    grade = 'B'
+else:
+    grade = 'C'</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(5)">
+                    <h3>5. 반복문(for문)</h3>
+                    <p>특정 횟수만큼 또는 컬렉션의 요소들을 순회하며 반복 실행</p>
+                    <div class="code-example">
+                        <pre># 숫자 범위 반복
+for i in range(5):
+    print(i)  # 0, 1, 2, 3, 4
+
+# 리스트 순회
+fruits = ['사과', '바나나', '딸기']
+for fruit in fruits:
+    print(fruit)</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(6)">
+                    <h3>6. 반복문(while문)</h3>
+                    <p>조건이 참인 동안 코드 블록을 반복 실행</p>
+                    <div class="code-example">
+                        <pre>count = 0
+while count < 5:
+    print(count)
+    count += 1  # 0, 1, 2, 3, 4 출력</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(7)">
+                    <h3>7. 리스트(Lists)</h3>
+                    <p>순서가 있는 변경 가능한(mutable) 데이터 컬렉션</p>
+                    <div class="code-example">
+                        <pre># 리스트 생성 및 조작
+numbers = [1, 2, 3, 4, 5]
+numbers.append(6)     # [1,2,3,4,5,6]
+numbers.pop()         # 마지막 요소 제거
+print(numbers[0])     # 첫번째 요소 출력</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(8)">
+                    <h3>8. 튜플(Tuples)</h3>
+                    <p>순서가 있는 변경 불가능한(immutable) 데이터 컬렉션</p>
+                    <div class="code-example">
+                        <pre># 튜플 생성
+point = (10, 20)
+
+# 튜플 요소 접근
+x = point[0]  # 10
+y = point[1]  # 20</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(9)">
+                    <h3>9. 딕셔너리(Dictionaries)</h3>
+                    <p>키-값 쌍으로 이루어진 데이터 컬렉션</p>
+                    <div class="code-example">
+                        <pre># 딕셔너리 생성
+person = {
+    'name': '김파이',
+    'age': 25,
+    'city': '서울'
+}
+
+# 값 접근
+print(person['name'])  # 김파이</pre>
+                    </div>
+                </div>
+                
+                <div class="topic-card" onclick="showTopic(10)">
+                    <h3>10. 집합(Sets)</h3>
+                    <p>중복되지 않는 고유한 요소들의 모음</p>
+                    <div class="code-example">
+                        <pre># 집합 생성
+fruits = {'사과', '바나나', '딸기', '사과'}
+print(fruits)  # {'사과', '바나나', '딸기'} (중복 제거)
+
+# 집합 연산
+set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+print(set1 | set2)  # 합집합: {1, 2, 3, 4, 5}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="acode" class="tab-content">
+            <h2>Acode 앱 사용법 가이드</h2>
+            <p>Acode는 모바일에서 파이썬 코드를 작성하고 실행할 수 있는 강력한 코드 에디터 앱입니다. 아래 가이드를 따라 설치부터 사용법까지 배워보세요.</p>
+            
+            <div class="acode-guide">
+                <div class="guide-step">
+                    <h3>1. Acode 설치하기</h3>
+                    <p>구글 플레이 스토어에서 "Acode"를 검색하여 앱을 설치합니다. 설치 후 앱을 실행합니다.</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>2. 파이썬 플러그인 설치</h3>
+                    <p>Acode에서 파이썬을 실행하기 위해서는 플러그인이 필요합니다:</p>
+                    <ol>
+                        <li>앱 우측 상단의 ≡ 메뉴 버튼을 탭합니다</li>
+                        <li>"플러그인" 섹션을 선택합니다</li>
+                        <li>"Python" 플러그인을 찾아 설치합니다</li>
+                        <li>터미널 플러그인도 함께 설치합니다</li>
+                    </ol>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>3. 첫 파이썬 파일 만들기</h3>
+                    <p>새 파일을 생성하고 파이썬 코드를 작성합니다:</p>
+                    <ol>
+                        <li>하단의 + 버튼을 눌러 새 파일 생성</li>
+                        <li>파일 이름을 "hello.py"로 지정</li>
+                        <li>에디터에 코드 작성: <code>print("Hello Python!")</code></li>
+                    </ol>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>4. 코드 실행하기</h3>
+                    <p>작성한 파이썬 코드를 실행하는 방법:</p>
+                    <ol>
+                        <li>상단의 플레이 버튼(▶)을 탭합니다</li>
+                        <li>또는 ≡ 메뉴 > "실행"을 선택합니다</li>
+                        <li>실행 결과는 하단의 콘솔에서 확인할 수 있습니다</li>
+                    </ol>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>5. HTML 파일 작성 및 미리보기</h3>
+                    <p>Acode에서 웹 개발도 가능합니다:</p>
+                    <ol>
+                        <li>새 파일을 생성하고 이름을 "index.html"로 지정</li>
+                        <li>HTML 코드 작성 (아래 예제 참고)</li>
+                        <li>≡ 메뉴 > "미리보기"를 선택하면 웹페이지 확인 가능</li>
+                    </ol>
+                    <div class="code-example">
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;나의 첫 웹페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;안녕하세요!&lt;/h1&gt;
+    &lt;p&gt;Acode로 만든 첫 웹페이지입니다.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+                
+                <h2 style="margin-top: 30px;">Acode 주요 기능</h2>
+                <div class="features">
+                    <div class="feature">
+                        <h4>코드 자동 완성</h4>
+                        <p>파이썬 키워드, 함수 등을 자동 완성해주어 코드 작성 속도를 높여줍니다</p>
+                    </div>
+                    <div class="feature">
+                        <h4>실시간 오류 검사</h4>
+                        <p>문법 오류를 실시간으로 표시하여 즉시 수정할 수 있습니다</p>
+                    </div>
+                    <div class="feature">
+                        <h4>테마 변경</h4>
+                        <p>다양한 색상 테마를 지원하여 눈에 편한 환경에서 작업할 수 있습니다</p>
+                    </div>
+                    <div class="feature">
+                        <h4>파일 관리</h4>
+                        <p>기기 내 파일을 쉽게 관리하고 여러 프로젝트를 작업할 수 있습니다</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="resources" class="tab-content">
+            <h2>추가 학습 자료</h2>
+            <p>파이썬 학습을 더 깊이 있게 하고 싶다면 아래 자료들을 활용해보세요.</p>
+            
+            <div class="acode-guide">
+                <div class="guide-step">
+                    <h3>추천 학습 사이트</h3>
+                    <ul>
+                        <li>점프 투 파이썬 (한국어): https://wikidocs.net/book/1</li>
+                        <li>Python 공식 튜토리얼 (영어): https://docs.python.org/3/tutorial/</li>
+                        <li>Programiz 파이썬 튜토리얼 (한국어): https://www.programiz.com/python-programming</li>
+                        <li>코딩 도장 (한국어): https://dojang.io/</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>Acode 관련 자료</h3>
+                    <ul>
+                        <li>Acode 공식 웹사이트: https://acode.foxdebug.com/</li>
+                        <li>Acode 플러그인 저장소: https://github.com/deadlyjack/Acode-plugins</li>
+                        <li>파이썬 플러그인 GitHub: https://github.com/deadlyjack/acode-python</li>
+                        <li>터미널 플러그인 GitHub: https://github.com/deadlyjack/Acode-plugin-terminal</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-step">
+                    <h3>초보자를 위한 연습 프로젝트</h3>
+                    <ul>
+                        <li>간단한 계산기 프로그램 만들기</li>
+                        <li>숫자 맞추기 게임 (Up & Down 게임)</li>
+                        <li>간단한 To-Do 리스트 애플리케이션</li>
+                        <li>미니 영단어 암기 프로그램</li>
+                        <li>텍스트 기반 RPG 게임</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 파이썬 왕초보를 위한 기초 공부 가이드. Acode 앱을 활용하여 언제 어디서나 파이썬을 배워보세요!</p>
+            <p style="margin-top: 10px;">이 페이지는 Acode 앱에서 작성되고 테스트된 HTML 파일입니다.</p>
+        </footer>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // 모든 탭 내용 숨기기
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // 모든 탭 버튼 비활성화
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // 선택한 탭 내용 보이기
+            document.getElementById(tabName).classList.add("active");
+            
+            // 선택한 탭 버튼 활성화
+            event.currentTarget.classList.add("active");
+        }
+        
+        function showTopic(topicNumber) {
+            alert(`주제 ${topicNumber}의 상세 설명 페이지로 이동합니다.\n\n이 기능은 데모 버전에서는 구현되지 않았습니다. 실제 구현 시에는 각 주제의 상세 페이지로 연결됩니다.`);
+        }
+        
+        // 페이지 로드 시 첫 번째 탭 활성화
+        window.onload = function() {
+            document.querySelector('.tab-button').classList.add('active');
+            document.getElementById('python').classList.add('active');
+        };
+    </script>
+</body>
+</html>
