@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초보자를 위한 재무제표 읽기 - 주식투자 필수 지식</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #0077b6, #00b4d8, #0077b6);
+        }
+        
+        h1 {
+            color: #1a2a6c;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #e63946;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .intro {
+            max-width: 800px;
+            margin: 0 auto 25px;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-1 .card-header { background: linear-gradient(90deg, #0077b6, #00b4d8); }
+        .card-2 .card-header { background: linear-gradient(90deg, #e63946, #f4a261); }
+        .card-3 .card-header { background: linear-gradient(90deg, #2a9d8f, #8ac926); }
+        .card-4 .card-header { background: linear-gradient(90deg, #7209b7, #4361ee); }
+        .card-5 .card-header { background: linear-gradient(90deg, #ff6b6b, #ff9e00); }
+        
+        .card-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-content h3 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+            color: #444;
+            font-size: 1.05rem;
+        }
+        
+        .highlight {
+            background: #ffd166;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .financial-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .financial-section h2 {
+            text-align: center;
+            color: #1a2a6c;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .financial-section h2::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #00b4d8;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .financial-tables {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+        
+        .financial-table {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-header {
+            background: #1a2a6c;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background: #e9ecef;
+            font-weight: 600;
+            color: #1a2a6c;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .good {
+            color: #2a9d8f;
+            font-weight: 600;
+        }
+        
+        .bad {
+            color: #e63946;
+            font-weight: 600;
+        }
+        
+        .tip-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+        
+        .tip-box h4 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .quote {
+            font-style: italic;
+            margin: 20px auto;
+            max-width: 800px;
+            font-size: 1.2rem;
+            color: #f8f9fa;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-tables {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-chart-line"></i> 초보자를 위한 재무제표 읽기</h1>
+            <div class="subtitle">주식투자 심금을 울리는 필수 지식 총정리</div>
+            <p class="intro">재무제표를 읽는 법을 왕초보도 이해할 수 있도록 쉽게 설명합니다. 주식 격언, 업황 사이클, 재무능력, 부채 분석법, 우량기업 판단법을 배우고 재무제표와 손익계산서를 직접 해석해보세요!</p>
+        </header>
+        
+        <div class="grid-container">
+            <div class="card card-1">
+                <div class="card-header">
+                    <i class="fas fa-quote-left card-icon"></i>
+                    <div>주식 격언 (투자의 지혜)</div>
+                </div>
+                <div class="card-content">
+                    <h3>현명한 투자자를 위한 명언들</h3>
+                    <p><span class="highlight">"시장이 공포에 빠졌을 때 욕심을 내고, 시장이 욕심에 빠졌을 때 공포하라."</span> - 워런 버핏</p>
+                    <p><span class="highlight">"당신이 이해하지 못하는 사업에 투자하지 마라."</span> - 피터 린치</p>
+                    <p><span class="highlight">"가장 위험한 말은 '이번에는 다르다' 이다."</span> - 존 템플턴</p>
+                    <p>이 격언들은 감정에 휩쓸리지 말고, 자신이 이해하는 범위 내에서 투자하며, 역사가 반복된다는 점을 교훈으로 줍니다.</p>
+                </div>
+            </div>
+            
+            <div class="card card-2">
+                <div class="card-header">
+                    <i class="fas fa-sync-alt card-icon"></i>
+                    <div>업황 사이클 이해하기</div>
+                </div>
+                <div class="card-content">
+                    <h3>산업의 주기성 파악</h3>
+                    <p>모든 산업은 호황과 불황의 주기를 반복합니다. 업황 사이클을 이해하면 적절한 투자 시점을 판단할 수 있습니다.</p>
+                    <p><span class="highlight">반도체 업황 사이클</span>: 3~4년 주기로 반복 (슈퍼 사이클 → 조정기 → 회복기)</p>
+                    <p><span class="highlight">조선 업황 사이클</span>: 10~15년의 장기 주기</p>
+                    <p><span class="highlight">철강 업황 사이클</span>: 7~10년 주기</p>
+                    <p>투자 전 해당 산업의 현재 사이클 위치를 파악하는 것이 중요합니다.</p>
+                </div>
+            </div>
+            
+            <div class="card card-3">
+                <div class="card-header">
+                    <i class="fas fa-university card-icon"></i>
+                    <div>재무능력 평가하기</div>
+                </div>
+                <div class="card-content">
+                    <h3>기업의 재무적 건강 상태</h3>
+                    <p>기업의 재무능력은 안정성과 수익성을 종합적으로 평가해야 합니다.</p>
+                    <p><span class="highlight">유동비율</span>: 유동자산 / 유동부채 (200% 이상 우수)</p>
+                    <p><span class="highlight">이자보상배율</span>: 영업이익 / 이자비용 (5배 이상 우수)</p>
+                    <p><span class="highlight">ROE(자기자본이익률)</span>: 당기순이익 / 자기자본 (10% 이상 우수)</p>
+                    <p>이 수치들은 기업이 빚을 갚을 능력이 있는지, 수익성을 유지하는지 판단하는 핵심 지표입니다.</p>
+                </div>
+            </div>
+            
+            <div class="card card-4">
+                <div class="card-header">
+                    <i class="fas fa-file-invoice-dollar card-icon"></i>
+                    <div>부채 보는 법</div>
+                </div>
+                <div class="card-content">
+                    <h3>건강한 부채 vs 위험한 부채</h3>
+                    <p>모든 부채가 나쁜 것은 아닙니다. 성장을 위한 건설적인 부채와 위험한 부채를 구분해야 합니다.</p>
+                    <p><span class="highlight">부채비율</span>: 총부채 / 자기자본 × 100 (100% 이하 안전, 200% 이상 위험)</p>
+                    <p><span class="highlight">차입금 의존도</span>: 차입금 / 총자산 × 100 (20% 이하 우수)</p>
+                    <p><span class="highlight">유동부채 비중</span>: 유동부채 / 총부채 (30% 이하 권장)</p>
+                    <p>부채 구조를 분석하면 기업의 재무적 안정성을 판단할 수 있습니다.</p>
+                </div>
+            </div>
+            
+            <div class="card card-5">
+                <div class="card-header">
+                    <i class="fas fa-crown card-icon"></i>
+                    <div>절대 안 망할 회사 찾기</div>
+                </div>
+                <div class="card-content">
+                    <h3>우량 기업의 특징</h3>
+                    <p>경제 위기에서도 살아남는 기업은 다음과 같은 특징을 가집니다:</p>
+                    <p><span class="highlight">풍부한 현금 보유</span>: 현금 및 현금성자산이 유동부채의 2배 이상</p>
+                    <p><span class="highlight">낮은 부채비율</span>: 100% 미만의 부채비율</p>
+                    <p><span class="highlight">지속적 배당</span>: 10년 이상 꾸준한 배당 실적</p>
+                    <p><span class="highlight">이익잉여금</span>: 축적된 이익이 많을수록 안정적</p>
+                    <p>이러한 기업은 시장의 침체기에서도 생존할 가능성이 높습니다.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="financial-section">
+            <h2><i class="fas fa-file-alt"></i> 재무제표 & 손익계산서 해석하기</h2>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-lightbulb"></i> 왕초보를 위한 재무제표 읽기 Tip</h4>
+                <p>재무제표는 기업의 건강상태를 나타내는 '건강검진 결과'와 같습니다. 재무상태표(대차대조표)는 특정 시점의 재무상태를, 손익계산서는 일정 기간의 경영성과를 보여줍니다. 가장 중요한 항목들에 집중하여 분석해보세요!</p>
+            </div>
+            
+            <div class="financial-tables">
+                <div class="financial-table">
+                    <div class="table-header">재무상태표 (대차대조표) 핵심 항목</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>의미</th>
+                                <th>우량 기업 기준</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>현금 및 현금성자산</td>
+                                <td>기업이 보유한 현금</td>
+                                <td class="good">유동부채의 2배 이상</td>
+                            </tr>
+                            <tr>
+                                <td>매출채권</td>
+                                <td>팔았지만 아직 받지 못한 돈</td>
+                                <td class="good">매출액 대비 15% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>재고자산</td>
+                                <td>아직 판매하지 않은 제품</td>
+                                <td class="good">매출액 대비 20% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>유형자산</td>
+                                <td>토지, 건물, 기계 등</td>
+                                <td class="good">총자산 대비 50% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>유동부채</td>
+                                <td>1년 안에 갚아야 할 빚</td>
+                                <td class="good">유동자산의 50% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>비유동부채</td>
+                                <td>1년 이후에 갚을 빚</td>
+                                <td class="good">총부채의 70% 이상</td>
+                            </tr>
+                            <tr>
+                                <td>이익잉여금</td>
+                                <td>축적된 순이익</td>
+                                <td class="good">자본의 50% 이상</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="financial-table">
+                    <div class="table-header">손익계산서 핵심 항목</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>의미</th>
+                                <th>우량 기업 기준</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>매출액</td>
+                                <td>총 판매금액</td>
+                                <td class="good">3년 연속 성장</td>
+                            </tr>
+                            <tr>
+                                <td>매출원가</td>
+                                <td>상품 생산/구매 비용</td>
+                                <td class="good">매출액의 60% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>매출총이익</td>
+                                <td>매출액 - 매출원가</td>
+                                <td class="good">30% 이상</td>
+                            </tr>
+                            <tr>
+                                <td>판매관리비</td>
+                                <td>운영 경비</td>
+                                <td class="good">매출액의 15% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>영업이익</td>
+                                <td>매출총이익 - 판관비</td>
+                                <td class="good">10% 이상</td>
+                            </tr>
+                            <tr>
+                                <td>이자비용</td>
+                                <td>빚에 대한 이자</td>
+                                <td class="good">영업이익의 20% 이하</td>
+                            </tr>
+                            <tr>
+                                <td>당기순이익</td>
+                                <td>최종 순수익</td>
+                                <td class="good">5% 이상</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <h4><i class="fas fa-check-circle"></i> 건강한 기업의 재무제표 특징</h4>
+                <p>1. 현금이 풍부하고 부채가 적음<br>
+                2. 매출채권과 재고자산이 적정 수준<br>
+                3. 영업이익률이 10% 이상으로 안정적<br>
+                4. 이익잉여금이 꾸준히 증가<br>
+                5. 부채비율이 100% 미만<br>
+                6. 3년 이상 연속해서 매출과 이익이 성장</p>
+            </div>
+        </div>
+        
+        <div class="quote">
+            "위험은 자신이 무엇을 하고 있는지 모를 때 발생한다." - 워런 버핏
+        </div>
+        
+        <footer>
+            <h3>초보자를 위한 재무제표 읽기</h3>
+            <p>이 자료는 주식투자 초보자를 위한 학습 목적으로 제작되었습니다. 실제 투자 결정을 위해서는 전문가의 조언을 구하시기 바랍니다.</p>
+            <p>© 2023 재무제표로 배우는 주식투자. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 카드 클릭 시 확장 애니메이션
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('expanded');
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- 섹션 1: 주식 격언 -->
+<details>
+    <summary>1. 주식 격언 (투자 명언)</summary>
+    <div>
+        <h3>유명한 투자자들의 격언</h3>
+        <ul>
+            <li><strong>워런 버핏</strong>: "두려움의 시장이 욕심의 시장을 이긴다." (시장이 두려워할 때 사고, 욕심을 부릴 때 팔아라)</li>
+            <li><strong>피터 린치</strong>: "당신이 알고 있는 것을 투자하라." (익숙한 분야에서 투자하라는 의미)</li>
+            <li><strong>벤저민 그레이엄</strong>: "투자는 지능적인 추측이 아니라 철저한 분석이다."</li>
+        </ul>
+        <p>이 격언들은 감정에 휩쓸리지 말고, 자신이 이해하는 범위 내에서 투자하며, 철저한 분석을 통해 결정하라는 교훈을 줍니다.</p>
+    </div>
+</details>
+
+<!-- 섹션 2: 업황 사이클 -->
+<details>
+    <summary>2. 업황 사이클 (산업의 주기성)</summary>
+    <div>
+        <h3>업황 사이클이란?</h3>
+        <p>업황(業況)이란 산업의 상황을 말합니다. 산업은 호황과 불황을 반복하는 주기(사이클)를 가집니다. 예를 들어, 반도체 산업은 '슈퍼 사이클'이라는 호황과 불황을 반복합니다.</p>
+        <h3>주요 산업의 사이클 예시</h3>
+        <ul>
+            <li><strong>반도체</strong>: 수요와 공급의 불균형으로 인해 가격이 오르락내리락 합니다. 호황일 때는 수익이 크지만, 불황일 때는 어려움을 겪습니다.</li>
+            <li><strong>조선</strong>: 선박 수요와 세계 무역량에 따라 주기가 결정됩니다. 호황기에는 엄청난 이익을 내지만, 불황기에는 오랜 시간 지속됩니다.</li>
+        </ul>
+        <p>투자할 때는 해당 산업이 현재 어느 주기에 있는지 파악하는 것이 중요합니다.</p>
+    </div>
+</details>
+
+<!-- 섹션 3: 재무 능력 -->
+<details>
+    <summary>3. 재무 능력 (기업의 재무적 건강 상태)</summary>
+    <div>
+        <h3>재무 능력이란?</h3>
+        <p>기업이 단기적으로는 빚을 갚고, 장기적으로는 성장할 수 있는 능력을 말합니다. 재무제표에서 아래 항목을 보면 알 수 있습니다.</p>
+        <h3>중요한 재무 비율</h3>
+        <table>
+            <tr>
+                <th>비율</th>
+                <th>계산 방법</th>
+                <th>의미</th>
+                <th>좋은 수치</th>
+            </tr>
+            <tr>
+                <td>유동비율</td>
+                <td>유동자산 ÷ 유동부채</td>
+                <td>단기 부채 갚을 능력</td>
+                <td>100% 이상 (200% 이상이면 우량)</td>
+            </tr>
+            <tr>
+                <td>당좌비율</td>
+                <td>(현금+단기투자) ÷ 유동부채</td>
+                <td>현금으로 단기 부채 갚을 능력</td>
+                <td>100% 이상</td>
+            </tr>
+            <tr>
+                <td>이자보상배율</td>
+                <td>영업이익 ÷ 이자비용</td>
+                <td>이자 갚을 능력</td>
+                <td>5배 이상</td>
+            </tr>
+        </table>
+        <p>위 비율들을 종합해서 기업의 재무 상태가 건강한지 판단합니다.</p>
+    </div>
+</details>
+
+<!-- 섹션 4: 부채 보는 법 -->
+<details>
+    <summary>4. 부채 보는 법 (기업의 부채 구조 분석)</summary>
+    <div>
+        <h3>부채의 종류</h3>
+        <ul>
+            <li><strong>유동부채</strong>: 1년 안에 갚아야 할 빚 (예: 단기대출, 미지급금)</li>
+            <li><strong>비유동부채</strong>: 1년 이후에 갚아야 할 빚 (예: 장기대출, 사채)</li>
+        </ul>
+        <h3>부채 비율</h3>
+        <p>부채비율 = (총부채 ÷ 자본) × 100</p>
+        <ul>
+            <li>100% 미만: 부채가 적은 편</li>
+            <li>100%~200%: 보통</li>
+            <li>200% 초과: 부채가 많음 (위험)</li>
+        </ul>
+        <p>하지만 산업에 따라 적정 부채비율이 다를 수 있습니다. (예: 은행은 부채비율이 높음)</p>
+        <h3>부채 구조가 건강한 기업</h3>
+        <ul>
+            <li>유동부채보다 유동자산이 많아야 함 (유동비율 100% 이상)</li>
+            <li>이자보상배율이 높아야 함 (이자비용을 여유롭게 감당)</li>
+        </ul>
+    </div>
+</details>
+
+<!-- 섹션 5: 절대 안 망할 회사와 돈이 많은 회사 -->
+<details>
+    <summary>5. 절대 안 망할 회사와 돈이 많은 회사 (우량 기업의 특징)</summary>
+    <div>
+        <h3>우량 기업의 특징</h3>
+        <ul>
+            <li><strong>많은 현금 보유</strong>: 재무상태표의 '현금 및 현금성자산' 항목이 큽니다.</li>
+            <li><strong>낮은 부채</strong>: 부채비율이 낮고, 특히 이자보상배율이 높습니다.</li>
+            <li><strong>꾸준한 수익</strong>: 손익계산서에서 매출액과 영업이익이 꾸준히 증가합니다.</li>
+            <li><strong>이익잉여금</strong>: 기업이 벌어들인 이익이 쌓여 있는 금액 (재무상태표의 자본 항목)이 큽니다.</li>
+        </ul>
+        <h3>재무제표에서 확인하는 법</h3>
+        <table>
+            <tr>
+                <th>항목</th>
+                <th>재무제표</th>
+                <th>의미</th>
+            </tr>
+            <tr>
+                <td>현금 및 현금성자산</td>
+                <td>재무상태표 (자산)</td>
+                <td>기업이 보유한 현금. 많을수록 좋음</td>
+            </tr>
+            <tr>
+                <td>부채비율</td>
+                <td>(총부채 ÷ 자본) × 100</td>
+                <td>낮을수록 부채가 적음</td>
+            </tr>
+            <tr>
+                <td>이익잉여금</td>
+                <td>재무상태표 (자본)</td>
+                <td>과거 이익이 쌓인 금액. 많을수록 좋음</td>
+            </tr>
+        </table>
+        <p>이런 기업들은 경제 위기에서도 살아남을 가능성이 높습니다.</p>
+    </div>
+</details>
