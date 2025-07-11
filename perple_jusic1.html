@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬과 주식 투자: 왕초보를 위한 따라하기 공부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .code-block {
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #4a5568;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .copy-btn:hover {
+            opacity: 1;
+        }
+        .copy-btn.copied {
+            background-color: #2f855a;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">파이썬과 주식 투자</h1>
+            <p class="text-lg text-gray-600 mt-2">왕초보를 위한 따라하기 공부 가이드</p>
+        </header>
+
+        <div id="accordion-container" class="space-y-4">
+
+            <!-- 섹션 1: 왜 파이썬인가? -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">1. 왜 파이썬으로 주식 분석을 할까요?</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">주식 투자는 데이터와의 싸움입니다. 파이썬을 이용하면 이 싸움에서 강력한 무기를 얻을 수 있습니다.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>자동화:</strong> 매일 반복해야 하는 데이터 수집, 분석 작업을 자동으로 처리하여 시간을 절약합니다.</li>
+                        <li><strong>방대한 데이터 처리:</strong> 수십 년 치의 주가 데이터도 파이썬을 이용하면 순식간에 처리하고 분석할 수 있습니다.</li>
+                        <li><strong>객관적인 분석:</strong> 감정에 휘둘리지 않고, 데이터를 기반으로 한 전략을 세우고 검증(백테스팅)할 수 있습니다.</li>
+                        <li><strong>강력한 생태계:</strong> 주식 분석에 필요한 수많은 도구(라이브러리)들이 이미 만들어져 있어, 우리는 가져다 쓰기만 하면 됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 섹션 2: 준비물 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">2. 무엇을 준비해야 할까요?</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">본격적인 분석에 앞서 컴퓨터에 몇 가지 프로그램을 설치해야 합니다.</p>
+                    <ol class="list-decimal list-inside space-y-3">
+                        <li><strong>파이썬 설치:</strong> <a href="https://www.python.org/downloads/" target="_blank" class="text-blue-500 hover:underline">공식 홈페이지</a>에서 최신 버전을 다운로드하여 설치하세요. 설치 시 'Add Python to PATH' 옵션을 꼭 체크해주세요.</li>
+                        <li><strong>코드 편집기 설치:</strong> 파이썬 코드를 작성하고 실행할 프로그램입니다. 초보자에게는 <a href="https://code.visualstudio.com/" target="_blank" class="text-blue-500 hover:underline">Visual Studio Code (VS Code)</a>를 추천합니다.</li>
+                        <li><strong>필수 라이브러리 설치:</strong> '라이브러리'는 유용한 기능들을 모아놓은 코드 묶음입니다. 컴퓨터의 '터미널' 또는 '명령 프롬프트'를 열고 아래 명령어를 한 줄씩 입력하여 설치하세요.
+                            <div class="code-block bg-gray-800 text-white p-4 rounded-lg mt-4">
+                                <button class="copy-btn">복사</button>
+                                <pre><code>pip install pandas matplotlib yfinance</code></pre>
+                            </div>
+                            <ul class="list-disc list-inside ml-6 mt-2 text-sm text-gray-600">
+                                <li><code>pandas</code>: 엑셀처럼 데이터를 표 형태로 다루는 도구</li>
+                                <li><code>matplotlib</code>: 데이터를 차트나 그래프로 그리는 도구</li>
+                                <li><code>yfinance</code>: 야후 파이낸스에서 주가 데이터를 가져오는 도구</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- 섹션 3: 실전! 주가 데이터 가져오기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">3. 실전! 주가 데이터 가져오기</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">이제 파이썬 코드로 직접 주가 데이터를 가져와 보겠습니다. VS Code에서 새 파일(예: `stock_test.py`)을 만들고 아래 코드를 붙여넣은 후 실행해보세요.</p>
+                    <p class="mb-2">여기서는 예시로 '삼성전자'의 데이터를 가져옵니다. 한국 주식은 종목코드 뒤에 <code>.KS</code>를 붙여야 합니다.</p>
+                    <div class="code-block bg-gray-800 text-white p-4 rounded-lg mt-2">
+                        <button class="copy-btn">복사</button>
+                        <pre><code># 1. 필요한 라이브러리를 불러옵니다.
+import yfinance as yf
+import pandas as pd
+
+# 2. 삼성전자(005930.KS)의 주가 데이터를 2023년부터 현재까지 가져옵니다.
+samsung_df = yf.download('005930.KS', start='2023-01-01')
+
+# 3. 데이터의 첫 5줄을 화면에 출력합니다.
+print(samsung_df.head())
+</code></pre>
+                    </div>
+                    <p class="mt-4 font-semibold">실행 결과 예시:</p>
+                    <div class="bg-gray-200 p-4 rounded-lg mt-2 text-sm overflow-x-auto">
+<pre>
+                  Open         High          Low        Close    Adj Close      Volume
+Date                                                                                   
+2023-01-02  55500.0  56100.0  55200.0  55500.0  54593.453125   10031448
+2023-01-03  55400.0  56000.0  54500.0  55400.0  54495.140625   13545752
+2023-01-04  55700.0  58000.0  55600.0  57800.0  56855.324219   20188071
+2023-01-05  58200.0  58800.0  57600.0  58200.0  57248.648438   15682723
+2023-01-06  58300.0  59400.0  57900.0  59000.0  58035.031250   17334989
+</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 섹션 4: 데이터 시각화: 차트 그리기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">4. 데이터 시각화: 차트 그리기</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">숫자만 봐서는 흐름을 알기 어렵습니다. 데이터를 차트로 그려보면 주가의 움직임을 한눈에 파악할 수 있습니다. 위 코드에 이어서 아래 코드를 추가하고 실행해보세요.</p>
+                    <div class="code-block bg-gray-800 text-white p-4 rounded-lg mt-2">
+                        <button class="copy-btn">복사</button>
+                        <pre><code># 4. 차트를 그리기 위한 라이브러리를 불러옵니다.
+import matplotlib.pyplot as plt
+
+# 5. 종가(Close) 데이터만 사용하여 차트를 그립니다.
+plt.figure(figsize=(12, 6)) # 차트 크기 설정
+plt.plot(samsung_df.index, samsung_df['Close'], label='Samsung Close Price')
+
+plt.title('Samsung Electronics Stock Price') # 차트 제목
+plt.xlabel('Date') # x축 라벨
+plt.ylabel('Price (KRW)') # y축 라벨
+plt.legend() # 범례 표시
+plt.grid(True) # 그리드 표시
+plt.show() # 차트 보여주기
+</code></pre>
+                    </div>
+                    <p class="mt-4 font-semibold">실행 결과:</p>
+                    <p class="mt-2">코드를 실행하면 삼성전자 주가 흐름이 그려진 별도의 차트 창이 나타납니다. 이를 통해 언제 주가가 오르고 내렸는지 쉽게 확인할 수 있습니다.</p>
+                    <div class="mt-4 p-4 border border-blue-200 rounded-lg bg-blue-50">
+                        <p class="font-bold">[차트 이미지 예시]</p>
+                        <p class="text-sm text-gray-600">실제 실행 시에는 삼성전자 종가 그래프가 그려진 창이 나타납니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 섹션 5: 간단한 기술적 분석: 이동평균선 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">5. 간단한 기술적 분석: 이동평균선</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">'이동평균선(Moving Average)'은 가장 기본적이면서도 중요한 기술적 분석 지표입니다. 일정 기간 동안의 주가 평균을 선으로 이은 것으로, 주가의 전반적인 추세를 파악하는 데 도움을 줍니다.</p>
+                    <p class="mb-2">예를 들어, 20일 이동평균선은 최근 20일간의 종가 평균을 계산한 값입니다. pandas를 이용하면 아주 쉽게 계산할 수 있습니다.</p>
+                    <div class="code-block bg-gray-800 text-white p-4 rounded-lg mt-2">
+                        <button class="copy-btn">복사</button>
+                        <pre><code># 6. 20일 이동평균선과 60일 이동평균선을 계산하여 새로운 열에 추가합니다.
+samsung_df['MA20'] = samsung_df['Close'].rolling(window=20).mean()
+samsung_df['MA60'] = samsung_df['Close'].rolling(window=60).mean()
+
+# 7. 주가와 이동평균선을 함께 그립니다.
+plt.figure(figsize=(12, 6))
+plt.plot(samsung_df.index, samsung_df['Close'], label='Close Price', alpha=0.7)
+plt.plot(samsung_df.index, samsung_df['MA20'], label='20-Day MA', linestyle='--')
+plt.plot(samsung_df.index, samsung_df['MA60'], label='60-Day MA', linestyle=':')
+
+plt.title('Samsung Electronics Price with Moving Averages')
+plt.xlabel('Date')
+plt.ylabel('Price (KRW)')
+plt.legend()
+plt.grid(True)
+plt.show()
+</code></pre>
+                    </div>
+                    <p class="mt-4 font-semibold">분석 팁:</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 mt-2">
+                        <li><strong>골든 크로스:</strong> 단기 이동평균선(20일)이 장기 이동평균선(60일)을 아래에서 위로 뚫고 올라가는 시점. 보통 강세 신호로 해석됩니다.</li>
+                        <li><strong>데드 크로스:</strong> 단기 이동평균선이 장기 이동평균선을 위에서 아래로 뚫고 내려가는 시점. 보통 약세 신호로 해석됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 섹션 6: 다음 단계 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-600">6. 다음 단계는 무엇일까요?</h2>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="accordion-content px-5 pb-5">
+                    <p class="mb-4">축하합니다! 파이썬으로 주식 데이터를 분석하는 첫걸음을 떼셨습니다. 이제 더 많은 것을 배울 준비가 되셨습니다.</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong>다양한 기술적 지표 공부하기:</strong> RSI, MACD, 볼린저 밴드 등 다른 보조지표를 계산하고 차트에 추가해보세요.</li>
+                        <li><strong>투자 전략 백테스팅:</strong> '골든 크로스에 매수, 데드 크로스에 매도'와 같은 간단한 전략을 만들고, 과거 데이터로 수익률이 어땠는지 검증해보세요.</li>
+                        <li><strong>여러 종목 비교 분석하기:</strong> 관심 있는 여러 종목의 데이터를 가져와 수익률, 변동성 등을 비교하는 코드를 작성해보세요.</li>
+                        <li><strong>꾸준히 학습하기:</strong> 온라인 강의, 관련 서적, 커뮤니티 등을 통해 꾸준히 파이썬과 금융 지식을 쌓아나가세요.</li>
+                    </ul>
+                    <p class="mt-4">이 가이드는 시작일 뿐입니다. 데이터 분석의 세계는 넓고 깊으며, 여러분의 투자 여정에 훌륭한 나침반이 되어줄 것입니다.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            // 첫 번째 아코디언을 기본으로 열어둡니다.
+            const firstHeader = accordionHeaders[0];
+            const firstContent = firstHeader.nextElementSibling;
+            const firstIcon = firstHeader.querySelector('svg');
+            if (firstContent) {
+                firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+                if(firstIcon) firstIcon.style.transform = 'rotate(180deg)';
+            }
+
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('svg');
+                    const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+                    // 모든 아코디언을 닫습니다.
+                    document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = '0px');
+                    document.querySelectorAll('.accordion-header svg').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                    // 클릭된 아코디언만 엽니다 (만약 닫혀 있었다면).
+                    if (!isOpen) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        if(icon) icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.stopPropagation(); // 아코디언이 닫히는 것을 방지
+                    const codeBlock = this.nextElementSibling;
+                    const code = codeBlock.innerText;
+                    
+                    // 임시 textarea를 만들어 복사
+                    const textArea = document.createElement('textarea');
+                    textArea.value = code;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        this.innerText = '복사됨!';
+                        this.classList.add('copied');
+                    } catch (err) {
+                        console.error('복사 실패:', err);
+                        this.innerText = '실패';
+                    }
+                    
+                    document.body.removeChild(textArea);
+
+                    setTimeout(() => {
+                        this.innerText = '복사';
+                        this.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
