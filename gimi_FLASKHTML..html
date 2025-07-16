@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 & 플라스크 웹 개발 완전 정복</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .content-section {
+            display: none;
+            transition: all 0.3s ease-in-out;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .code-block {
+            background-color: #2d3748; /* bg-gray-800 */
+            color: #e2e8f0; /* text-gray-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .code-block .comment {
+            color: #9ca3af; /* text-gray-400 */
+        }
+        .code-block .keyword {
+            color: #63b3ed; /* text-blue-400 */
+        }
+        .code-block .string {
+            color: #a3bf99; /* Like a green */
+        }
+        .code-block .function {
+            color: #e5c07b; /* Like a yellow */
+        }
+        .command {
+            background-color: #1a202c;
+            color: #a0aec0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .highlight {
+            background-color: #fefcbf; /* bg-yellow-100 */
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.25rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">파이썬 & 플라스크 웹 개발 입문</h1>
+            <p class="text-lg text-gray-600 mt-4">왕초보를 위한 가장 쉬운 웹 개발 가이드</p>
+        </header>
+
+        <div id="accordion-container" class="space-y-4">
+            <!-- 1. 파이썬이란? -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-blue-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">1. 파이썬(Python)이란 무엇일까요?</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        파이썬은 <strong class="text-blue-600">컴퓨터와 대화하기 위한 매우 쉬운 언어</strong>라고 생각하면 됩니다. 마치 우리가 사람과 한국어로 대화하듯, 컴퓨터에게 파이썬이라는 언어로 명령을 내리는 것이죠.
+                    </p>
+                    <p class="mb-4">
+                        레고 블록에 비유해볼까요? 파이썬은 다양한 모양의 레고 블록과 같습니다. 이 블록들을 조립해서 자동차, 집, 로봇 등 원하는 것은 무엇이든 만들 수 있죠. 파이썬으로도 간단한 계산기부터 복잡한 인공지능까지 정말 다양한 프로그램을 만들 수 있습니다.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 bg-blue-50 p-4 rounded-lg">
+                        <li><strong>문법이 쉬워요:</strong> 영어와 비슷해서 배우기 쉽고 코드가 간결합니다.</li>
+                        <li><strong>활용 분야가 넓어요:</strong> 웹 개발, 데이터 분석, 인공지능, 게임 등 못하는 게 거의 없어요.</li>
+                        <li><strong>'배터리 포함':</strong> 유용한 기능들이 기본적으로 많이 포함되어 있어 바로 사용할 수 있습니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. 플라스크란? -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-green-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">2. 플라스크(Flask)란 무엇일까요?</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        플라스크는 <strong class="text-green-600">파이썬으로 웹사이트를 만들 수 있게 도와주는 특별한 도구 상자</strong>입니다.
+                    </p>
+                    <p class="mb-4">
+                        다시 레고 비유를 들어볼게요. 파이썬이 레고 블록이라면, 플라스크는 '웹사이트 만들기 전용 레고 키트'와 같습니다. 이 키트 안에는 웹사이트의 뼈대를 만들고, 인터넷 주소(URL)에 따라 다른 페이지를 보여주는 등 웹 개발에 꼭 필요한 부품들이 들어있습니다.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 bg-green-50 p-4 rounded-lg">
+                        <li><strong>가볍고 유연해요:</strong> 꼭 필요한 핵심 기능만 있어서 시작하기 쉽습니다. 필요한 기능은 레고 블록처럼 하나씩 추가하면 됩니다.</li>
+                        <li><strong>'마이크로' 프레임워크:</strong> '마이크로'라는 말은 기능이 없다는 뜻이 아니라, 여러분이 원하는 대로 자유롭게 만들 수 있다는 의미입니다.</li>
+                        <li><strong>확장성이 좋아요:</strong> 작은 웹사이트부터 큰 서비스까지 모두 만들 수 있습니다.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 3. 파이썬과 플라스크의 관계 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-purple-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">3. 파이썬과 플라스크는 어떤 관계인가요?</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        아주 간단합니다. <strong class="text-purple-600">플라스크는 파이썬으로 만들어진 도구</strong>입니다. 따라서 플라스크를 사용하려면 반드시 파이썬이 설치되어 있어야 합니다.
+                    </p>
+                    <p class="mb-4">
+                        우리는 <span class="highlight">파이썬 언어</span>를 사용해서 <span class="highlight">플라스크라는 도구</span>에게 "이 주소로 접속하면 이 페이지를 보여줘" 라고 명령을 내리는 것입니다.
+                    </p>
+                    <div class="bg-purple-50 p-4 rounded-lg text-center">
+                        <strong>파이썬 (언어)</strong>  ➡️  <strong>플라스크 (도구)</strong>  ➡️  <strong>웹사이트 (결과물)</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 설치 및 웹 만들기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-red-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">4. 파이썬과 플라스크 설치하고 웹 만들어보기</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <h3 class="text-lg font-semibold mb-2">1단계: 파이썬 설치하기</h3>
+                    <p class="mb-4">
+                        먼저 컴퓨터에 파이썬을 설치해야 합니다. <a href="https://www.python.org/downloads/" target="_blank" class="text-blue-600 hover:underline font-bold">공식 홈페이지</a>에서 최신 버전을 다운로드하세요. 설치할 때 <strong class="text-red-600">"Add Python to PATH"</strong> 체크박스를 꼭! 클릭해주세요.
+                    </p>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-2">2단계: 플라스크 설치하기</h3>
+                    <p class="mb-4">
+                        Windows에서는 '명령 프롬프트(cmd)'나 'PowerShell'을, Mac에서는 '터미널'을 열고 아래 명령어를 입력하세요. <code class="command">pip</code>는 파이썬의 앱스토어 같은 역할을 합니다.
+                    </p>
+                    <pre class="code-block"><span class="command">pip install Flask</span></pre>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-2">3단계: 세상에서 가장 간단한 웹 앱 만들기</h3>
+                    <p class="mb-4">
+                        원하는 곳에 폴더를 하나 만들고, 그 안에 <code class="command">app.py</code> 라는 이름으로 파일을 만드세요. 그리고 아래 코드를 그대로 복사해서 붙여넣으세요.
+                    </p>
+                    <pre class="code-block">
+<span class="comment"># 1. 플라스크 도구를 가져옵니다.</span>
+<span class="keyword">from</span> flask <span class="keyword">import</span> Flask
+
+<span class="comment"># 2. 플라스크를 이용해 웹 앱을 만듭니다.</span>
+app = Flask(__name__)
+
+<span class="comment"># 3. 특정 주소(URL)로 접속하면 실행될 함수를 지정합니다.</span>
+@app.route('/')
+<span class="keyword">def</span> <span class="function">hello_world</span>():
+    <span class="keyword">return</span> <span class="string">'Hello, World! 제 첫 웹사이트에 오신 것을 환영합니다!'</span>
+
+<span class="comment"># 4. 이 파이썬 파일을 직접 실행하면 웹 서버를 가동합니다.</span>
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    app.run(debug=True)
+                    </pre>
+                    
+                    <h3 class="text-lg font-semibold mt-6 mb-2">4단계: 웹 서버 실행하기</h3>
+                    <p class="mb-4">
+                        터미널에서 <code class="command">app.py</code> 파일이 있는 폴더로 이동한 후, 아래 명령어를 실행하세요.
+                    </p>
+                    <pre class="code-block"><span class="command">python app.py</span></pre>
+                    <p class="mt-4">
+                        터미널에 <code class="command">Running on http://127.0.0.1:5000/</code> 와 같은 메시지가 나타나면 성공입니다! 이제 웹 브라우저를 열고 주소창에 <a href="http://127.0.0.1:5000" target="_blank" class="text-blue-600 hover:underline font-bold">http://127.0.0.1:5000</a> 을 입력해보세요. 화면에 "Hello, World!..." 메시지가 보일 겁니다.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. HTML과 연동하기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-orange-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">5. 기본 HTML 만들고 웹에 표시하기</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        단순한 글자 대신, 진짜 웹페이지처럼 꾸미려면 HTML 파일이 필요합니다.
+                    </p>
+                    <h3 class="text-lg font-semibold mb-2">1단계: `templates` 폴더 만들기</h3>
+                    <p class="mb-4">
+                        <code class="command">app.py</code> 파일이 있는 곳에 <code class="command">templates</code> 라는 이름의 폴더를 만드세요. 플라스크는 이 폴더 안에서 HTML 파일을 찾습니다.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold mt-6 mb-2">2단계: `index.html` 파일 만들기</h3>
+                    <p class="mb-4">
+                        방금 만든 <code class="command">templates</code> 폴더 안에 <code class="command">index.html</code> 파일을 만들고 아래 내용을 붙여넣으세요.
+                    </p>
+                    <pre class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;나의 첫 웹페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;플라스크와 HTML의 만남!&lt;/h1&gt;
+    &lt;p&gt;파이썬 코드가 이 HTML 파일을 불러왔어요.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                    </pre>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-2">3단계: `app.py` 수정하기</h3>
+                    <p class="mb-4">
+                        이제 파이썬 코드가 HTML 파일을 불러오도록 <code class="command">app.py</code>를 수정합시다.
+                    </p>
+                    <pre class="code-block">
+<span class="comment"># render_template 라는 도구를 추가로 가져옵니다. HTML 파일을 불러오는 역할을 합니다.</span>
+<span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+<span class="keyword">def</span> <span class="function">home</span>():
+    <span class="comment"># 'Hello World' 대신 index.html 파일을 화면에 보여줍니다.</span>
+    <span class="keyword">return</span> render_template('index.html')
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    app.run(debug=True)
+                    </pre>
+                    <p class="mt-4">
+                        서버를 껐다가(<kbd>Ctrl</kbd>+<kbd>C</kbd>) 다시 켜고(<code class="command">python app.py</code>) 브라우저를 새로고침하면, 방금 만든 HTML 페이지가 나타날 겁니다!
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6. API 활용하기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-teal-500 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">6. API를 이용해 최신 뉴스 보여주기</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        API는 '데이터를 배달해주는 웨이터' 같은 것입니다. 우리는 API를 통해 다른 서비스(뉴스, 주식, 날씨 등)의 데이터를 우리 웹사이트에 가져와 보여줄 수 있습니다.
+                    </p>
+                    <h3 class="text-lg font-semibold mb-2">1단계: `requests` 라이브러리 설치</h3>
+                    <p class="mb-4">
+                        API에 데이터를 요청하려면 `requests` 라는 도구가 필요합니다. 터미널에 아래 명령어를 입력해 설치하세요.
+                    </p>
+                    <pre class="code-block"><span class="command">pip install requests</span></pre>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-2">2단계: `app.py`에서 뉴스 데이터 가져오기</h3>
+                    <p class="mb-4">
+                        여기서는 실제 API 키가 필요 없는 간단한 예제용 뉴스 데이터를 사용하겠습니다. <code class="command">app.py</code>를 아래와 같이 수정하세요.
+                    </p>
+                    <pre class="code-block">
+<span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template
+<span class="keyword">import</span> requests <span class="comment"># requests 라이브러리 가져오기</span>
+
+app = Flask(__name__)
+
+@app.route('/news')
+<span class="keyword">def</span> <span class="function">get_news</span>():
+    <span class="comment"># 예제: IT 분야 최신 뉴스 API (실제 API는 주소가 다를 수 있습니다)</span>
+    <span class="comment"># 여기서는 간단한 실습을 위해 미리 준비된 JSON 데이터를 사용합니다.</span>
+    dummy_news_data = {
+        "articles": [
+            {"title": "파이썬, 2025년 가장 인기있는 언어로 선정", "content": "파이썬의 쉬운 문법과 강력한 라이브러리가 인기 비결입니다."},
+            {"title": "플라스크 3.0 출시, 비동기 지원 강화", "content": "더 빠르고 효율적인 웹 개발이 가능해졌습니다."},
+            {"title": "API 경제, 개발자에게 새로운 기회 제공", "content": "다양한 서비스의 데이터를 조합하여 혁신적인 앱을 만들 수 있습니다."}
+        ]
+    }
+    articles = dummy_news_data["articles"]
+    
+    <span class="comment"># news.html 파일에 'articles'라는 이름으로 뉴스 데이터를 전달합니다.</span>
+    <span class="keyword">return</span> render_template('news.html', articles=articles)
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    app.run(debug=True)
+                    </pre>
+
+                    <h3 class="text-lg font-semibold mt-6 mb-2">3단계: `news.html` 만들기</h3>
+                    <p class="mb-4">
+                        <code class="command">templates</code> 폴더에 <code class="command">news.html</code> 파일을 만들고, 파이썬에서 받은 뉴스 데이터를 표시하도록 코드를 작성합니다.
+                    </p>
+                    <pre class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;최신 IT 뉴스&lt;/title&gt;
+    &lt;style&gt;
+        body { font-family: sans-serif; margin: 2em; }
+        .article { border: 1px solid #ccc; padding: 1em; margin-bottom: 1em; border-radius: 5px; }
+        h2 { color: #2c3e50; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;오늘의 최신 IT 뉴스&lt;/h1&gt;
+    
+    <span class="comment">&lt;!-- 파이썬에서 받은 articles 데이터를 반복해서 보여줍니다. --&gt;</span>
+    <span class="keyword">{% for</span> article <span class="keyword">in</span> articles <span class="keyword">%}</span>
+    &lt;div class="article"&gt;
+        &lt;h2&gt;{{ article.title }}&lt;/h2&gt;
+        &lt;p&gt;{{ article.content }}&lt;/p&gt;
+    &lt;/div&gt;
+    <span class="keyword">{% endfor %}</span>
+    
+&lt;/body&gt;
+&lt;/html&gt;
+                    </pre>
+                    <p class="mt-4">
+                        서버를 재시작하고, 웹 브라우저에서 <a href="http://127.0.0.1:5000/news" target="_blank" class="text-blue-600 hover:underline font-bold">http://127.0.0.1:5000/news</a> 로 접속해보세요. 우리가 준비한 가짜 뉴스 목록이 멋지게 나타날 겁니다! <strong class="text-teal-600">주식 데이터도 이와 동일한 원리로 가져와 분석하고 표시할 수 있습니다.</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 7. 인터넷에 올리기 -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-5 cursor-pointer flex justify-between items-center bg-gray-600 text-white rounded-t-lg">
+                    <h2 class="text-xl font-bold">7. 내 웹사이트를 인터넷에 올리는 법 (배포)</h2>
+                    <span class="text-2xl font-bold transform transition-transform duration-300">+</span>
+                </div>
+                <div class="content-section p-6 border-t border-gray-200">
+                    <p class="mb-4">
+                        지금까지 만든 웹사이트는 내 컴퓨터에서만 접속할 수 있습니다. 친구들에게 자랑하려면 인터넷 세상에 공개해야겠죠? 이 과정을 '배포'라고 합니다. 초보자가 가장 쉽게 배포할 수 있는 방법 몇 가지를 소개합니다.
+                    </p>
+                    <ul class="list-disc list-inside space-y-4 bg-gray-50 p-4 rounded-lg">
+                        <li>
+                            <strong>PythonAnywhere:</strong> 파이썬 웹 앱을 위한 가장 쉬운 호스팅 서비스 중 하나입니다. 무료 플랜으로 간단한 플라스크 앱을 몇 번의 클릭만으로 배포할 수 있습니다.
+                        </li>
+                        <li>
+                            <strong>Render:</strong> 최근 인기를 얻고 있는 클라우드 서비스로, 무료 플랜을 제공하며 GitHub 계정과 연동하여 코드를 올리면 자동으로 배포해주는 기능이 매우 편리합니다.
+                        </li>
+                        <li>
+                            <strong>Vercel / Netlify (정적 사이트용):</strong> 만약 파이썬 백엔드 없이 순수 HTML, CSS, JavaScript로만 만든 '정적 사이트'라면 이 서비스들이 최고입니다. 파일을 드래그 앤 드롭하는 것만으로 배포가 끝납니다.
+                        </li>
+                    </ul>
+                    <p class="mt-4">
+                        이러한 서비스들은 대부분 자세한 가이드를 제공하므로, "Render Flask deploy" 와 같이 검색하여 차근차근 따라 해보는 것을 추천합니다.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('span');
+
+                    // Close all other sections
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== this) {
+                            otherHeader.nextElementSibling.style.maxHeight = null;
+                            otherHeader.nextElementSibling.classList.remove('active');
+                            otherHeader.querySelector('span').textContent = '+';
+                            otherHeader.querySelector('span').classList.remove('rotate-45');
+                        }
+                    });
+
+                    // Toggle current section
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        content.classList.remove('active');
+                        icon.textContent = '+';
+                        icon.classList.remove('rotate-45');
+                    } else {
+                        content.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.textContent = '+';
+                        icon.classList.add('rotate-45');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
