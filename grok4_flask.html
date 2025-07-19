@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask와 Python 가이드</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .section { margin-bottom: 20px; }
+        .title { cursor: pointer; background-color: #f0f0f0; padding: 10px; border: 1px solid #ccc; }
+        .content { display: none; padding: 10px; border: 1px solid #ccc; border-top: none; }
+    </style>
+    <script>
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Flask와 Python 완전 초보자 가이드</h1>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content1')">1. Flask와 Python의 개념</div>
+        <div id="content1" class="content">
+            <p><strong>Python 개념:</strong> Python은 Guido van Rossum에 의해 개발된 고급 프로그래밍 언어로, 간결하고 읽기 쉬운 문법을 가지고 있습니다. 데이터 분석, 웹 개발, 자동화, 인공지능 등 다양한 분야에서 사용됩니다.</p>
+            <p><strong>Flask 개념:</strong> Flask는 Python의 마이크로 웹 프레임워크로, 웹 애플리케이션을 빠르게 구축할 수 있게 해줍니다. Django처럼 풀스택이 아닌, 최소한의 기능으로 유연성이 높습니다. RESTful 웹 서비스나 간단한 웹 사이트를 만들 때 유용합니다.</p>
+        </div>
+    </div>
+    
+<div class="section">
+        <div class="title" onclick="toggleContent('content2')">1. Flask와 Python의 좋은 점과 단점</div>
+        <div id="content2" class="content">
+            <p><strong>좋은 점:</strong></p>
+            <ul>
+                <li>Python: 배우기 쉽고, 방대한 라이브러리(예: NumPy, Pandas), 크로스-플랫폼 지원.</li>
+                <li>Flask: 가볍고 빠름, 유연하여 필요에 따라 확장 가능, 최소 코드로 웹 앱 개발 가능.</li>
+            </ul>
+            <p><strong>단점:</strong></p>
+            <ul>
+                <li>Python: 속도가 느림 (C++보다), GIL로 인해 멀티스레딩 제한.</li>
+                <li>Flask: 기본 기능이 적어 (Django에 비해), 보안이나 ORM 같은 내장 기능이 없어 직접 구현해야 함.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content3')">3. 왜 Flask와 Python을 사용하는지, 무슨 용도인지</div>
+        <div id="content3" class="content">
+            <p><strong>왜 왜 사용하나요?</strong> Python은 코드가 간단하고 생산성이 높아 초보자부터 전문가까지 널리 사용됩니다. Flask는 Python의 장점을 살려 웹 개발을 쉽게 만들어줍니다. 빠른 프로토타이핑과 API 개발에 적합합니다.</p>
+            <p><strong>용도:</strong> 웹 서버 구축, REST API, 데이터 처리 앱, IoT, 데이터 사이언스 도구, 주식 분석 앱 등. 예를 들어, Python으로 데이터 분석을 하고 Flask로 웹 인터페이스를 만들어 결과를 공유할 수 있습니다.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content4')">4. Python에서 Flask 사용법 (왕초보 따라하기)</div>
+        <div id="content4" class="content">
+            <p><strong>단계별 따라하기:</strong></p>
+            <ol>
+                <li>Python 설치: python.org에서 다운로드하고 설치하세요.</li>
+                <li>Flask 설치: 명령 프롬프트에서 <code>pip install flask</code> 입력.</li>
+                <li>간단한 앱 만들기: 새 파일 app.py를 만들고 아래 코드 작성:</li>
+                <pre><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return "Hello, World!"
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre>
+                <li>실행: <code>python app.py</code> 입력. 브라우저에서 http://127.0.0.1:5000/ 에 방문하세요.</li>
+            </ol>
+            <p>이게 기본! 에러가 나면 콘솔 확인하세요.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content5')">5. Flask 이용 Python에서 HTML 만들기 (완전 초보 따라하기)</div>
+        <div id="content5" class="content">
+            <p><strong>단계별 따라하기:</strong></p>
+            <ol>
+                <li>templates 폴더 만들기 (app.py와 같은 디렉토리).</li>
+                <li>templates 안에 index.html 파일 만들기: <code>&lt;h1&gt;Hello from Flask!&lt;/h1&gt;</code></li>
+                <li>app.py 수정:
+<pre><code>from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre></li>
+                <li>실행하고 브라우저에서 확인하세요. Jinja2로 동적 HTML: {{ variable }} 사용 가능.</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content6')">6. Flask와 Python으로 주식 API 주식정보 투자 분석 (왕초보 따라하기)</div>
+        <div id="content6" class="content">
+            <p><strong>주의: API 키 필요 (Alpha Vantage 등에서 무료 키 얻기. pip install yfinance 또는 requests.</strong></p>
+            <ol>
+                <li>yfinance 설치: <code>pip install yfinance</code></li>
+                <li>app.py에 추가:
+<pre><code>import yfinance as yf
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/stock/&lt;ticker&gt;')
+def get_stock(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    return render_template('stock.html', data=info)
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre></li>
+                <li>templates/stock.html: <code>&lt;h1&gt;{{ data['longName'] }}&lt;/h1&gt;&lt;p&gt;Price: {{ data['currentPrice'] }}&lt;/p&gt;</code></li>
+                <li>실행 후 http://127.0.0.1:5000/stock/AAPL 방문. 분석: Pandas로 데이터 처리, Matplotlib으로 차트.</li>
+                <li>투자 분석: 역사 데이터 가져와 평균 계산, 예: stock.history(period='1y').close.mean() 등. 투자 조심!</li>
+            </ol>
+            <p>이걸로 주식 정보 표시. 더 자세히: yfinance API 문서 공부하세요.</p>
+        </div>
+    </div>
+
+</body>
+</html>
