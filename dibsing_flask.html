@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask와 Python 종합 학습 가이드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #3498db;
+        }
+        
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        header p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 25px 0;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        
+        .logo i {
+            font-size: 6rem;
+            color: #2c3e50;
+        }
+        
+        .python-logo i {
+            color: #306998;
+        }
+        
+        .flask-logo i {
+            color: #000;
+        }
+        
+        .nav-container {
+            background: #2c3e50;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        nav button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        nav button.active {
+            background: #e74c3c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .content {
+            padding: 40px;
+            min-height: 600px;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        h3 {
+            color: #3498db;
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #f0f0f0;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            border-color: #3498db;
+        }
+        
+        .card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card h4 i {
+            color: #e74c3c;
+        }
+        
+        .pros-cons {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .pros, .cons {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .pros {
+            background: rgba(46, 204, 113, 0.15);
+            border: 2px solid #2ecc71;
+        }
+        
+        .cons {
+            background: rgba(231, 76, 60, 0.15);
+            border: 2px solid #e74c3c;
+        }
+        
+        .pros h3, .cons h3 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .pros ul, .cons ul {
+            padding-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .pros li, .cons li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin: 25px 0;
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+        
+        .code-comment {
+            color: #7f8c8d;
+        }
+        
+        .code-keyword {
+            color: #3498db;
+        }
+        
+        .code-function {
+            color: #f1c40f;
+        }
+        
+        .code-string {
+            color: #2ecc71;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .step-number {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .stock-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .stock-form {
+            background: #ecf0f1;
+            padding: 25px;
+            border-radius: 15px;
+        }
+        
+        .stock-form input, .stock-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .stock-form button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .stock-form button:hover {
+            background: #2980b9;
+        }
+        
+        .stock-info {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .stock-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+        
+        .stock-change {
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+        
+        .chart-container {
+            margin-top: 30px;
+            height: 300px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #2c3e50;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .stock-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .pros-cons {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-code"></i> Flask와 Python 종합 학습 가이드</h1>
+            <p>웹 개발부터 주식 분석까지, 한 페이지에서 모두 배우는 Flask & Python 마스터 클래스</p>
+            
+            <div class="logo-container">
+                <div class="logo python-logo">
+                    <i class="fab fa-python"></i>
+                </div>
+                <div class="logo flask-logo">
+                    <i class="fas fa-flask"></i>
+                </div>
+            </div>
+        </header>
+        
+        <div class="nav-container">
+            <nav>
+                <button class="nav-btn active" data-target="concept">개념</button>
+                <button class="nav-btn" data-target="pros-cons">장단점</button>
+                <button class="nav-btn" data-target="usage">사용용도</button>
+                <button class="nav-btn" data-target="tutorial">왕초보 따라하기</button>
+                <button class="nav-btn" data-target="html-guide">HTML 만들기</button>
+                <button class="nav-btn" data-target="multi-page">다중 페이지</button>
+                <button class="nav-btn" data-target="stock">주식 API 분석</button>
+            </nav>
+        </div>
+        
+        <div class="content">
+            <!-- 개념 섹션 -->
+            <div class="section active" id="concept">
+                <h2><i class="fas fa-lightbulb"></i> Flask와 Python 기본 개념</h2>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <h4><i class="fab fa-python"></i> Python이란?</h4>
+                        <p>Python은 1991년에 발표된 고급 프로그래밍 언어로, 가독성이 높고 간결한 문법이 특징입니다. 데이터 분석, 인공지능, 웹 개발 등 다양한 분야에서 널리 사용됩니다.</p>
+                        <p>초보자부터 전문가까지 모두가 사용할 수 있으며, 방대한 라이브러리 생태계를 자랑합니다.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4><i class="fas fa-flask"></i> Flask란?</h4>
+                        <p>Flask는 Python으로 작성된 마이크로 웹 프레임워크입니다. '마이크로'라는 이름은 핵심 기능만을 제공함으로써 가볍고 유연한 개발 환경을 제공한다는 의미입니다.</p>
+                        <p>Flask는 작은 프로젝트부터 복잡한 웹 애플리케이션까지 다양한 규모의 개발에 적합합니다.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4><i class="fas fa-handshake"></i> Flask와 Python의 관계</h4>
+                        <p>Flask는 Python으로 작성되었으며, Python의 강력한 기능을 웹 개발에 활용할 수 있게 해줍니다.</p>
+                        <p>Python으로 비즈니스 로직을 작성하고, Flask는 이를 웹 인터페이스로 노출시키는 역할을 합니다. 이 조합은 빠른 프로토타이핑과 유연한 개발을 가능하게 합니다.</p>
+                    </div>
+                </div>
+                
+                <h3>Flask의 핵심 개념</h3>
+                <ul>
+                    <li><strong>라우팅(Routing)</strong>: URL을 Python 함수에 매핑하는 기능</li>
+                    <li><strong>템플릿(Templates)</strong>: HTML을 동적으로 생성하는 시스템</li>
+                    <li><strong>요청(Request) 처리</strong>: 사용자 입력 및 데이터 처리</li>
+                    <li><strong>응답(Response) 생성</strong>: 웹 브라우저에 반환할 결과 생성</li>
+                    <li><strong>미들웨어(Middleware)</strong>: 요청 처리 전후에 실행되는 기능</li>
+                </ul>
+            </div>
+            
+            <!-- 장단점 섹션 -->
+            <div class="section" id="pros-cons">
+                <h2><i class="fas fa-balance-scale"></i> Flask와 Python의 장단점</h2>
+                
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3><i class="fas fa-thumbs-up"></i> 장점</h3>
+                        <ul>
+                            <li><strong>간결하고 가벼움</strong>: 작은 코드로도 웹 서버 구축 가능</li>
+                            <li><strong>유연한 확장성</strong>: 필요한 기능만 선택해 추가 가능</li>
+                            <li><strong>파이썬 생태계 활용</strong>: 데이터 분석, 머신러닝 등 다양한 라이브러리 통합</li>
+                            <li><strong>빠른 개발 속도</strong>: 프로토타입 제작과 테스트에 적합</li>
+                            <li><strong>쉬운 학습 곡선</strong>: 초보자도 쉽게 배울 수 있음</li>
+                            <li><strong>풍부한 문서화</strong>: 공식 문서와 커뮤니티 자료가 풍부</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="cons">
+                        <h3><i class="fas fa-thumbs-down"></i> 단점</h3>
+                        <ul>
+                            <li><strong>대규모 프로젝트 제한</strong>: Django에 비해 확장성이 낮음</li>
+                            <li><strong>기본 기능 부족</strong>: 많은 기능을 직접 구현하거나 확장 필요</li>
+                            <li><strong>비동기 처리</strong>: 기본적으로 비동기 지원이 약함</li>
+                            <li><strong>보안 기능</strong>: 기본 보안 기능이 Django보다 부족</li>
+                            <li><strong>성능 한계</strong>: 매우 높은 트래픽에는 적합하지 않을 수 있음</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Flask vs Django</h3>
+                <p>Flask와 Django는 Python의 대표적인 웹 프레임워크입니다. Django는 "배터리 포함" 철학으로 모든 기능을 제공하는 반면, Flask는 최소한의 기능을 제공하고 개발자가 필요한 부분만 선택해 사용합니다.</p>
+                <p>Flask는 작은 프로젝트나 마이크로서비스에, Django는 대규모 엔터프라이즈 애플리케이션에 적합합니다.</p>
+            </div>
+            
+            <!-- 사용용도 섹션 -->
+            <div class="section" id="usage">
+                <h2><i class="fas fa-tasks"></i> Flask와 Python의 사용 용도</h2>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <h4><i class="fas fa-rocket"></i> 웹 API 서버</h4>
+                        <p>Flask는 RESTful API 구축에 매우 적합합니다. 간단한 설정으로 JSON 기반의 API를 빠르게 개발할 수 있습니다.</p>
+                        <p>데이터베이스와 연동하여 CRUD(Create, Read, Update, Delete) 기능을 구현하기 용이합니다.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4><i class="fas fa-chart-line"></i> 데이터 대시보드</h4>
+                        <p>Python의 데이터 분석 라이브러리(pandas, matplotlib)와 Flask를 결합하면 실시간 데이터 시각화 대시보드를 만들 수 있습니다.</p>
+                        <p>주식 분석, 비즈니스 인텔리전스, IoT 데이터 모니터링 등에 활용됩니다.</p>
+                    </div>
+                    
+                    <div class="card">
+                        <h4><i class="fas fa-microchip"></i> 마이크로서비스</h4>
+                        <p>경량인 Flask는 마이크로서비스 아키텍처에 적합합니다. 각 서비스를 독립적으로 개발하고 배포할 수 있습니다.</p>
+                        <p>서비스 간 통신은 REST API나 메시지 큐를 통해 이루어집니다.</p>
+                    </div>
+                </div>
+                
+                <h3>Flask의 실제 활용 사례</h3>
+                <ul>
+                    <li><strong>Netflix</strong>: 콘텐츠 전송 네트워크 관리 도구</li>
+                    <li><strong>Airbnb</strong>: 내부 도구 및 마이크로서비스</li>
+                    <li><strong>Uber</strong>: 배달 예측 및 분석 도구</li>
+                    <li><strong>Lyft</strong>: 지리공간 데이터 처리</li>
+                    <li><strong>Reddit</strong>: 초기 버전 개발</li>
+                </ul>
+            </div>
+            
+            <!-- 왕초보 따라하기 섹션 -->
+            <div class="section" id="tutorial">
+                <h2><i class="fas fa-laptop-code"></i> 왕초보 Flask 따라하기</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>설치하기</h3>
+                        <p>Python이 설치되어 있다면, 터미널에서 다음 명령어로 Flask를 설치합니다:</p>
+                        <div class="code-block">
+                            <span class="code-comment"># Flask 설치 명령어</span><br>
+                            <span class="code-keyword">pip install</span> flask
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>기본 앱 생성</h3>
+                        <p><code>app.py</code> 파일을 생성하고 다음 코드를 입력합니다:</p>
+                        <div class="code-block">
+                            <span class="code-keyword">from</span> flask <span class="code-keyword">import</span> Flask<br>
+                            <br>
+                            app = Flask(<span class="code-string">__name__</span>)<br>
+                            <br>
+                            <span class="code-comment"># 홈페이지 라우트</span><br>
+                            @app.route(<span class="code-string">'/'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">home</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"안녕하세요! Flask 첫 페이지입니다!"</span><br>
+                            <br>
+                            <span class="code-keyword">if</span> <span class="code-string">__name__</span> == <span class="code-string">'__main__'</span>:<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;app.run(debug=<span class="code-keyword">True</span>)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>애플리케이션 실행</h3>
+                        <p>터미널에서 다음 명령어로 애플리케이션을 실행합니다:</p>
+                        <div class="code-block">
+                            <span class="code-comment"># 애플리케이션 실행</span><br>
+                            python app.py
+                        </div>
+                        <p>브라우저에서 <code>http://localhost:5000</code> 주소로 접속하면 결과를 확인할 수 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h3>라우트 추가하기</h3>
+                        <p>새로운 페이지를 추가하려면 다음과 같이 라우트를 추가합니다:</p>
+                        <div class="code-block">
+                            <span class="code-comment"># 정보 페이지 추가</span><br>
+                            @app.route(<span class="code-string">'/info'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">info</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"이것은 정보 페이지입니다."</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- HTML 만들기 섹션 -->
+            <div class="section" id="html-guide">
+                <h2><i class="fab fa-html5"></i> Flask에서 HTML 템플릿 사용하기</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>폴더 구조 생성</h3>
+                        <p>프로젝트에 다음과 같은 폴더 구조를 생성합니다:</p>
+                        <div class="code-block">
+                            project/<br>
+                            ├── app.py<br>
+                            └── templates/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;└── index.html
+                        </div>
+                        <p><code>templates</code> 폴더가 Flask에서 HTML 템플릿을 찾는 기본 위치입니다.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>HTML 파일 생성</h3>
+                        <p><code>templates/index.html</code> 파일을 생성하고 기본 HTML 구조를 작성합니다:</p>
+                        <div class="code-block">
+                            &lt;!DOCTYPE html&gt;<br>
+                            &lt;html&gt;<br>
+                            &lt;head&gt;<br>
+                            &nbsp;&nbsp;&lt;title&gt;나의 첫 Flask 페이지&lt;/title&gt;<br>
+                            &lt;/head&gt;<br>
+                            &lt;body&gt;<br>
+                            &nbsp;&nbsp;&lt;h1&gt;환영합니다!&lt;/h1&gt;<br>
+                            &nbsp;&nbsp;&lt;p&gt;이 페이지는 Flask로 만들었어요.&lt;/p&gt;<br>
+                            &lt;/body&gt;<br>
+                            &lt;/html&gt;
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>Flask에서 HTML 렌더링</h3>
+                        <p><code>app.py</code>를 수정하여 HTML 템플릿을 렌더링합니다:</p>
+                        <div class="code-block">
+                            <span class="code-keyword">from</span> flask <span class="code-keyword">import</span> Flask, render_template<br><br>
+                            
+                            app = Flask(<span class="code-string">__name__</span>)<br><br>
+                            
+                            @app.route(<span class="code-string">'/'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">home</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'index.html'</span>)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h3>동적 데이터 전달</h3>
+                        <p>Python에서 HTML로 데이터를 전달할 수 있습니다:</p>
+                        <div class="code-block">
+                            @app.route(<span class="code-string">'/'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">home</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;message = <span class="code-string">"Flask에서 보낸 메시지"</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'index.html'</span>, message=message)
+                        </div>
+                        <p>HTML에서는 다음과 같이 데이터를 사용합니다:</p>
+                        <div class="code-block">
+                            &lt;body&gt;<br>
+                            &nbsp;&nbsp;&lt;h1&gt;{{ message }}&lt;/h1&gt;<br>
+                            &lt;/body&gt;
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 다중 페이지 섹션 -->
+            <div class="section" id="multi-page">
+                <h2><i class="fas fa-sitemap"></i> 다중 페이지 웹사이트 만들기</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>라우트 추가</h3>
+                        <p>여러 페이지를 위한 라우트를 추가합니다:</p>
+                        <div class="code-block">
+                            <span class="code-comment"># 메인 페이지</span><br>
+                            @app.route(<span class="code-string">'/'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">home</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'index.html'</span>)<br><br>
+                            
+                            <span class="code-comment"># Flask 소개 페이지</span><br>
+                            @app.route(<span class="code-string">'/flask'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">flask_intro</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'flask.html'</span>)<br><br>
+                            
+                            <span class="code-comment"># Python 소개 페이지</span><br>
+                            @app.route(<span class="code-string">'/python'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">python_intro</span>():<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'python.html'</span>)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>템플릿 상속</h3>
+                        <p>공통 레이아웃을 위한 <code>base.html</code> 생성:</p>
+                        <div class="code-block">
+                            &lt;!DOCTYPE html&gt;<br>
+                            &lt;html&gt;<br>
+                            &lt;head&gt;<br>
+                            &nbsp;&nbsp;&lt;title&gt;{% block title %}{% endblock %}&lt;/title&gt;<br>
+                            &lt;/head&gt;<br>
+                            &lt;body&gt;<br>
+                            &nbsp;&nbsp;&lt;nav&gt;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="/"&gt;홈&lt;/a&gt;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="/flask"&gt;Flask&lt;/a&gt;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&lt;a href="/python"&gt;Python&lt;/a&gt;<br>
+                            &nbsp;&nbsp;&lt;/nav&gt;<br>
+                            <br>
+                            &nbsp;&nbsp;{% block content %}{% endblock %}<br>
+                            <br>
+                            &lt;footer&gt;© 2023 내 웹사이트&lt;/footer&gt;<br>
+                            &lt;/body&gt;<br>
+                            &lt;/html&gt;
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>페이지별 템플릿 생성</h3>
+                        <p><code>flask.html</code> 예시:</p>
+                        <div class="code-block">
+                            {% extends "base.html" %}<br><br>
+                            
+                            {% block title %}Flask 소개{% endblock %}<br><br>
+                            
+                            {% block content %}<br>
+                            &nbsp;&nbsp;&lt;h1&gt;Flask란?&lt;/h1&gt;<br>
+                            &nbsp;&nbsp;&lt;p&gt;Flask는 Python 웹 프레임워크입니다.&lt;/p&gt;<br>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h3>동적 URL 파라미터</h3>
+                        <p>URL에서 파라미터를 받아 처리:</p>
+                        <div class="code-block">
+                            @app.route(<span class="code-string">'/user/&lt;username&gt;'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">show_user</span>(username):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> render_template(<span class="code-string">'user.html'</span>, name=username)
+                        </div>
+                        <p><code>user.html</code>에서 <code>{{ name }}</code>으로 사용자 이름을 표시할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주식 API 섹션 -->
+            <div class="section" id="stock">
+                <h2><i class="fas fa-chart-line"></i> Flask로 주식 API 분석하기</h2>
+                
+                <div class="stock-section">
+                    <div class="stock-form">
+                        <h3><i class="fas fa-search"></i> 주식 검색</h3>
+                        <select id="stock-select">
+                            <option value="AAPL">애플 (AAPL)</option>
+                            <option value="MSFT">마이크로소프트 (MSFT)</option>
+                            <option value="GOOGL">알파벳 (GOOGL)</option>
+                            <option value="AMZN">아마존 (AMZN)</option>
+                            <option value="TSLA">테슬라 (TSLA)</option>
+                        </select>
+                        
+                        <h3><i class="fas fa-sliders-h"></i> 분석 설정</h3>
+                        <select id="period-select">
+                            <option value="1d">1일</option>
+                            <option value="5d">5일</option>
+                            <option value="1mo">1개월</option>
+                            <option value="3mo">3개월</option>
+                            <option value="6mo">6개월</option>
+                            <option value="1y" selected>1년</option>
+                            <option value="5y">5년</option>
+                        </select>
+                        
+                        <button id="analyze-btn"><i class="fas fa-calculator"></i> 분석 시작</button>
+                    </div>
+                    
+                    <div class="stock-info">
+                        <div class="stock-header">
+                            <div>
+                                <h3 id="stock-name">애플 (AAPL)</h3>
+                                <p id="stock-fullname">Apple Inc.</p>
+                            </div>
+                            <div>
+                                <div class="stock-price" id="stock-price">$172.57</div>
+                                <div class="stock-change" id="stock-change">+2.45 (1.44%)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stock-details">
+                            <p><strong>시가총액:</strong> <span id="market-cap">2.71T</span></p>
+                            <p><strong>PER:</strong> <span id="pe-ratio">29.34</span></p>
+                            <p><strong>배당 수익률:</strong> <span id="dividend-yield">0.55%</span></p>
+                            <p><strong>52주 최고가:</strong> <span id="52-high">$198.23</span></p>
+                            <p><strong>52주 최저가:</strong> <span id="52-low">$124.17</span></p>
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="stock-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Flask에서 주식 API 구현</h3>
+                <p>Flask를 사용하여 주식 데이터를 가져오는 API를 구현하는 방법:</p>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h3>필요 라이브러리 설치</h3>
+                        <div class="code-block">
+                            pip install flask yfinance pandas
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h3>주식 데이터 엔드포인트 생성</h3>
+                        <div class="code-block">
+                            <span class="code-keyword">import</span> yfinance <span class="code-keyword">as</span> yf<br>
+                            <span class="code-keyword">from</span> flask <span class="code-keyword">import</span> jsonify<br><br>
+                            
+                            @app.route(<span class="code-string">'/stock/&lt;ticker&gt;'</span>)<br>
+                            <span class="code-keyword">def</span> <span class="code-function">get_stock_data</span>(ticker):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;stock = yf.Ticker(ticker)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 주식 정보 가져오기</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;info = stock.info<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 주가 기록 가져오기</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;history = stock.history(period=<span class="code-string">"1y"</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># JSON 형식으로 반환</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> jsonify({<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'info'</span>: info,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'history'</span>: history.reset_index().to_dict(<span class="code-string">'records'</span>)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;})
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h3>프론트엔드에서 데이터 가져오기</h3>
+                        <p>JavaScript를 사용하여 Flask API에서 데이터를 가져옵니다:</p>
+                        <div class="code-block">
+                            <span class="code-comment">// 주식 데이터 가져오기</span><br>
+                            fetch(<span class="code-string">`/stock/${ticker}`</span>)<br>
+                            &nbsp;&nbsp;.then(response => response.json())<br>
+                            &nbsp;&nbsp;.then(data => {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 데이터 처리 및 차트 생성</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;renderStockChart(data.history);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;displayStockInfo(data.info);<br>
+                            &nbsp;&nbsp;});
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Flask와 Python 종합 학습 가이드 | 초보자를 위한 웹 개발 & 주식 분석 마스터 클래스</p>
+            <p>모든 내용은 하나의 HTML 파일로 통합되었습니다. 저장 후 바로 실행 가능합니다.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 섹션 전환 기능
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // 모든 버튼과 섹션 비활성화
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // 현재 버튼 활성화
+                button.classList.add('active');
+                
+                // 대상 섹션 활성화
+                const target = button.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+                
+                // 페이지 상단으로 스크롤
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+        
+        // 주식 차트 데이터 (실제 구현에서는 Flask API에서 데이터를 가져옵니다)
+        const stockData = {
+            'AAPL': {
+                name: '애플',
+                fullName: 'Apple Inc.',
+                price: 172.57,
+                change: 2.45,
+                changePercent: 1.44,
+                marketCap: '2.71T',
+                peRatio: 29.34,
+                dividendYield: '0.55%',
+                high52: 198.23,
+                low52: 124.17,
+                history: [
+                    130.15, 132.03, 133.49, 134.76, 133.11, 133.50, 131.94, 132.04, 130.06, 131.56,
+                    133.41, 135.02, 135.53, 132.04, 133.08, 134.29, 135.43, 136.69, 137.71, 138.93,
+                    140.61, 142.92, 143.78, 144.84, 146.55, 147.11, 148.47, 149.44, 150.08, 151.03,
+                    152.25, 153.87, 155.57, 157.28, 158.93, 160.75, 162.03, 163.92, 165.32, 167.43,
+                    168.75, 170.12, 171.25, 172.57
+                ]
+            },
+            'MSFT': {
+                name: '마이크로소프트',
+                fullName: 'Microsoft Corporation',
+                price: 328.79,
+                change: -1.23,
+                changePercent: -0.37,
+                marketCap: '2.45T',
+                peRatio: 34.12,
+                dividendYield: '0.85%',
+                high52: 366.78,
+                low52: 213.43,
+                history: [
+                    240.12, 245.67, 248.31, 252.76, 249.31, 251.22, 253.76, 255.89, 257.43, 259.67,
+                    261.45, 265.78, 268.45, 270.12, 272.56, 275.43, 278.21, 281.56, 283.67, 285.43,
+                    287.56, 290.12, 292.45, 295.67, 298.56, 301.23, 304.56, 307.89, 310.12, 312.45,
+                    315.67, 318.56, 321.78, 324.12, 326.45, 328.79
+                ]
+            }
+        };
+        
+        // 주식 차트 생성
+        const ctx = document.getElementById('stock-chart').getContext('2d');
+        let stockChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: stockData.AAPL.history.length}, (_, i) => `Day ${i+1}`),
+                datasets: [{
+                    label: '주가 추이',
+                    data: stockData.AAPL.history,
+                    borderColor: '#3498db',
+                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 주식 정보 업데이트 함수
+        function updateStockInfo(ticker) {
+            const stock = stockData[ticker];
+            document.getElementById('stock-name').textContent = `${stock.name} (${ticker})`;
+            document.getElementById('stock-fullname').textContent = stock.fullName;
+            document.getElementById('stock-price').textContent = `$${stock.price.toFixed(2)}`;
+            
+            const changeSign = stock.change >= 0 ? '+' : '';
+            const changeClass = stock.change >= 0 ? 'text-success' : 'text-danger';
+            document.getElementById('stock-change').innerHTML = 
+                `<span class="${changeClass}">${changeSign}${stock.change.toFixed(2)} (${changeSign}${stock.changePercent.toFixed(2)}%)</span>`;
+            
+            document.getElementById('market-cap').textContent = stock.marketCap;
+            document.getElementById('pe-ratio').textContent = stock.peRatio;
+            document.getElementById('dividend-yield').textContent = stock.dividendYield;
+            document.getElementById('52-high').textContent = `$${stock.high52.toFixed(2)}`;
+            document.getElementById('52-low').textContent = `$${stock.low52.toFixed(2)}`;
+            
+            // 차트 업데이트
+            stockChart.data.datasets[0].data = stock.history;
+            stockChart.update();
+        }
+        
+        // 분석 버튼 이벤트
+        document.getElementById('analyze-btn').addEventListener('click', () => {
+            const ticker = document.getElementById('stock-select').value;
+            updateStockInfo(ticker);
+        });
+        
+        // 초기 주식 데이터 표시
+        updateStockInfo('AAPL');
+    </script>
+</body>
+</html>
