@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask 따라하기 (왕초보용)</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f9ff;
+      padding: 20px;
+      color: #222;
+    }
+    h1, h2 {
+      color: #0056a3;
+    }
+    .box {
+      background-color: #e0f0ff;
+      padding: 15px;
+      border-left: 6px solid #0077cc;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+    img {
+      width: 100%;
+      max-width: 600px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🐍 Flask + HTML 왕초보 따라하기</h1>
+
+  <div class="box">
+    <h2>1. Flask란 무엇인가요?</h2>
+    <p><strong>Python</strong>: 컴퓨터에게 말하는 언어예요. 아주 쉬운 문법으로 유명하죠!</p>
+    <p><strong>Flask</strong>: Python으로 만든 <u>작은 웹사이트</u>를 쉽게 만들 수 있는 도구입니다.</p>
+    <p>→ 웹페이지(HTML)를 화면에 뿅! 보여주는 역할을 해요.</p>
+  </div>
+
+  <div class="box">
+    <h2>2. Flask 코드 예시</h2>
+    <p>아래는 Flask를 이용해 HTML을 출력하는 코드입니다.</p>
+
+    <!-- 원래 이미지 -->
+    <img src="apptest_code.png" alt="Flask Python 코드 사진">
+
+    <!-- 이미지가 안 보일 때 대비: 실제 코드 출력 -->
+    <pre>
+from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return render_template_string("""
+    &lt;html&gt;
+        &lt;head&gt;&lt;title&gt;Flask + HTML&lt;/title&gt;&lt;/head&gt;
+        &lt;body style='text-align: center;'&gt;
+            &lt;h1&gt;안녕하세요!&lt;/h1&gt;
+            &lt;p&gt;Flask가 HTML을 보여주는 성공 예제입니다.&lt;/p&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+    """)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+    </pre>
+
+    <p style="font-size: 14px;">🔺 위 코드는 실제 Flask Python 예제 코드입니다.</p>
+  </div>
+
+  <div class="box">
+    <h2>3. 코드 설명 요약</h2>
+    <pre>
+1. flask에서 Flask, render_template_string 가져오기
+2. Flask 웹 앱 만들기
+3. '/' 주소에 접속하면 hello 함수 실행
+4. HTML을 문자열로 직접 만들어 반환
+5. 브라우저에서 결과 확인 가능 (http://127.0.0.1:5000)
+    </pre>
+  </div>
+
+</body>
+</html>
