@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask와 파이썬 완전초보 가이드</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body { font-family:"Noto Sans KR",sans-serif; margin:0; background: #f7fafd; color:#222;}
+        header { background: #0677eb; color:white; padding:2rem 1rem 1.3rem 1rem; text-align: center;}
+        nav { margin-bottom:2rem; }
+        nav a {
+            display: inline-block; margin: 0 1rem 0.5rem 1rem;
+            text-decoration: none; color: #ffffff; background: #145ae0;
+            padding: 9px 17px; border-radius: 4px; font-weight:700; transition:background 0.15s;}
+        nav a.selected, nav a:hover { background: #43baff; color: #fff; }
+        main { max-width: 900px; margin:2rem auto 3rem auto; background:white; padding:2.2rem 1.5rem; border-radius: 13px; box-shadow:0 2px 16px 0 rgba(0,0,30,0.07);}
+        section { margin-bottom:2.9rem;}
+        h1 { margin-bottom:1.1rem;}
+        h2 { margin:1.4rem 0 0.9rem 0; color:#198be0;}
+        h3 {color:#2475e1; margin:1.2rem 0 0.6rem 0;}
+        .desc { margin-bottom: 1.7rem; font-size:1.1em;}
+        .tag {
+            font-size:0.92em; background: #e1eefb; color:#398adb; padding: 3px 8px; border-radius: 3px; margin-right:7px;}
+        ol, ul{ margin-bottom:0.7rem;}
+        table { border-collapse:collapse; width:100%; margin:0.8rem 0;}
+        th, td{ border:1px solid #d4e7ff; padding:0.7em; text-align:left;}
+        th{background:#eaf5ff;}
+        code, pre {background: #f1f6fd; color: #023974;}
+        pre { display:block; padding:1em; border-radius:5px; margin:1.4em 0; font-size:1em;}
+        .stock-data { background: #ebf7e9; border:1px solid #c5edcf; padding:1.2em 1em; border-radius:7px; line-height:1.8;}
+        .box { background: #f6fafb; border-left:3px solid #1171c0; padding:0.8em 1.1em; border-radius:5px; margin-bottom:1.2em;}
+        .notice { color:#555b; font-size:0.98em; padding:0.3em 0 0.6em 0;}
+        @media (max-width:700px){ main{padding:0.6em 0.2em; }}
+    </style>
+    <script>
+        // SPA형식 메뉴 전환
+        document.addEventListener("DOMContentLoaded", function(){
+            // SPA 메뉴 선택 이벤트
+            const menuList = document.querySelectorAll('nav a[data-section]');
+            function swapSection(target){
+                document.querySelectorAll("section").forEach(s=>s.style.display="none");
+                document.getElementById("sec-"+target).style.display="block";
+                menuList.forEach(a=>a.classList.remove("selected"));
+                document.querySelector("a[data-section='"+target+"']").classList.add("selected");
+                window.scrollTo(0,0);
+            }
+            menuList.forEach(a=>{
+                a.onclick = function(e){
+                    e.preventDefault();
+                    swapSection(this.dataset.section);
+                }
+            });
+            swapSection('home');
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Flask와 파이썬 완전초보 실전 가이드</h1>
+        <nav>
+            <a data-section="home" class="selected">개요/비교</a>
+            <a data-section="why">왜 사용하나</a>
+            <a data-section="uses">대표용도</a>
+            <a data-section="how">Flask 사용법</a>
+            <a data-section="html">HTML 연동법</a>
+            <a data-section="stock">[예제] 주식 API/데이터</a>
+        </nav>
+    </header>
+    <main>
+        <!-- 1. Flask와 Python 개념 및 장단점 -->
+        <section id="sec-home">
+            <h2>Flask와 파이썬: 개념, 좋은점, 한계</h2>
+            <div class="desc">
+                <span class="tag">Flask</span>
+                <b>파이썬 기반의 초경량 웹 프레임워크</b>로, 웹서버, API, 대시보드, 다양한 웹서비스를 
+                <b>매우 쉽고 빠르게 개발</b>할 수 있습니다.<br>
+                <span class="tag">Python</span>
+                <b>간결하고 배우기 쉬운 언어</b>로, 웹, 데이터분석, 자동화, 인공지능, 시스템, 게임 등에서 널리 쓰입니다.
+            </div>
+            <h3>Flask vs 다른 프레임워크</h3>
+            <table>
+                <tr><th>구분</th><th>Flask</th><th>Django (참고)</th></tr>
+                <tr>
+                    <td>특징</td>
+                    <td>가볍고 빠른 개발, 최소한의 구조만 제공</td>
+                    <td>모든 기능이 내장된 대형 프레임워크</td>
+                </tr>
+                <tr>
+                    <td>장점</td>
+                    <td>
+                        - 배우기 쉽고 코딩양 적음<br>
+                        - 구조가 자유로움<br>
+                        - 확장성이 좋음 (원하는 기능만 추가)
+                    </td>
+                    <td>- 보안/관리 기능 모두 내장<br>- 대규모 서비스에 적합</td>
+                </tr>
+                <tr>
+                    <td>단점</td>
+                    <td>
+                        - 보안/관리 등 직접 구현 필요<br>
+                        - 대용량·복잡 서비스는 추가 라이브러리 필요
+                    </td>
+                    <td>- 구조가 고정적<br>- 배우기 어려울 수 있음</td>
+                </tr>
+                <tr>
+                    <td>적합한 사람</td>
+                    <td>입문자, 스타트업, 빠른 개발, 소규모 프로젝트</td>
+                    <td>대형 서비스, 강력한 인증·보안 필요 시</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 2. 왜 Flask를 쓰는가? -->
+        <section id="sec-why" style="display:none;">
+            <h2>왜 Flask, Python을 쓸까?</h2>
+            <ul>
+                <li><b>빠른 개발/테스트</b> : 10~20라인으로 동작하는 실전 웹앱 제작 가능</li>
+                <li><b>데이터, AI, 자동화 등 파이썬 생태계</b>와의 연동이 자유로워, 데이터 시각화, DB/API, AI모델과 쉽게 연결됨</li>
+                <li><b>설치 복잡성/서버 환경 부담 없음</b>: 컴퓨터, 노트북, 클라우드 어디든 바로 실행</li>
+            </ul>
+            <div class="box">
+                <b>실제 Flask가 많이 활용되는 예시:</b>
+                <ul>
+                    <li>데이터 시각화 대시보드/웹 리포트</li>
+                    <li>IoT/머신러닝 장치의 HTTP서버</li>
+                    <li>모바일·웹 API 및 간단관리페이지 제작</li>
+                    <li>스타트업, 사이드 프로젝트의 MVP</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Flask 대표 사용/용도 -->
+        <section id="sec-uses" style="display:none;">
+            <h2>Flask, Python 어디에 쓰이나?</h2>
+            <ul>
+                <li>단일/실험용 웹사이트, 블로그, 포트폴리오</li>
+                <li>데이터 수집, 크롤링, EDA(탐색) 결과 웹에 표출</li>
+                <li>REST API, JSON 응답 서버, 실시간 알림 시스템</li>
+                <li>AI inference 서버(챗봇, 이미지분석 등)</li>
+            </ul>
+            <div class="desc"><b>HTML, CSS, JS</b> 등과 함께 <b>동적 웹앱</b> 제작을 지원합니다.</div>
+        </section>
+
+        <!-- 4. Flask 기본 사용법(왕초보) -->
+        <section id="sec-how" style="display:none;">
+            <h2>Flask 설치와 "Hello, Flask!" 따라하기</h2>
+            <ol>
+                <li><b>설치:</b> <code>pip install flask</code> (커맨드창/터미널에 입력)</li>
+                <li><b>최소 예제 코드(app.py):</b></li>
+            </ol>
+<pre><code class="language-python">from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def home():
+    return '&lt;h1&gt;Hello, Flask!&lt;/h1&gt;'
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+            <ol start="3">
+                <li>
+                    <b>실행:</b>
+                    <code>python app.py</code><br>
+                    실행 후 <b>localhost:5000</b><br>
+                    주소에 접속하면 <b>Hello, Flask!</b>
+                </li>
+            </ol>
+            <b class="notice">웹페이지 내용은 직접 HTML로 반환하거나, 템플릿 파일에서 불러올 수 있음 (아래 참고)</b>
+        </section>
+
+        <!-- 5. Flask에서 HTML 파일 연동/템플릿 사용법 -->
+        <section id="sec-html" style="display:none;">
+            <h2>Flask에 HTML 직접 연결 - 동적 템플릿 엔진 Jinja2</h2>
+            <ul>
+                <li><b>HTML 템플릿</b>을 <code>/templates/</code> 폴더에 보관</li>
+                <li>파이썬에서 <code>render_template('파일.html')</code> 호출시 해당 HTML 반환</li>
+            </ul>
+<pre><code class="language-python">from flask import Flask, render_template
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return render_template('sample.html', name='홍길동')
+</code></pre>
+            <div class="box">
+                <b>템플릿 내 파이썬 변수 사용</b><br>
+                <i>아래처럼 쓰면, Flask에서 전달한 변수 직접 출력:</i><br>
+                <code>{{ name }}</code> – 변수값 출력<br>
+                <code>{% for item in list %}...{% endfor %}</code> – 파이썬 for문<br>
+                <code>{% if cond %}...{% endif %}</code> – 조건문
+            </div>
+<pre><code class="language-html">&lt;!-- sample.html 예시 --&gt;
+&lt;h1&gt;환영합니다, {{ name }} 님!&lt;/h1&gt;
+&lt;ol&gt;
+  {% for title in ["HTML", "CSS", "파이썬", "Flask"] %}
+    &lt;li&gt;{{ title }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ol&gt;
+</code></pre>
+            <ul>
+                <li><b>템플릿 상속</b> 기능으로 여러 페이지에 공통 레이아웃 사용 가능</li>
+            </ul>
+        </section>
+
+        <!-- 6. Flask + 파이썬으로 현업 주식 정보 간단 분석 예시 -->
+        <section id="sec-stock" style="display:none;">
+            <h2>실습: Flask로 주식정보 분석 서비스 (예시)</h2>
+            <div class="desc"><b>목표:</b> 예제로 가상 주식데이터를 Flask로 받아 HTML표시</div>
+            <div class="stock-data">
+                <b>코드예시(app.py):</b><br>
+<pre><code class="language-python">from flask import Flask, render_template
+app = Flask(__name__)
+@app.route('/stock')
+def stock():
+    stocks = [
+        {'종목':'삼성전자', '가격':73500, '변동':'+1.8%'},
+        {'종목':'NAVER', '가격':205000, '변동':'-0.7%'},
+        {'종목':'LG화학', '가격':412000, '변동':'+2.0%'},
+    ]
+    return render_template('stock_page.html', stocks=stocks)
+</code></pre>
+                <b>템플릿 예시(stock_page.html):</b><br>
+<pre><code class="language-html">&lt;h2&gt;가상 주식 시세표&lt;/h2&gt;
+&lt;table&gt;
+  &lt;tr&gt;&lt;th&gt;종목명&lt;/th&gt;&lt;th&gt;현재가&lt;/th&gt;&lt;th&gt;변동률&lt;/th&gt;&lt;/tr&gt;
+  {% for stock in stocks %}
+    &lt;tr&gt;
+      &lt;td&gt;{{ stock.종목 }}&lt;/td&gt;&lt;td&gt;{{ "{:,}".format(stock.가격) }}&lt;/td&gt;&lt;td&gt;{{ stock.변동 }}&lt;/td&gt;
+    &lt;/tr&gt;
+  {% endfor %}
+&lt;/table&gt;
+</code></pre>
+            </div>
+            <div class="box">
+                실제 증권 API 연동도 <b>requests</b> 라이브러리로 외부 데이터를 받아와 Flask에 전달방식으로 확장.<br>
+                <b>투자 분석로직</b>은 파이썬 함수로 구현/결과 웹에 뿌리면 됩니다.
+            </div>
+        </section>
+    </main>
+    <footer style="text-align:center; color: #aaaaaa; font-size:0.98em; margin-bottom:2em;">
+        &copy; 2025 플라스크-파이썬 가이드 | 실제 소스와 주석을 꼭 천천히 각 섹션별로 실습해보세요!
+    </footer>
+</body>
+</html>
