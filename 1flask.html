@@ -1,0 +1,104 @@
+<pre>📘 Flask 따라하기 (1~18번 코드 설명)
+
+줄 번호	코드	설명
+
+1	from flask import Flask, render_template_string	Flask에서 웹앱을 만들 도구(Flask)와 HTML 문자열을 표시하는 함수(render_template_string)를 가져와요.
+3	app = Flask(__name__)	Flask 앱을 만들어요. 이름은 현재 파일을 기준으로 자동으로 정해져요.
+5	@app.route('/')	웹사이트의 '첫 화면(홈)'을 만들겠다는 뜻이에요.
+6	def hello():	화면에 무엇을 보여줄지 정해주는 함수의 시작이에요. 이름은 hello예요.
+7	return render_template_string('''	HTML 내용을 보여주는 시작이에요. ('''는 여러 줄 문자열)
+8~14	<html>...</html>	여기에 들어가는 게 바로 **웹페이지 내용(HTML)**이에요.
+9	<head><title>Flask + HTML</title></head>	웹페이지 제목을 설정해요. 브라우저 탭에 뜨는 이름이에요.
+10	<body style="text-align: center;">	본문 시작! 가운데 정렬로 글을 보여줘요.
+11	<h1>안녕하세요!</h1>	큰 제목을 보여줘요.
+12	<p>Flask가 HTML을 보여주는 성공 예제입니다.</p>	단락으로 설명 글을 보여줘요.
+13~14	</body></html>	HTML 마무리 닫기예요.
+17	if __name__ == '__main__':	이 파일을 직접 실행하면 아래 내용을 실행해! 라는 뜻이에요.
+18	app.run(debug=True)	Flask 앱을 실행해요. debug=True는 수정할 때 편하게 오류 알려주는 모드예요.
+
+</pre>📘 Flask 따라하기 (1~18번 코드 설명)
+
+줄 번호	코드	설명
+
+1	from flask import Flask, render_template_string	Flask에서 웹앱을 만들 도구(Flask)와 HTML 문자열을 표시하는 함수(render_template_string)를 가져와요.
+3	app = Flask(__name__)	Flask 앱을 만들어요. 이름은 현재 파일을 기준으로 자동으로 정해져요.
+5	@app.route('/')	웹사이트의 '첫 화면(홈)'을 만들겠다는 뜻이에요.
+6	def hello():	화면에 무엇을 보여줄지 정해주는 함수의 시작이에요. 이름은 hello예요.
+7	return render_template_string('''	HTML 내용을 보여주는 시작이에요. ('''는 여러 줄 문자열)
+8~14	<html>...</html>	여기에 들어가는 게 바로 **웹페이지 내용(HTML)**이에요.
+9	<head><title>Flask + HTML</title></head>	웹페이지 제목을 설정해요. 브라우저 탭에 뜨는 이름이에요.
+10	<body style="text-align: center;">	본문 시작! 가운데 정렬로 글을 보여줘요.
+11	<h1>안녕하세요!</h1>	큰 제목을 보여줘요.
+12	<p>Flask가 HTML을 보여주는 성공 예제입니다.</p>	단락으로 설명 글을 보여줘요.
+13~14	</body></html>	HTML 마무리 닫기예요.
+17	if __name__ == '__main__':	이 파일을 직접 실행하면 아래 내용을 실행해! 라는 뜻이에요.
+18	app.run(debug=True)	Flask 앱을 실행해요. debug=True는 수정할 때 편하게 오류 알려주는 모드예요.</pre>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flask 배우기 따라하기</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background: #f0f8ff;
+    }
+    h1 {
+      color: #00539C;
+    }
+    pre {
+      background: #e0e0e0;
+      padding: 10px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .line {
+      margin-bottom: 8px;
+    }
+    .kindergarten {
+      background: #fff3cd;
+      padding: 10px;
+      border-left: 6px solid #ffc107;
+      margin-bottom: 15px;
+    }
+    .middle {
+      background: #d1ecf1;
+      padding: 10px;
+      border-left: 6px solid #17a2b8;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🐍 Flask + HTML 왕초보 따라하기</h1>
+
+  <div class="kindergarten">
+    <h2>유치원생 설명 🧒</h2>
+    <p>파이썬은 컴퓨터에게 말하는 언어예요.</p>
+    <p>플라스크는 파이썬으로 만든 홈페이지 도구예요.</p>
+    <p>“이렇게 보여줘~” 하면 화면에 뿅 하고 나와요!</p>
+  </div>
+
+  <div class="middle">
+    <h2>중학생 설명 🎒</h2>
+    <p>Flask는 Python으로 웹사이트를 만들 수 있게 도와주는 프레임워크입니다.</p>
+    <p>HTML은 웹사이트에 글, 제목, 버튼 등을 구성할 수 있는 마크업 언어입니다.</p>
+  </div>
+
+  <h2>📘 코드 해설 (1~18줄)</h2>
+  <pre>
+1. Flask에서 필요한 기능 가져오기
+2. Flask 앱 만들기
+3. '/' 주소에 접속하면 화면을 보여주도록 지정
+4. 함수 hello()로 HTML 내용을 만듦
+5. HTML 코드 시작 (제목, 글자, 단락 등)
+6. 웹 제목 설정: Flask + HTML
+7. <body>에 인사말과 설명글 넣기
+8. Flask 앱 실행하기 (debug=True)
+  </pre>
+
+</body>
+</html>
