@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개발자도구 링크 수정 연습</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .link-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .link-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #0066cc;
+            border-radius: 3px;
+            display: inline-block;
+            margin: 5px;
+        }
+        a:hover {
+            background-color: #0066cc;
+            color: white;
+        }
+        .instructions {
+            background-color: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>개발자도구 F12 링크 수정 연습</h1>
+    
+    <div class="instructions">
+        <h2>연습 방법:</h2>
+        <ol>
+            <li><strong>F12</strong> 키를 눌러 개발자도구를 실행하세요</li>
+            <li>왼쪽 상단의 <strong>화살표 아이콘</strong>을 클릭하세요</li>
+            <li>수정하고 싶은 링크를 클릭하여 선택하세요</li>
+            <li>Elements 패널에서 링크 텍스트를 <strong>더블클릭</strong>하여 제목을 변경하세요</li>
+            <li><strong>href 속성</strong>을 더블클릭하여 링크 주소를 변경하세요</li>
+            <li><strong>Enter</strong> 키를 눌러 변경사항을 적용하세요</li>
+        </ol>
+    </div>
+
+    <div class="link-section">
+        <h3>내비게이션 링크</h3>
+        <a href="/home">홈페이지</a>
+        <a href="/about">회사소개</a>
+        <a href="/services">서비스</a>
+        <a href="/contact">연락처</a>
+    </div>
+
+    <div class="link-section">
+        <h3>외부 사이트 링크</h3>
+        <a href="https://www.google.com">구글 검색</a>
+        <a href="https://www.naver.com">네이버</a>
+        <a href="https://github.com">GitHub</a>
+        <a href="https://stackoverflow.com">Stack Overflow</a>
+    </div>
+
+    <div class="link-section">
+        <h3>파일 다운로드 링크</h3>
+        <a href="/download/manual.pdf">사용자 매뉴얼</a>
+        <a href="/download/catalog.pdf">제품 카탈로그</a>
+        <a href="/download/report.xlsx">분석 보고서</a>
+    </div>
+
+    <div class="link-section">
+        <h3>이메일 및 전화 링크</h3>
+        <a href="mailto:info@example.com">이메일 문의</a>
+        <a href="tel:+82-2-1234-5678">전화 문의</a>
+        <a href="mailto:support@example.com">기술 지원</a>
+    </div>
+
+    <div class="instructions">
+        <h2>고급 연습:</h2>
+        <ol>
+            <li>링크에 <strong>target="_blank"</strong> 속성을 추가하여 새 창에서 열리도록 하세요</li>
+            <li><strong>우클릭 > Edit as HTML</strong>로 전체 HTML을 편집해보세요</li>
+            <li><strong>Sources > Overrides</strong>를 사용하여 변경사항을 유지해보세요</li>
+            <li>링크에 <strong>title 속성</strong>을 추가하여 마우스 오버 시 툴팁을 표시해보세요</li>
+        </ol>
+    </div>
+
+    <div class="link-section">
+        <h3>연습용 샘플 링크</h3>
+        <p>아래 링크들을 다양하게 수정해보세요:</p>
+        <a href="#section1">섹션 1</a>
+        <a href="#section2">섹션 2</a>
+        <a href="javascript:alert('Hello!')">알림 테스트</a>
+        <a href="/old-page">이전 페이지</a>
+        <a href="https://example.com">예제 사이트</a>
+    </div>
+
+    <footer style="margin-top: 50px; text-align: center; color: #666;">
+        <p>이 페이지는 개발자도구 연습용으로 제작되었습니다.</p>
+        <p>F12를 눌러 개발자도구를 열고 위의 링크들을 자유롭게 수정해보세요!</p>
+    </footer>
+</body>
+</html>
