@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주식 시장 사이클 종합 학습 가이드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1a1f36, #2c3e50, #1e3a5f);
+            color: #333;
+            line-height: 1.7;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(120deg, #2563eb, #1e40af);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #e0f2fe;
+            font-weight: 300;
+        }
+        
+        .toc-container {
+            background: #f0f9ff;
+            padding: 25px;
+            border-bottom: 2px solid #dbeafe;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .toc-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .toc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #2563eb;
+        }
+        
+        .toc-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc-card h3 i {
+            margin-right: 10px;
+            color: #3b82f6;
+        }
+        
+        .toc-card ul {
+            padding-left: 20px;
+        }
+        
+        .toc-card ul li {
+            margin-bottom: 8px;
+            list-style-type: circle;
+            color: #4b5563;
+            transition: color 0.3s;
+        }
+        
+        .toc-card ul li:hover {
+            color: #2563eb;
+        }
+        
+        .content-section {
+            padding: 35px 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dbeafe;
+        }
+        
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-header h2 i {
+            margin-right: 15px;
+            background: #dbeafe;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+        }
+        
+        .qna-container {
+            display: flex;
+            margin-bottom: 35px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .question-box {
+            flex: 0 0 250px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .answer-box {
+            flex: 1;
+            padding: 25px;
+            background: white;
+        }
+        
+        .question-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-box h3 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .question-content {
+            flex: 1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .question-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        .answer-box h4 {
+            font-size: 1.4rem;
+            color: #1e40af;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dbeafe;
+        }
+        
+        .answer-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .answer-content p {
+            margin-bottom: 15px;
+        }
+        
+        .highlight-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        th {
+            background: #3b82f6;
+            color: white;
+            font-weight: 500;
+        }
+        
+        tr:nth-child(even) {
+            background: #f0f9ff;
+        }
+        
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .strategy-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 7px 20px rgba(0,0,0,0.08);
+            border-top: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.15);
+        }
+        
+        .strategy-card h4 {
+            font-size: 1.3rem;
+            color: #1e40af;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .strategy-card h4 i {
+            margin-right: 10px;
+            color: #3b82f6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #1e40af;
+            color: white;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .qna-container {
+                flex-direction: column;
+            }
+            
+            .question-box {
+                flex: 1;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-chart-cycle"></i> 주식 시장 사이클 종합 학습 가이드</h1>
+                <p>경기 순환, 주식 시장 계절, 산업별 사이클을 한눈에 이해하는 통합 가이드</p>
+            </div>
+        </header>
+        
+        <div class="toc-container">
+            <h2 style="text-align: center; margin-bottom: 25px; color: #1e40af;">
+                <i class="fas fa-bookmark"></i> 학습 내용 목차
+            </h2>
+            <div class="toc-grid">
+                <div class="toc-card">
+                    <h3><i class="fas fa-seedling"></i> 주식시장 4계절</h3>
+                    <ul>
+                        <li>금융 장세 (봄) 특징</li>
+                        <li>실적 장세 (여름) 분석</li>
+                        <li>역금융 장세 (가을) 대응</li>
+                        <li>역실적 장세 (겨울) 전략</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-card">
+                    <h3><i class="fas fa-microchip"></i> 반도체 사이클</h3>
+                    <ul>
+                        <li>4년 주기 패턴 분석</li>
+                        <li>호황기 vs 불황기 특징</li>
+                        <li>현재 시장 위치 (2025년 7월)</li>
+                        <li>투자 타이밍 포착법</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-card">
+                    <h3><i class="fas fa-shopping-cart"></i> 소비재 사이클</h3>
+                    <ul>
+                        <li>경기소비재 vs 필수소비재</li>
+                        <li>경기 단계별 추천 종목</li>
+                        <li>역실적 장세 대비 전략</li>
+                        <li>소비 트렌드 변화 분석</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-card">
+                    <h3><i class="fas fa-industry"></i> 금융 vs 제조업</h3>
+                    <ul>
+                        <li>금융산업 사이클 특징</li>
+                        <li>제조업 사이클 패턴</li>
+                        <li>금리 영향도 비교</li>
+                        <li>경기 단계별 우위 산업</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-card">
+                    <h3><i class="fas fa-chart-line"></i> 2025년 시장 전망</h3>
+                    <ul>
+                        <li>하반기 경기 전망</li>
+                        <li>주식시장 로테이션 분석</li>
+                        <li>변동성 관리 전략</li>
+                        <li>글로벌 다각화 포트폴리오</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-card">
+                    <h3><i class="fas fa-lightbulb"></i> 투자 전략 요약</h3>
+                    <ul>
+                        <li>사이클별 포트폴리오 구성</li>
+                        <li>리밸런싱 시기 판단법</li>
+                        <li>위험 관리 기법</li>
+                        <li>장기 성공 전략</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 주식시장 4계절 분석 -->
+        <div class="content-section" id="market-seasons">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> 주식시장 4계절 분석</h2>
+            </div>
+            
+            <div class="qna-container">
+                <div class="question-box">
+                    <h3><i class="fas fa-question-circle"></i> 사용자 질문</h3>
+                    <div class="question-content">
+                        "지금 세계경기 주식계절 4계절 혹은 경기 순환으로 봤을때 무슨장세 인지 침체기 인지 경기과열 천장 과열기 거품인지"
+                    </div>
+                    <div class="question-date">2025년 7월 26일</div>
+                </div>
+                <div class="answer-box">
+                    <h4>실적 장세(여름) 후기 → 역금융 장세(가을) 전환기 분석</h4>
+                    <div class="answer-content">
+                        <p>2025년 7월 기준 현재 주식시장은 <strong>실적 장세(여름) 후기 단계</strong>로, 기업 실적 호조와 주가 상승이 지속되고 있으나 역금융 장세(가을)로의 전환 신호가 나타나고 있습니다.</p>
+                        
+                        <div class="highlight-box">
+                            <strong>주요 근거:</strong>
+                            <ul>
+                                <li>S&P 500 기업의 82%가 2분기 실적에서 시장 기대치 상회</li>
+                                <li>S&P 500은 44번째 사상 최고치 갱신 중 (2025년 6~7월)</li>
+                                <li>금리 인상(미 연준 기준금리 4.09%)으로 유동성 축소 시작</li>
+                                <li>인플레이션 잔존(2024년 9월 CPI 상승)과 기업 대출 부담 증가</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>금융 장세(봄)</th>
+                                    <th>현재 시장(실적 장세)</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>주가 동력</strong></td>
+                                    <td>정부 유동성 공급 (금리 인하)</td>
+                                    <td>기업 실적 개선 (수익 성장)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>경기 환경</strong></td>
+                                    <td>경기 침체 + 실적 악화</td>
+                                    <td>경기 확장 + 실적 호조</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>주도주</strong></td>
+                                    <td>금융주, 건설주, 유틸리티</td>
+                                    <td>기술주, 소비재, 소재주</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>위험 요인</strong></td>
+                                    <td>디플레이션 우려</td>
+                                    <td>인플레이션 과열 및 거품 논란</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <p><strong>역금융 장세(가을) 진입 예측 (2025년 말~2026년 초):</strong></p>
+                        <ul>
+                            <li>Shiller P/E Ratio 33.2: 역대 평균(16.8) 대비 2배 고평가</li>
+                            <li>7월 기관 순매도 2.3조 원 (국내 증시 기준)</li>
+                            <li>미 대선(2025.11) 및 무역 분쟁 재발 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 반도체 사이클 분석 -->
+        <div class="content-section" id="semiconductor-cycle">
+            <div class="section-header">
+                <h2><i class="fas fa-microchip"></i> 반도체 사이클 분석</h2>
+            </div>
+            
+            <div class="qna-container">
+                <div class="question-box">
+                    <h3><i class="fas fa-question-circle"></i> 사용자 질문</h3>
+                    <div class="question-content">
+                        "주식계절과 반도체 사이클, 소비제 사이클, 금융산업과 제조업 차이 등 모든 주식종목 사이클을 쉽게 알려주세요"
+                    </div>
+                    <div class="question-date">2025년 7월 26일</div>
+                </div>
+                <div class="answer-box">
+                    <h4>반도체 산업의 4년 주기 패턴과 투자 시사점</h4>
+                    <div class="answer-content">
+                        <p>반도체 산업은 <strong>호황 → 과잉공급 → 불황 → 수요 회복</strong>의 뚜렷한 4년 주기 사이클을 보입니다. 현재 2025년 7월 기준 <strong>제2 AI 붐 상승기</strong> 진입 중입니다.</p>
+                        
+                        <div class="chart-container">
+                            <canvas id="semiconductorCycleChart"></canvas>
+                        </div>
+                        
+                        <div class="strategy-grid">
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-arrow-trend-up"></i> 호황기 특징</h4>
+                                <p>AI/5G 수요 증가 → D램·낸드 가격 상승 → 삼성전자·SK하이닉스 주가 강세</p>
+                                <p><strong>투자전략:</strong> 반도체 장비주 및 메모리 반도체 중심 매수</p>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-arrow-trend-down"></i> 불황기 특징</h4>
+                                <p>재고 과다 → 가격 하락 → 주가 바닥 신호(감산 발표 시 매수 기회)</p>
+                                <p><strong>투자전략:</strong> 차별화 기술 보유 기업 저점 매수</p>
+                            </div>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <strong>저점 포착 3대 신호:</strong>
+                            <ol>
+                                <li>D램 가격 반등 + ISM 제조업 지수 50 이상 돌파</li>
+                                <li>반도체 기업 CAPEX 감소 추세 반전</li>
+                                <li>PBR 1.0 미만 진입 시 저평가 구간</li>
+                            </ol>
+                        </div>
+                        
+                        <p>2025년 삼성전자의 갤럭시 Z 시리즈 출시와 AI 수요 증가로 호실적 기대되나, 2026년 상반기 과잉공급 가능성에 유의해야 합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 소비재 사이클 분석 -->
+        <div class="content-section" id="consumer-cycle">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> 소비재 사이클 분석</h2>
+            </div>
+            
+            <div class="qna-container">
+                <div class="question-box">
+                    <h3><i class="fas fa-question-circle"></i> 사용자 질문</h3>
+                    <div class="question-content">
+                        "역실적 장세 시기 주식은 늘려야 되는지 줄여야 되는지? 어떤 주식이 좋을까?"
+                    </div>
+                    <div class="question-date">2025년 7월 26일</div>
+                </div>
+                <div class="answer-box">
+                    <h4>경기 침체기 소비재 투자 전략</h4>
+                    <div class="answer-content">
+                        <p>소비재는 경기 민감도에 따라 <strong>경기소비재(임의소비재)</strong>와 <strong>필수소비재</strong>로 구분되며, 역실적 장세(겨울)에서는 필수소비재가 안정적 수익을 제공합니다.</p>
+                        
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>경기소비재 (임의소비재)</th>
+                                    <th>필수소비재</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>특징</strong></td>
+                                    <td>경제 호황 시 수요 증가</td>
+                                    <td>경기 영향 적음</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>호황기</strong></td>
+                                    <td>전자상거래, 자동차 강세</td>
+                                    <td>안정적 성장</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>불황기</strong></td>
+                                    <td>주가 급락 위험</td>
+                                    <td>방어적 성향</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>대표 종목</strong></td>
+                                    <td>아마존, 테슬라</td>
+                                    <td>코카콜라, P&G</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <strong>역실적 장세 대비 포트폴리오 조정 방향:</strong>
+                            <ul>
+                                <li>주식 비중 축소 → 현금 비중 30%↑ 유지</li>
+                                <li>방어종목 편입 → 경기방어주(필수소비재) 집중</li>
+                                <li>고배당주 확대 → 꾸준한 배당 제공 우량주 선택</li>
+                                <li>리밸런싱 빈도 증가 → 분기별 포트폴리오 점검</li>
+                            </ul>
+                        </div>
+                        
+                        <p><strong>역실적 장세 추천 주식 유형:</strong></p>
+                        <div class="strategy-grid">
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-pills"></i> 제약 바이오</h4>
+                                <p>의약품 수요 감소 없음 (종합병원 협력 바이오 기업)</p>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-utensils"></i> 식음료</h4>
+                                <p>생필품(라면, 간편식 등) 소비 안정적</p>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-bolt"></i> 유틸리티</h4>
+                                <p>전기·가스 등 기본 인프라 수요 지속</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 2025년 하반기 전망 -->
+        <div class="content-section" id="outlook">
+            <div class="section-header">
+                <h2><i class="fas fa-binoculars"></i> 2025년 하반기 시장 전망</h2>
+            </div>
+            
+            <div class="qna-container">
+                <div class="question-box">
+                    <h3><i class="fas fa-question-circle"></i> 사용자 질문</h3>
+                    <div class="question-content">
+                        "2025년 하반기 경기 전망과 주식시장 로테이션 전략은?"
+                    </div>
+                    <div class="question-date">2025년 7월 26일</div>
+                </div>
+                <div class="answer-box">
+                    <h4>하반기 투자 환경 분석 및 전략</h4>
+                    <div class="answer-content">
+                        <p>2025년 하반기는 경기 둔화와 변동성 확대가 예상되며, <strong>섹터 로테이션</strong>이 핵심 투자 테마로 부상할 전망입니다.</p>
+                        
+                        <div class="highlight-box">
+                            <strong>하반기 3대 리스크 요인:</strong>
+                            <ol>
+                                <li>고용시장 위축 → 실업률 상승 가능성</li>
+                                <li>소비 심리 악화 → 초과저축 바닥 현상</li>
+                                <li>서비스업 성장 둔화 → 제조업 부진 상쇄력 약화</li>
+                            </ol>
+                        </div>
+                        
+                        <p><strong>주식시장 로테이션 동향:</strong></p>
+                        <ul>
+                            <li>성장주(기술) → 가치주, 순환주, 국제주로 자금 이동</li>
+                            <li>미국 내 에너지, 금융, 산업 분야 강세 (1분기 7~10% 상승)</li>
+                            <li>국제 주식 상승 (2025년 상반기 약 10% 상승)</li>
+                        </ul>
+                        
+                        <div class="strategy-grid">
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-sync-alt"></i> 로테이션 반영 재조정</h4>
+                                <p>에너지, 금융, 글로벌 주식 노출이 있는 다각화된 가치 및 국제 ETF 편입</p>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-balance-scale"></i> 성장-가치 조화</h4>
+                                <p>대형주 의존도 ↓ + 중소형주 가치주 ↑ 조합</p>
+                            </div>
+                            
+                            <div class="strategy-card">
+                                <h4><i class="fas fa-globe"></i> 글로벌 다각화</h4>
+                                <p>주식 노출의 20~30%를 유럽, 아시아, 신흥 경제권 할당</p>
+                            </div>
+                        </div>
+                        
+                        <p><strong>골드만삭스 전망:</strong> S&P500은 유동성 개선, 변동성 급감, 경기 침체 우려 완화로 7월 랠리 지속 예상. 1928년 이후 7월 평균 수익률 1.67% 기록 [citation:8].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 주식 시장 사이클 종합 학습 가이드</p>
+                <p>본 자료는 참고용으로만 활용하시기 바랍니다. 실제 투자 결정 시 전문가의 조언을 받으시기 권장합니다.</p>
+                <p>주식 투자에는 리스크가 따르므로 신중한 의사 결정이 필요합니다.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 반도체 사이클 차트
+        const ctx = document.getElementById('semiconductorCycleChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년'],
+                datasets: [{
+                    label: '반도체 산업 사이클',
+                    data: [65, 85, 95, 100, 75, 50, 60, 85],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#1e40af',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '반도체 산업의 4년 주기 패턴 (2025년 현재 8년차)',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 40,
+                        title: {
+                            display: true,
+                            text: '산업 활성도 지수'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '시간 (년)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 카드 호버 효과
+        document.querySelectorAll('.toc-card, .strategy-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.08)';
+            });
+        });
+    </script>
+</body>
+</html>
