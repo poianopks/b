@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<title>88-Key Web Piano</title>
+<style>
+  body{margin:0;background:#222;display:flex;justify-content:center;align-items:center;height:100vh}
+  #piano{position:relative;height:200px;white-space:nowrap;font-size:0}
+  .key{display:inline-block;vertical-align:top;cursor:pointer;font-size:0}
+  .white{width:24px;height:200px;border:1px solid #000;background:#fff}
+  .black{position:absolute;top:0;width:14px;height:120px;background:#000;margin-left:-7px;z-index:2}
+  .white:active, .white.active{background:#ddd}
+  .black:active, .black.active{background:#555}
+</style>
+</head>
+<body>
+<div id="piano"></div>
+
+<script>
+/* ---------- 1. 88개 키 정보 만들기 ---------- */
+const startMidi = 21;         // A0
+const endMidi   = 108;        // C8
+const keyNames  = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+
+const keys = [];
+for (let midi=startMidi; midi<=endMidi; midi++){
+    const note = keyNames[midi % 12] + Math.floor((midi+9)/12 - 1);
+    keys.push({midi, note, isBlack: note.includes('#')});
+}
+
+/* ---------- 2. AudioContext & 로딩 ---------- */
+const ctx = new (window.AudioContext||window.webkitAudioContext)();
+const audioBuffers = {};
+
+async function loadPianoSamples(){
+    // 무료 샘플 URL (C4만 예시, 실제로는 모든 음역대 필요)
+    // 여기서는 간단히 Web-Audio Oscillator로 대체 (피아노 톤)
+    return Promise.resolve();   // 실제 샘플 로딩은 여기서 처리
+}
+
+/* ---------- 3. 키보드 그리기 ---------- */
+const piano = document.getElementById('piano');
+let whiteIndex = 0;
+
+keys.forEach(k=>{
+    if(!k.isBlack){
+        const div = document.createElement('div');
+        div.className='key white';
+        div.dataset.midi = k.midi;
+        piano.appendChild(div);
+        whiteIndex++;
+    }
+});
+
+/* 블랙키는 절대 위치로 */
+whiteIndex = 0;
+keys.forEach(k=>{
+    if(!k.isBlack) whiteIndex++;
+    else{
+        const div = document.createElement('div');
+        div.className='key black';
+        div.dataset.midi = k.midi;
+        // 블랙키 위치 계산
+        div.style.left = (whiteIndex * 24 - 7) + 'px';
+        piano.appendChild(div);
+    }
+});
+
+/* ---------- 4. 소리 재생 ---------- */
+function playNote(midi, vel=0.7){
+    const freq = 440 * Math.pow(2, (midi-69)/12);
+    const osc  = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type='triangle';              // 간단한 피아노 대용
+    osc.frequency.value = freq;
+    gain.gain.value = vel;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.5);
+    osc.stop(ctx.currentTime + 1.5);
+}
+
+/* ---------- 5. 마우스 & 키보드 이벤트 ---------- */
+document.addEventListener('mousedown', e=>{
+    if(e.target.classList.contains('key')){
+        const midi = +e.target.dataset.midi;
+        playNote(midi);
+        e.target.classList.add('active');
+    }
+});
+document.addEventListener('mouseup',   e=>{
+    if(e.target.classList.contains('key'))
+        e.target.classList.remove('active');
+});
+
+/* 키보드 매핑 예: ASDFG... (가장 왼쪽 A0부터) */
+const keyMap = {}; // 실제 자판 배치는 원하는 대로 조정
+'awsedftgyhujkolp;'.split('').forEach((k,i)=>{
+    keyMap[k] = startMidi + i;
+});
+document.addEventListener('keydown', e=>{
+    if(keyMap[e.key] && !e.repeat){
+        playNote(keyMap[e.key]);
+        document.querySelector(`[data-midi="${keyMap[e.key]}"]`)?.classList.add('active');
+    }
+});
+document.addEventListener('keyup', e=>{
+    document.querySelector(`[data-midi="${keyMap[e.key]}"]`)?.classList.remove('active');
+});
+
+/* ---------- 6. 초기화 ---------- */
+loadPianoSamples();
+</script>
+</body>
+</html>
