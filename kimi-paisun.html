@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>파이썬 왕초보 30가지 + 기초 공부</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      font-family:"Noto Sans KR",sans-serif;
+      margin:0;
+      padding:20px;
+      background:#f5f7fa;
+      color:#222;
+      line-height:1.7;
+    }
+    h1,h2{color:#004e98;}
+    .box{
+      background:#fff;
+      border-left:5px solid #004e98;
+      padding:20px;
+      margin-bottom:30px;
+      border-radius:5px;
+    }
+    details{
+      margin-bottom:12px;
+      background:#fff;
+      border-left:5px solid #004e98;
+      border-radius:4px;
+    }
+    summary{
+      padding:14px 18px;
+      font-weight:bold;
+      cursor:pointer;
+      outline:none;
+    }
+    summary:hover{background:#e8f0fe;}
+    .answer{padding:0 18px 18px;}
+    code{background:#eef;padding:2px 6px;border-radius:3px;font-family:Consolas;}
+    .btn{
+      display:inline-block;
+      margin-top:15px;
+      padding:10px 20px;
+      background:#004e98;
+      color:#fff;
+      text-decoration:none;
+      border-radius:4px;
+    }
+    table{border-collapse:collapse;width:100%;margin-top:10px;}
+    th,td{border:1px solid #ccc;padding:8px;text-align:center;}
+    th{background:#eef;}
+  </style>
+</head>
+<body>
+
+  <!-- 대제목 -->
+  <h1>파이썬 왕초보 30가지 + 기초 공부</h1>
+
+  <!-- 1. 파이썬이란? 왜 배워야 하나? -->
+  <div class="box">
+    <h2>1. 파이썬이란? 왜 배워야 하나?</h2>
+    <p>
+      1991년 <strong>귀도 반 로섬</strong>이 만든 쉽고 강력한 프로그래밍 언어.<br>
+      영어처럼 읽히는 문법으로 <em>왕초보도 1주일 만에 실무</em>에 쓸 수 있습니다.
+    </p>
+    <ul>
+      <li>가장 짧은 코드로 가장 많은 일</li>
+      <li>AI, 웹, 데이터 분석, 자동화 <strong>모든 분야 1위</strong></li>
+      <li>휴대폰 앱(Pydroid)으로도 코딩 가능</li>
+    </ul>
+  </div>
+
+  <!-- 2. 활용 분야 -->
+  <div class="box">
+    <h2>2. 활용 분야 & 예시</h2>
+    <table>
+      <tr><th>분야</th><th>예시</th></tr>
+      <tr><td>주식 분석</td><td>삼성전자 주가 그래프 자동 그리기</td></tr>
+      <tr><td>뉴스 분석</td><td>네이버 뉴스 키워드 빈도 & 감성 점수</td></tr>
+      <tr><td>자동화</td><td>엑셀 다운로드 → 요약 메일 발송</td></tr>
+      <tr><td>AI/ML</td><td>챗봇 & 이미지 분류 10줄 코드</td></tr>
+    </table>
+  </div>
+
+  <!-- 3. 설치 & 다음 단계 -->
+  <div class="box">
+    <h2>3. 설치 및 다음 단계</h2>
+    <ol>
+      <li><a href="https://www.python.org/downloads/" target="_blank">Python 3.12 다운로드</a> → 설치 시 “Add to PATH” 체크</li>
+      <li>무료 에디터: <strong>VS Code</strong> 또는 <strong>PyCharm Community</strong></li>
+      <li>초보자 추천 책: “점프 투 파이썬” 1~3장 (30분)</li>
+      <li><a class="btn" href="https://colab.research.google.com/" target="_blank">▶ 구글 Colab에서 바로 실행</a> (설치 없음)</li>
+    </ol>
+  </div>
+
+  <!-- 4. 왕초보 30가지 -->
+  <h2>4. 왕초보 30가지 (클릭하면 설명)</h2>
+
+  <!-- 1~30 번 항목 -->
+  <!-- (아래는 예시 1~30번까지 동일한 패턴으로 작성) -->
+  <!-- 1 -->
+  <details><summary>1. 파이썬이란?</summary><div class="answer">1991년 귀도 반 로섬이 만든 쉽고 강력한 프로그래밍 언어. 영어처럼 읽히는 문법으로 왕초보도 1주일 만에 실무 가능.</div></details>
+  <!-- 2 -->
+  <details><summary>2. 설치 방법 (윈도우)</summary><div class="answer">1) <a href="https://www.python.org/downloads/">python.org</a> 접속 2) Python 3.12 다운 → 설치 시 “Add to PATH” 체크 3) 터미널에 <code>python</code> 입력 → 버전 나오면 성공!</div></details>
+  <!-- 3 -->
+  <details><summary>3. 첫 프로그램 “Hello, World!”</summary><div class="answer"><pre><code>print("Hello, World!")</code></pre> 저장 → <code>python hello.py</code> 실행!</div></details>
+  <!-- 4 -->
+  <details><summary>4. 변수와 타입</summary><div class="answer"><pre><code>name = "삼성"; price = 70600; per = 10.8</code></pre></div></details>
+  <!-- 5 -->
+  <details><summary>5. 숫자 연산</summary><div class="answer"><pre><code>a = 10; b = 3; print(a + b, a ** b)</code></pre></div></details>
+  <!-- 6 -->
+  <details><summary>6. 문자열 다루기</summary><div class="answer"><pre><code>msg = "삼성전자"; print(msg[0], msg[-2:])</code></pre></div></details>
+  <!-- 7 -->
+  <details><summary>7. 리스트 기초</summary><div class="answer"><pre><code>prices = [70000, 70500]; prices.append(71000)</code></pre></div></details>
+  <!-- 8 -->
+  <details><summary>8. 딕셔너리 기초</summary><div class="answer"><pre><code>samsung = {"code":"005930","price":70600}</code></pre></div></details>
+  <!-- 9 -->
+  <details><summary>9. 조건문 if</summary><div class="answer"><pre><code>if price > 70000: print("상승")</code></pre></div></details>
+  <!-- 10 -->
+  <details><summary>10. 반복문 for</summary><div class="answer"><pre><code>for p in [70000, 70500]: print(p)</code></pre></div></details>
+  <!-- 11 -->
+  <details><summary>11. while 문</summary><div class="answer"><pre><code>i = 1; while i <= 3: print(i); i += 1</code></pre></div></details>
+  <!-- 12 -->
+  <details><summary>12. 함수 만들기</summary><div class="answer"><pre><code>def add_tax(price): return price * 1.1</code></pre></div></details>
+  <!-- 13 -->
+  <details><summary>13. 패키지 설치 pip</summary><div class="answer">터미널에서 <code>pip install yfinance pandas matplotlib</code></div></details>
+  <!-- 14 -->
+  <details><summary>14. 주식 데이터 가져오기 (yfinance)</summary><div class="answer"><pre><code>import yfinance as yf; df = yf.download('005930.KS'); print(df.tail(1))</code></pre></div></details>
+  <!-- 15 -->
+  <details><summary>15. 차트 그리기</summary><div class="answer"><pre><code>import matplotlib.pyplot as plt; plt.plot(df['Close']); plt.show()</code></pre></div></details>
+  <!-- 16 -->
+  <details><summary>16. 뉴스 제목 가져오기</summary><div class="answer"><pre><code>from newspaper import Article; a=Article(url,language='ko'); a.download(); a.parse(); print(a.title)</code></pre></div></details>
+  <!-- 17 -->
+  <details><summary>17. CSV 파일 읽기/쓰기</summary><div class="answer"><pre><code>import pandas as pd; df=pd.read_csv('price.csv'); df.to_csv('result.csv')</code></pre></div></details>
+  <!-- 18 -->
+  <details><summary>18. 에러 처리 try/except</summary><div class="answer"><pre><code>try: int("삼") except ValueError: print("숫자만 입력하세요")</code></pre></div></details>
+  <!-- 19 -->
+  <details><summary>19. 날짜 다루기 (datetime)</summary><div class="answer"><pre><code>from datetime import date; print(date.today().strftime("%Y-%m-%d"))</code></pre></div></details>
+  <!-- 20 -->
+  <details><summary>20. 리스트 컴프리헨션</summary><div class="answer"><pre><code>squares=[x**2 for x in range(5)]</code></pre></div></details>
+  <!-- 21 -->
+  <details><summary>21. 람다 함수</summary><div class="answer"><pre><code>multiply=lambda x,y:x*y</code></pre></div></details>
+  <!-- 22 -->
+  <details><summary>22. enumerate, zip</summary><div class="answer"><pre><code>for idx,val in enumerate(['A','B']): print(idx,val)</code></pre></div></details>
+  <!-- 23 -->
+  <details><summary>23. set 중복 제거</summary><div class="answer"><pre><code>nums=[1,2,2,3]; print(set(nums))</code></pre></div></details>
+  <!-- 24 -->
+  <details><summary>24. JSON 읽기/쓰기</summary><div class="answer"><pre><code>import json; json.dump({"price":70600},open('s.json','w')); d=json.load(open('s.json'))</code></pre></div></details>
+  <!-- 25 -->
+  <details><summary>25. 가상환경 만들기</summary><div class="answer"><code>python -m venv venv</code><br>Windows: <code>venv\Scripts\activate</code></div></details>
+  <!-- 26 -->
+  <details><summary>26. Ternary 연산자</summary><div class="answer"><pre><code>status="상승" if 70600>70000 else "하락"</code></pre></div></details>
+  <!-- 27 -->
+  <details><summary>27. 모듈 만들기</summary><div class="answer">파일 <code>myutil.py</code>에 함수 작성 → <code>import myutil</code>로 사용</div></details>
+  <!-- 28 -->
+  <details><summary>28. logging 기초</summary><div class="answer"><pre><code>import logging; logging.basicConfig(level=logging.INFO); logging.info("시작")</code></pre></div></details>
+  <!-- 29 -->
+  <details><summary>29. Google Colab 무료 GPU</summary><div class="answer"><a href="https://colab.research.google.com/" target="_blank">colab.research.google.com</a> 접속 후 바로 실행</div></details>
+  <!-- 30 -->
+  <details><summary>30. 최소 실습 프로젝트</summary><div class="answer"><strong>삼성전자 일일 수익률 계산기</strong> → yfinance로 주가 받고 CSV 저장 후 엑셀 확인</div></details>
+
+  <footer style="text-align:center;margin-top:40px;font-size:0.9em;color:#666;">
+    본 페이지는 왕초보를 위한 통합 파이썬 가이드입니다. 자유롭게 복사·배포 가능.
+  </footer>
+</body>
+</html>
