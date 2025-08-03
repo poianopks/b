@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제미니 AI로 구글 폼 만들기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+        .step-title {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .step-title:hover {
+            background-color: #e0e7ff;
+        }
+        .step-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .step-content.active {
+            max-height: 500px; /* Adjust as needed */
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="container mx-auto p-6 bg-white rounded-2xl shadow-xl">
+        <h1 class="text-3xl font-extrabold text-blue-600 mb-2">제미니 AI로 구글 폼 만들기</h1>
+        <p class="text-gray-600 mb-8">
+            유치원생도 따라할 수 있는 아주 쉬운 가이드입니다. 제목을 클릭해서 하나씩 따라해 보세요!
+        </p>
+
+        <!-- Step 1 -->
+        <div class="mb-4">
+            <h2 id="step1-title" class="step-title flex items-center justify-between p-4 bg-indigo-50 text-indigo-800 font-bold rounded-lg shadow-md hover:bg-indigo-100 transition-colors">
+                <span>1. 구글 폼 접속하기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </h2>
+            <div id="step1-content" class="step-content p-6 mt-2 bg-gray-100 rounded-lg text-gray-700">
+                <ol class="list-decimal list-inside space-y-3 text-lg leading-relaxed">
+                    <li>컴퓨터에서 인터넷 브라우저(크롬 등)를 엽니다.</li>
+                    <li>주소창에 <strong class="font-semibold">forms.google.com</strong>을 입력하고 엔터를 누르세요.</li>
+                    <li><strong class="font-semibold">구글 계정으로 로그인</strong>이 되어 있어야 합니다. 로그인이 안 되어 있다면 먼저 로그인해 주세요.</li>
+                    <li>새 폼을 만들기 위해 <strong class="font-semibold">"빈 양식"</strong>을 클릭하세요.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="mb-4">
+            <h2 id="step2-title" class="step-title flex items-center justify-between p-4 bg-indigo-50 text-indigo-800 font-bold rounded-lg shadow-md hover:bg-indigo-100 transition-colors">
+                <span>2. 제미니 AI 기능 찾기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </h2>
+            <div id="step2-content" class="step-content p-6 mt-2 bg-gray-100 rounded-lg text-gray-700">
+                <ol class="list-decimal list-inside space-y-3 text-lg leading-relaxed">
+                    <li>새 양식을 열면 화면에 <strong class="font-semibold">"Help me create a form"</strong>이라는 창이 나타날 수 있습니다.</li>
+                    <li>만약 이 창이 안 보이면, 폼 편집 화면 상단에 있는 <strong class="font-semibold">"도와줘서 폼 만들기"</strong> 아이콘(마법 지팡이 모양)을 찾아 클릭하세요.</li>
+                    <li><strong class="font-semibold text-red-500">잠깐!</strong> 이 기능은 아직 일부 사용자에게만 제공되니, 만약 안 보이더라도 걱정하지 마세요.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="mb-4">
+            <h2 id="step3-title" class="step-title flex items-center justify-between p-4 bg-indigo-50 text-indigo-800 font-bold rounded-lg shadow-md hover:bg-indigo-100 transition-colors">
+                <span>3. 원하는 내용 말해주기 (프롬프트 작성)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </h2>
+            <div id="step3-content" class="step-content p-6 mt-2 bg-gray-100 rounded-lg text-gray-700">
+                <ol class="list-decimal list-inside space-y-3 text-lg leading-relaxed">
+                    <li>제미니 AI 창에 만들고 싶은 폼에 대해 <strong class="font-semibold">자세하게 설명</strong>해 주세요. 이걸 '프롬프트'라고 부릅니다.</li>
+                    <li>어떤 정보를 받고 싶은지, 어떤 목적인지를 구체적으로 말해주는 것이 좋아요.</li>
+                    <li>
+                        <strong class="font-semibold">예시:</strong>
+                        <ul class="list-disc list-inside ml-5 mt-2 space-y-1">
+                            <li>"새로운 서비스 판매를 위한 주문 양식을 만들어줘. 고객 이름, 연락처, 배송 주소, 주문할 서비스 목록(A, B, C), 수량, 그리고 추가 요청사항을 받을 수 있도록 해줘."</li>
+                            <li>"회사 동료들을 위한 점심 메뉴 설문조사를 만들어줘. 이름, 선호하는 메뉴(한식, 중식, 양식), 싫어하는 음식, 그리고 먹고 싶은 특별한 메뉴를 물어봐."</li>
+                        </ul>
+                    </li>
+                    <li>설명을 다 썼으면 <strong class="font-semibold">"만들기"</strong> 버튼을 클릭하세요.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="mb-4">
+            <h2 id="step4-title" class="step-title flex items-center justify-between p-4 bg-indigo-50 text-indigo-800 font-bold rounded-lg shadow-md hover:bg-indigo-100 transition-colors">
+                <span>4. AI가 만든 폼 확인하고 고치기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </h2>
+            <div id="step4-content" class="step-content p-6 mt-2 bg-gray-100 rounded-lg text-gray-700">
+                <ol class="list-decimal list-inside space-y-3 text-lg leading-relaxed">
+                    <li>제미니 AI가 만든 양식 초안이 화면에 나타납니다.</li>
+                    <li>질문 내용이나 순서가 마음에 들지 않으면 <strong class="font-semibold">직접 수정</strong>할 수 있습니다. (클릭해서 내용 바꾸기)</li>
+                    <li>완전히 새로 만들고 싶다면 다시 프롬프트를 쓰고 <strong class="font-semibold">"다시 만들기"</strong> 버튼을 누르세요.</li>
+                    <li>모두 마음에 들면 <strong class="font-semibold">"폼 만들기"</strong> 버튼을 눌러 최종 확정하세요.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Step 5 -->
+        <div class="mb-4">
+            <h2 id="step5-title" class="step-title flex items-center justify-between p-4 bg-indigo-50 text-indigo-800 font-bold rounded-lg shadow-md hover:bg-indigo-100 transition-colors">
+                <span>5. 폼 배포하고 응답 확인하기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </h2>
+            <div id="step5-content" class="step-content p-6 mt-2 bg-gray-100 rounded-lg text-gray-700">
+                <ol class="list-decimal list-inside space-y-3 text-lg leading-relaxed">
+                    <li>폼이 완성되면 오른쪽 위에 있는 <strong class="font-semibold">"보내기"</strong> 버튼을 클릭하세요.</li>
+                    <li><strong class="font-semibold">"링크"</strong> 아이콘을 클릭해서 폼 주소를 복사합니다.</li>
+                    <li>이 주소를 카톡이나 문자, 이메일로 보내면 사람들이 폼을 작성할 수 있습니다.</li>
+                    <li>사람들이 폼에 답변하면, 폼 편집 화면 상단의 <strong class="font-semibold">"응답"</strong> 탭에서 결과를 바로 볼 수 있습니다.</li>
+                    <li><strong class="font-semibold">초록색 시트 아이콘</strong>을 누르면 구글 스프레드시트로 모든 응답을 깔끔하게 정리해 볼 수 있어요.</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript to toggle content visibility
+        document.querySelectorAll('.step-title').forEach(title => {
+            title.addEventListener('click', () => {
+                const contentId = title.id.replace('title', 'content');
+                const content = document.getElementById(contentId);
+                const arrow = title.querySelector('svg');
+                
+                // Toggle the 'active' class on the content
+                content.classList.toggle('active');
+                
+                // Toggle the arrow direction
+                if (content.classList.contains('active')) {
+                    arrow.classList.add('rotate-180');
+                } else {
+                    arrow.classList.remove('rotate-180');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
