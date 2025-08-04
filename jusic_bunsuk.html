@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>나만의 AI 주식 분석기</title>
+  <style>
+    body { font-family: 'NanumBarunGothic', sans-serif; margin: 20px; }
+    .box { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>✨ 내 주식 분석 대시보드</h1>
+
+  <!-- 1. 뉴스 -->
+  <div class="box">
+    <h2>📰 최신 뉴스 (삼성전자)</h2>
+    <iframe src="news.html" width="100%" height="200"></iframe>
+  </div>
+
+  <!-- 2. 재무제표 -->
+  <div class="box">
+    <h2>📊 핵심 재무지표</h2>
+    <p id="finance">불러오는 중...</p>
+  </div>
+
+  <!-- 3. AI 요약 -->
+  <div class="box">
+    <h2>🤖 AI 투자 요약</h2>
+    <textarea id="ai" rows="4" cols="60" readonly></textarea>
+  </div>
+
+  <!-- 실시간 갱신 버튼 -->
+  <button onclick="loadAll()">🔄 새로고침</button>
+
+  <script>
+    async function loadAll() {
+      // Colab에서 생성한 JSON 파일을 GitHub에 올려두면 무료로 호출 가능
+      const res = await fetch('https://raw.githubusercontent.com/본인계정/내저장소/main/data.json');
+      const data = await res.json();
+      document.getElementById('finance').innerText = `매출: ${data.revenue} 억원`;
+      document.getElementById('ai').value = data.aiSummary;
+    }
+    loadAll();
+  </script>
+</body>
+</html>
