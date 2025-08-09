@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>할아버지를 위한 주식 투자 가이드</title>
+
+  <!-- 내부 스타일만 사용 (CDN 제거) -->
+  <style>
+    :root {
+      --primary:#1e40af;--secondary:#64748b;--accent:#dc2626;
+      --neutral:#374151;--base-100:#fff;--base-200:#f8fafc;--base-300:#e2e8f0;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI','Noto Sans KR',sans-serif}
+    body{line-height:1.7;color:var(--neutral);background:#f9fafb}
+    h1,h2,h3{font-weight:700}
+    .step-number{display:inline-flex;align-items:center;justify-content:center;
+      width:2.5rem;height:2.5rem;background:var(--primary);color:#fff;border-radius:50%;font-weight:600;margin-right:.75rem}
+    .card-hover{transition:all .3s ease}
+    .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}
+    .toc{position:fixed;left:0;top:0;width:260px;height:100vh;background:#fff;border-right:1px solid var(--base-300);overflow-y:auto;padding:2rem 1rem;z-index:1000}
+    .main-content{margin-left:260px;padding:2rem 1.5rem}
+    @media(max-width:768px){.toc{transform:translateX(-100%)}.main-content{margin-left:0}}
+    .section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--base-300),transparent);margin:4rem 0}
+    .code-block{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:1rem;font-size:.875rem;overflow-x:auto}
+    .code-block .keyword{color:#93c5fd}.code-block .string{color:#86efac}.code-block .comment{color:#94a3b8;font-style:italic}
+  </style>
+</head>
+
+<body>
+<!-- 목차 -->
+<nav class="toc">
+  <h3 class="text-lg font-bold mb-4">목차</h3>
+  <ul class="space-y-2 text-sm">
+    <li><a href="#hero" class="block text-gray-600 hover:text-blue-600">시작하기</a></li>
+    <li><a href="#section-1" class="block text-gray-600 hover:text-blue-600">1. 주식 종목 분석</a></li>
+    <li><a href="#section-2" class="block text-gray-600 hover:text-blue-600">2. 파이썬으로 분석</a></li>
+    <li><a href="#section-3" class="block text-gray-600 hover:text-blue-600">3. AI 활용</a></li>
+    <li><a href="#section-4" class="block text-gray-600 hover:text-blue-600">4. 웹사이트 만들기</a></li>
+  </ul>
+</nav>
+
+<main class="main-content">
+  <!-- Hero -->
+  <section id="hero" class="min-h-[70vh] bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col justify-center">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">할아버지도 할 수 있는<br/>주식 투자 가이드</h1>
+      <p class="text-lg text-gray-600 mb-6">주식 분석 · 파이썬 · AI · 웹사이트 제작까지 한 번에 배우기</p>
+      <div class="flex flex-wrap gap-2">
+        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">주식 분석</span>
+        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">파이썬</span>
+        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">AI 활용</span>
+        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">웹 개발</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Section 1: 주식 분석 -->
+  <section id="section-1">
+    <div class="flex items-center mb-4"><div class="step-number">1</div><h2 class="text-3xl font-bold">주식 종목 분석, 뉴스 확인하는 법</h2></div>
+    <p class="mb-8 text-gray-600">할아버지도 이해하는 쉬운 방법으로 주식 분석 기초를 배웁니다.</p>
+
+    <div class="bg-white p-6 rounded-xl border mb-6">
+      <h3 class="text-xl font-semibold mb-2">주식이 뭔지 이해하기</h3>
+      <p>주식은 <strong>회사의 작은 조각</strong>이라고 생각하세요. 예) 맛집 100조각 중 1조각을 사면 1% 주인이 됩니다.</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl border">
+      <h3 class="text-xl font-semibold mb-2">정보는 어디서?</h3>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><strong>네이버 금융</strong> – 가장 쉽게 시작</li>
+        <li><strong>증권사 앱</strong> – 실제 거래 및 공시</li>
+        <li><strong>인베스팅닷컴</strong> – 심화 차트</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Section 2: 파이썬 -->
+  <section id="section-2">
+    <div class="flex items-center mb-4"><div class="step-number">2</div><h2 class="text-3xl font-bold">파이썬으로 주식 데이터 가져오기</h2></div>
+    <div class="bg-white p-6 rounded-xl border">
+      <h3 class="text-xl font-semibold mb-2">실전 예제 – 삼성전자 1년치 주가</h3>
+      <div class="code-block">
+<span class="keyword">import</span> yfinance <span class="keyword">as</span> yf
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+
+samsung = yf.Ticker(<span class="string">"005930.KS"</span>)
+data = samsung.history(period=<span class="string">"1y"</span>)
+plt.plot(data.index, data[<span class="string">"Close"</span>])
+plt.title(<span class="string">"삼성전자 1년 주가"</span>)
+plt.savefig(<span class="string">"img/samsung-chart.png"</span>)
+      </div>
+      <p class="mt-2 text-sm text-gray-600">위 코드를 <strong>Google Colab</strong>에 복사 → ▶ 실행만 하면 차트가 저장됩니다.</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Section 3: AI 활용 -->
+  <section id="section-3">
+    <div class="flex items-center mb-4"><div class="step-number">3</div><h2 class="text-3xl font-bold">AI로 뉴스·재무제표 분석</h2></div>
+    <div class="bg-white p-6 rounded-xl border">
+      <h3 class="text-xl font-semibold mb-2">ChatGPT 프롬프트 예시</h3>
+      <div class="code-block">
+"2025년 8월 기준 삼성전자 최신 뉴스 3개를 요약하고 주가 영향이 긍정/부정인지 알려줘."
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Section 4: 웹사이트 -->
+  <section id="section-4">
+    <div class="flex items-center mb-4"><div class="step-number">4</div><h2 class="text-3xl font-bold">나만의 주식 대시보드 만들기</h2></div>
+    <div class="bg-white p-6 rounded-xl border">
+      <h3 class="text-xl font-semibold mb-2">1분 만에 HTML 파일 생성</h3>
+      <ol class="list-decimal pl-5 space-y-1">
+        <li>메모장 열기</li>
+        <li>아래 코드 붙여넣기</li>
+        <li>파일명 <code>index.html</code> 로 저장</li>
+        <li>더블클릭 → 웹 브라우저로 확인</li>
+      </ol>
+      <div class="code-block mt-4">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;&lt;title&gt;My Stock&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;할아버지의 포트폴리오&lt;/h1&gt;
+  &lt;table border="1"&gt;
+    &lt;tr&gt;&lt;th&gt;종목&lt;/th&gt;&lt;th&gt;현재가&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;삼성전자&lt;/td&gt;&lt;td&gt;75,000원&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-gray-900 text-white text-center py-8">
+    <p>할아버지도 할 수 있는 주식 투자 가이드 © 2025</p>
+  </footer>
+</main>
+
+<!-- 작은 내부 스크립트 -->
+<script>
+  // 스크롤 하이라이트
+  const sections=[...document.querySelectorAll('section[id]')];
+  window.addEventListener('scroll',()=>{
+    const cur=sections.find(s=>scrollY>=s.offsetTop-200)?.id;
+    document.querySelectorAll('.toc a').forEach(a=>{
+      a.classList.toggle('text-blue-600',a.hash==='#'+cur);
+    });
+  });
+</script>
+</body>
+</html>
