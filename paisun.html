@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 완전 기초 개념 30가지 (클릭하여 보기)</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #333; color: #fff; padding: 1rem 0; text-align: center; }
+        header h1 { margin: 0; font-size: 1.8em; }
+       .container { width: 80%; margin: 20px auto; overflow: hidden; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        footer { text-align: center; padding: 20px; background-color: #333; color: #fff; margin-top: 20px; }
+        
+        /* Interactive Accordion Styles */
+        details {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        details[open] {
+            background-color: #fff;
+        }
+        summary {
+            cursor: pointer;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            list-style: none; /* Remove default marker */
+            outline: none;
+            transition: background-color 0.2s;
+        }
+        summary:hover {
+            background-color: #efefef;
+        }
+        summary::-webkit-details-marker {
+            display: none; /* Remove default marker for Chrome/Safari */
+        }
+        summary::before {
+            content: '▶'; /* Custom marker */
+            margin-right: 10px;
+            color: #555;
+            font-size: 0.8em;
+        }
+        details[open] > summary::before {
+            content: '▼'; /* Custom marker for open state */
+        }
+       .details-content {
+            padding: 0 20px 20px 40px;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* Content Styles */
+        h3 { color: #555; margin-top: 20px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        pre { background-color: #eee; padding: 10px; border: 1px solid #ddd; border-radius: 5px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
+        code { font-family: monospace; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>파이썬 완전 기초 개념 30가지</h1>
+    </header>
+    <div class="container">
+        <p style="text-align: center; font-style: italic; color: #666; margin-bottom: 25px;">각 제목을 클릭하면 자세한 설명을 볼 수 있습니다.</p>
+        
+        <details>
+            <summary>소개</summary>
+            <div class="details-content">
+                <p>이 자료는 프로그래밍 언어 파이썬(Python)의 가장 기초적인 개념 30가지를 유치원생, 초등학생, 중학생의 눈높이에 맞춰 설명하는 학습 가이드입니다. 각 연령대에 맞춰 비유, 놀이, 간단한 예시, 코드 조각 등을 활용하여 컴퓨터 과학의 기본 원리와 파이썬의 기초 문법을 쉽고 재미있게 배울 수 있도록 구성했습니다. 순서대로 따라 하며 컴퓨팅 사고력과 파이썬 기초 실력을 키워보세요.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>1. 명령어 (Command)</summary>
+            <div class="details-content">
+                <p>컴퓨터에게 무엇을 해야 할지 알려주는 구체적인 지시입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): "이렇게 해!" 라고 말하기</h3>
+                <p><strong>비유/이야기:</strong> 엄마나 선생님이 "장난감 정리하자!", "손 씻으세요!" 라고 말하는 것처럼, 컴퓨터에게도 우리가 무엇을 원하는지 하나하나 알려줘야 해요. 이 하나하나의 지시를 '명령어'라고 불러요. 로봇 친구에게 "앞으로 한 칸 가!", "오른쪽으로 돌아!" 라고 말하는 것과 같아요.</p>
+                <p><strong>활동:</strong> '선생님 따라 하기' 놀이: 선생님이 "점프!", "박수!" 같은 명령어를 말하면 그대로 따라 해 보세요. 우리가 선생님의 명령어를 듣고 행동하는 것처럼, 컴퓨터도 우리의 명령어를 듣고 움직여요.</p>
+                <h3>초등학생 수준 (탐구와 구축): 컴퓨터에게 내리는 지시</h3>
+                <p><strong>설명:</strong> 명령어는 컴퓨터가 알아들을 수 있는 언어로 내리는 구체적인 지시 사항이에요. 예를 들어 그림을 그리게 하거나, 글자를 화면에 보여주게 하거나, 계산을 시킬 때 사용해요. [span_0](start_span)[span_0](end_span) 파이썬에서는 <code>print()</code> 같은 단어가 명령어 역할을 해요.</p>
+                <h3>중학생 수준 (코드와 창작): 실행 가능한 코드 단위</h3>
+                <p><strong>정의:</strong> 명령어(Command 또는 Statement)는 프로그래밍 언어에서 컴퓨터가 특정 작업을 수행하도록 지시하는 가장 기본적인 단위입니다. 파이썬 인터프리터가 해석하고 실행할 수 있는 코드 한 줄 또는 여러 줄이 될 수 있습니다. [span_1](start_span)[span_1](end_span)</p>
+                <pre><code># 각 줄이 하나의 명령어입니다.
+print("안녕하세요!") # 화면에 "안녕하세요!"를 출력하는 명령어
+user_name = "파이썬" # "파이썬"이라는 값을 user_name 변수에 저장하는 명령어
+level = level + 1    # level 변수의 값을 1 증가시키는 명령어</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>2. 순서 (Sequence)</summary>
+            <div class="details-content">
+                <p>명령어들이 실행되는 정해진 차례입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 차례차례 따라 하기</h3>
+                <p><strong>비유/이야기:</strong> 아침에 일어나서 하는 일들을 생각해 볼까요? '일어나기 → 세수하기 → 옷 입기 → 아침 먹기' 처럼 순서대로 하죠? 컴퓨터에게 일을 시킬 때도 어떤 일을 먼저 하고, 어떤 일을 나중에 할지 순서를 정해주는 것이 중요해요. 이것이 바로 '순서'예요. (컴퓨팅 사고력: <strong>분해, 알고리즘</strong> [span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span))</p>
+                <h3>초등학생 수준 (탐구와 구축): 정해진 순서대로 실행하기</h3>
+                <p><strong>설명:</strong> 컴퓨터는 우리가 작성한 명령어들을 위에서부터 아래로, 정해진 순서대로 하나씩 실행해요. 만약 순서가 틀리면 컴퓨터는 엉뚱한 행동을 하거나 오류를 일으킬 수 있어요. [span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 코드 실행 흐름</h3>
+                <p><strong>정의:</strong> 순차 구조(Sequence)는 프로그램의 명령문(Statement)들이 작성된 순서대로 위에서 아래로 실행되는 가장 기본적인 제어 흐름입니다. 특별한 제어문(조건문, 반복문)이 없는 한, 코드는 순서대로 실행됩니다. [span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)</p>
+                <pre><code># 이 코드는 위에서 아래로 순서대로 실행됩니다.
+print("먼저 인사를 할게요.")
+print("안녕하세요!")
+print("다음으로 2 + 2를 계산할게요.")
+result = 2 + 2
+print("결과는:")
+print(result)</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>3. 파이썬이란? (What is Python?)</summary>
+            <div class="details-content">
+                <p>사람들이 컴퓨터 프로그램을 만들기 위해 사용하는 인기 있는 프로그래밍 언어 중 하나입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 컴퓨터랑 이야기하는 특별한 말</h3>
+                <p><strong>비유/이야기:</strong> 우리가 친구들과 이야기할 때 한국말을 쓰는 것처럼, 컴퓨터랑 이야기할 때는 특별한 말이 필요해요. '파이썬'은 컴퓨터가 알아들을 수 있는 특별한 말(언어) 중 하나예요. 이 말로 컴퓨터에게 그림을 그리게 하거나 재미있는 소리를 내게 할 수 있어요.</p>
+                <h3>초등학생 수준 (탐구와 구축): 무언가를 만드는 도구</h3>
+                <p><strong>설명:</strong> 파이썬은 사람들이 컴퓨터 프로그램, 게임, 웹사이트, 로봇 등을 만드는 데 사용하는 인기 있는 도구(프로그래밍 언어)예요. [span_14](start_span)[span_14](end_span)[span_16](start_span)[span_16](end_span) 영어를 닮아서 배우기 쉽고 [span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span), 많은 사람들이 사용하고 있어요.</p>
+                <h3>중학생 수준 (코드와 창작): 고수준 인터프리터 언어</h3>
+                <p><strong>정의:</strong> 파이썬은 귀도 반 로섬(Guido van Rossum)이 개발한 고수준(high-level), 인터프리터(interpreted), 범용(general-purpose) 프로그래밍 언어입니다. [span_15](start_span)[span_15](end_span)[span_17](start_span)[span_17](end_span) '고수준'은 사람이 이해하기 쉬운 문법을 가졌다는 의미이고, '인터프리터'는 코드를 한 줄씩 바로 실행한다는 의미입니다.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>4. 데이터/정보 (Data/Information)</summary>
+            <div class="details-content">
+                <p>컴퓨터가 다루는 숫자, 글자, 참/거짓과 같은 정보의 종류입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 여러 가지 종류의 물건들</h3>
+                <p><strong>비유/이야기:</strong> 장난감 상자에 여러 종류의 장난감(블록, 인형, 자동차)이 있거나, 접시에 여러 종류의 음식(과일, 채소, 과자)이 있는 것처럼, 컴퓨터도 여러 종류의 정보를 다뤄요. 숫자 정보, 글자 정보, '맞다/틀리다' 같은 생각 정보가 있어요. (컴퓨팅 사고력: <strong>데이터 표현</strong>)</p>
+                <h3>초등학생 수준 (탐구와 구축): 숫자, 글자, 그리고 참/거짓</h3>
+                <p><strong>설명:</strong> 컴퓨터는 여러 종류의 정보, 즉 '데이터 타입(data type)'을 저장하고 사용해요. 가장 기본적인 종류는 숫자(나이, 점수 등), 글자/단어(이름, 메시지 등, '문자열'이라고 불러요), 그리고 '참' 또는 '거짓'으로 답하는 것('불리언'이라고 불러요, 예를 들어 게임이 끝났는지 아닌지)이에요. [span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 데이터 타입 (int, float, str, bool)</h3>
+                <p><strong>정의:</strong> 데이터 타입은 변수에 저장될 데이터의 종류를 명시하며, 해당 데이터로 수행할 수 있는 연산을 결정합니다. 파이썬의 기본 데이터 타입으로는 정수(<code>int</code>), 실수(<code>float</code>), 문자열(<code>str</code>), 불리언(<code>bool</code>) 등이 있습니다. [span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span)[span_29](start_span)[span_29](end_span)</p>
+                <pre><code>score = 100        # int (정수)
+price = 19.99      # float (실수)
+message = "Game Over" # str (문자열)
+active = False     # bool (불리언)
+print(type(score))   # &lt;class 'int'&gt; 출력
+print(type(message)) # &lt;class 'str'&gt; 출력</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>5. 변수 (Variables)</summary>
+            <div class="details-content">
+                <p>데이터(정보)를 저장하는 상자에 붙인 이름표입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 이름표 붙은 상자</h3>
+                <p><strong>비유/이야기:</strong> 장난감 정리함에 '블록', '자동차', '인형'이라고 이름표를 붙여두면 안에 무엇이 들었는지 쉽게 알 수 있죠? 프로그래밍에서도 정보를 담아두는 상자에 이름표를 붙여 사용해요. 이 이름표를 '변수'라고 불러요. (컴퓨팅 사고력: <strong>표현/추상화</strong> [span_30](start_span)[span_30](end_span)[span_31](start_span)[span_31](end_span)[span_32](start_span)[span_32](end_span))</p>
+                <h3>초등학생 수준 (탐구와 구축): 정보에 이름 붙이기</h3>
+                <p><strong>설명:</strong> 변수는 정보를 저장하는 이름표가 붙은 상자와 같아요. 상자 안에 숫자나 글자 같은 정보를 넣고, 나중에 필요할 때 이름표(변수 이름)를 불러서 사용해요. 상자 안의 내용물(값)은 바뀔 수 있어요(그래서 '변'수라고 해요). [span_33](start_span)[span_33](end_span)[span_34](start_span)[span_34](end_span)[span_35](start_span)[span_35](end_span)[span_36](start_span)[span_36](end_span)[span_37](start_span)[span_37](end_span)[span_38](start_span)[span_38](end_span)[span_39](start_span)[span_39](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 데이터 저장 및 참조</h3>
+                <p><strong>정의:</strong> 변수(Variable)는 데이터를 저장하기 위해 컴퓨터 메모리 공간에 할당된 이름입니다. 변수에 저장된 값은 프로그램 실행 중에 변경될 수 있습니다. 의미 있는 변수 이름을 사용하는 것이 코드 가독성에 중요합니다. [span_40](start_span)[span_40](end_span)</p>
+                <pre><code>player_name = "Hero"  # 문자열 "Hero"를 player_name 변수에 저장
+health = 100          # 숫자 100을 health 변수에 저장
+# 플레이어가 데미지를 입음
+health = health - 10  # health 변수의 값을 10 감소시켜 다시 저장
+print(health)         # 출력: 90</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>6. 출력 (Printing / Output)</summary>
+            <div class="details-content">
+                <p>컴퓨터가 우리에게 결과를 보여주는 방법입니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 내가 만든 것 보여주기</h3>
+                <p><strong>비유/이야기:</strong> 내가 그린 그림을 친구에게 보여주거나, 만든 블록 작품을 자랑하거나, 장난감이 소리를 내는 것처럼, 컴퓨터도 자기가 계산한 결과나 메시지를 우리에게 보여줘요. 이것을 '출력'이라고 해요.</p>
+                <h3>초등학생 수준 (탐구와 구축): 화면에 글자 나타내기</h3>
+                <p><strong>설명:</strong> <code>print()</code> 명령어는 글자나 변수에 저장된 값을 화면에 나타나게 해서 우리가 볼 수 있도록 해주는 방법이에요. [span_41](start_span)[span_41](end_span)[span_42](start_span)[span_42](end_span)[span_43](start_span)[span_43](end_span)[span_44](start_span)[span_44](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>print()</code> 함수</h3>
+                <p><strong>정의:</strong> <code>print()</code> 함수는 파이썬에 내장된(built-in) 함수로, 괄호 안의 내용(텍스트, 숫자, 변수 값 등)을 콘솔(터미널) 화면에 출력하는 데 사용됩니다.</p>
+                <pre><code>name = "탐험가"
+level = 5
+print(f"플레이어: {name} - 레벨: {level}") # f-string 사용</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>7. 주석 (Comments)</summary>
+            <div class="details-content">
+                <p>코드에 대한 설명을 적어두는 메모로, 컴퓨터는 무시합니다.</p>
+                <h3>유치원 수준 (놀이와 생각): 그림 뒤에 숨겨둔 비밀 메모</h3>
+                <p><strong>비유/이야기:</strong> 내가 그린 그림 뒷면에 나만 보거나 엄마 아빠에게만 보여줄 비밀 메모를 적는다고 생각해 보세요. 코드 속의 '주석'도 이와 같이 컴퓨터는 읽지 않고 사람만 읽는 메모예요.</p>
+                <h3>초등학생 수준 (탐구와 구축): 코드 설명하기</h3>
+                <p><strong>설명:</strong> 주석은 코드 안에 써넣는 설명글이에요. 컴퓨터는 주석을 무시하고 그냥 지나가요. 주석은 사람이 코드를 읽을 때 '이 코드는 이런 일을 하는구나' 하고 이해하기 쉽게 도와주는 역할을 해요. [span_45](start_span)[span_45](end_span)[span_46](start_span)[span_46](end_span)[span_47](start_span)[span_47](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 코드 문서화 및 설명</h3>
+                <p><strong>정의:</strong> 주석(Comment)은 소스 코드 내에 포함된 설명문으로, 코드의 가독성을 높이고, 복잡한 로직을 설명하거나, 특정 코드 부분을 임시로 비활성화(주석 처리)하는 등의 목적으로 사용됩니다. 인터프리터는 주석 부분을 실행하지 않습니다.</p>
+                <pre><code># 사각형의 넓이를 계산합니다.
+length = 10
+width = 5
+area = length * width # 넓이 계산 공식</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>8. 기본 수학 연산자 (+, -, *, /)</summary>
+            <div class="details-content">
+                <p>더하기, 빼기, 곱하기, 나누기 같은 기본적인 계산을 하는 기호입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 컴퓨터 계산기</h3>
+                <p><strong>설명:</strong> 파이썬은 계산기처럼 수학 계산을 할 수 있어요. 더하기는 <code>+</code>, 빼기는 <code>-</code>, 곱하기는 <code>*</code>, 나누기는 <code>/</code> 기호(연산자라고 불러요)를 사용해요. [span_48](start_span)[span_48](end_span)[span_49](start_span)[span_49](end_span)[span_50](start_span)[span_50](end_span)[span_51](start_span)[span_51](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 산술 연산자</h3>
+                <p><strong>정의:</strong> 산술 연산자(Arithmetic Operator)는 숫자 데이터에 대해 기본적인 수학 연산을 수행하는 기호입니다. 추가적으로 <code>//</code>(정수 나눗셈 - 몫), <code>%</code>(나머지 연산), <code>**</code>(거듭제곱) 등도 자주 사용됩니다. [span_52](start_span)[span_52](end_span)[span_54](start_span)[span_54](end_span)</p>
+                <pre><code>print(10 / 3)  # 3.333... (실수 나눗셈)
+print(10 // 3) # 3 (정수 나눗셈)
+print(10 % 3)  # 1 (나머지)
+print(2 ** 3)  # 8 (2의 3제곱)</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>9. 문자열 (Strings)</summary>
+            <div class="details-content">
+                <p>컴퓨터가 다루는 글자나 단어, 문장과 같은 텍스트 데이터입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 컴퓨터가 쓰는 글자</h3>
+                <p><strong>설명:</strong> 파이썬에서 글자나 단어, 문장 같은 텍스트는 '문자열(string)'이라고 불러요. 문자열을 만들 때는 꼭 따옴표(<code>"</code> 또는 <code>'</code>)로 감싸줘야 파이썬이 '아, 이건 글자구나!' 하고 알아봐요. [span_56](start_span)[span_56](end_span)[span_57](start_span)[span_57](end_span)[span_58](start_span)[span_58](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 문자열 데이터 타입 (<code>str</code>)</h3>
+                <p><strong>정의:</strong> 문자열(<code>str</code>)은 텍스트 데이터를 나타내는 데 사용되는 문자의 시퀀스(sequence)입니다. 파이썬 문자열은 불변(immutable) 객체로, 생성된 후에는 내용을 직접 변경할 수 없습니다.</p>
+                <pre><code>message = "Hello, Python!"
+print(message.upper()) # 출력: HELLO, PYTHON!
+print(len(message))    # 출력: 14 (문자열 길이)</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>10. 리스트 (Lists)</summary>
+            <div class="details-content">
+                <p>여러 개의 항목(데이터)을 순서대로 담아 놓는 바구니입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 여러 개를 담는 목록 만들기</h3>
+                <p><strong>설명:</strong> 리스트는 여러 개의 항목을 순서대로 저장할 때 사용해요. 대괄호 <code></code> 안에 항목들을 넣고, 각 항목은 쉼표 <code>,</code> 로 구분해요. [span_59](start_span)[span_59](end_span)[span_62](start_span)[span_62](end_span)[span_65](start_span)[span_65](end_span)[span_68](start_span)[span_68](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 리스트 데이터 구조 (<code>list</code>)</h3>
+                <p><strong>정의:</strong> 리스트(<code>list</code>)는 파이썬의 대표적인 시퀀스 자료형으로, 여러 개의 데이터를 순서대로 저장하는 가변(mutable) 컬렉션입니다. 요소는 인덱스(0부터 시작)를 통해 접근하고 수정할 수 있습니다.</p>
+                <pre><code>scores = [span_71](start_span)[span_71](end_span)[span_72](start_span)[span_72](end_span)[span_73](start_span)[span_73](end_span)[span_74](start_span)[span_74](end_span)
+scores.append(95)     # 리스트 끝에 95 추가
+print(scores)         # 출력: [span_75](start_span)[span_75](end_span)[span_76](start_span)[span_76](end_span)[span_77](start_span)[span_77](end_span)[span_78](start_span)[span_78](end_span)[span_79](start_span)[span_79](end_span)</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>11. 입력 (Input)</summary>
+            <div class="details-content">
+                <p>프로그램 사용자가 컴퓨터에게 정보를 주는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 사용자에게 정보 받기</h3>
+                <p><strong>설명:</strong> <code>input()</code> 명령어는 프로그램 사용자에게 질문을 하고, 사용자가 키보드로 입력한 답변을 받아오는 역할을 해요. 사용자가 입력한 내용은 항상 문자열(글자)로 받아들여져요. [span_80](start_span)[span_80](end_span)[span_81](start_span)[span_81](end_span)[span_82](start_span)[span_82](end_span)[span_83](start_span)[span_83](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>input()</code> 함수</h3>
+                <p><strong>정의:</strong> <code>input()</code> 함수는 사용자로부터 키보드 입력을 받기 위한 내장 함수입니다. 숫자 계산이 필요하면 <code>int()</code>나 <code>float()</code> 함수를 사용해 타입을 변환해야 합니다. [span_84](start_span)[span_84](end_span)[span_85](start_span)[span_85](end_span)</p>
+                <pre><code>name = input("당신의 이름은 무엇인가요? ")
+print(f"안녕하세요, {name}님!")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>12. 조건문 (if)</summary>
+            <div class="details-content">
+                <p>"만약 ~하면 ~한다" 와 같이 특정 조건이 맞을 때만 코드를 실행하는 방법입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 조건에 따라 다르게 행동하기</h3>
+                <p><strong>설명:</strong> <code>if</code> 문은 "만약 (어떤 조건)이 참(True)이면, 이 코드를 실행해라" 라고 컴퓨터에게 알려주는 방법이에요. [span_86](start_span)[span_86](end_span)[span_87](start_span)[span_87](end_span)[span_88](start_span)[span_88](end_span)[span_89](start_span)[span_89](end_span)[span_90](start_span)[span_90](end_span)[span_91](start_span)[span_91](end_span)[span_92](start_span)[span_92](end_span)[span_93](start_span)[span_93](end_span)[span_94](start_span)[span_94](end_span)[span_95](start_span)[span_95](end_span)[span_96](start_span)[span_96](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>if</code> 문</h3>
+                <p><strong>정의:</strong> <code>if</code> 문은 주어진 조건(condition)을 평가(evaluate)하여 그 결과가 참(<code>True</code>)일 경우에만 특정 코드 블록(들여쓰기 된 부분)을 실행하는 제어 구조입니다.</p>
+                <pre><code>temperature = 25
+if temperature > 20:
+    print("날씨가 따뜻하네요.")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>13. 조건문 (else)</summary>
+            <div class="details-content">
+                <p><code>if</code> 문의 조건이 맞지 않을 때 실행할 코드를 지정합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 조건이 틀릴 때 할 일</h3>
+                <p><strong>설명:</strong> <code>else</code>는 <code>if</code> 문 바로 뒤에 와서, <code>if</code>의 조건이 참(True)이 아닐 경우에 실행될 코드를 지정해요. [span_97](start_span)[span_97](end_span)[span_98](start_span)[span_98](end_span)[span_99](start_span)[span_99](end_span)[span_100](start_span)[span_100](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>else</code> 문</h3>
+                <p><strong>정의:</strong> <code>else</code> 문은 <code>if</code> 문과 함께 사용되어, <code>if</code> 문의 조건식이 거짓(<code>False</code>)으로 평가될 경우 실행될 코드 블록을 정의합니다.</p>
+                <pre><code>age = 15
+if age >= 20:
+    print("성인입니다.")
+else:
+    print("미성년자입니다.")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>14. 조건문 (elif)</summary>
+            <div class="details-content">
+                <p>여러 개의 조건을 차례대로 확인할 때 사용합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 여러 조건 중 하나 고르기</h3>
+                <p><strong>설명:</strong> <code>elif</code>는 "else if"의 줄임말로, 첫 번째 <code>if</code> 조건이 틀렸을 때, 또 다른 조건을 확인하고 싶을 때 사용해요. [span_101](start_span)[span_101](end_span)[span_102](start_span)[span_102](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>elif</code> 문</h3>
+                <p><strong>정의:</strong> <code>elif</code> (else if) 문은 여러 개의 조건을 순차적으로 검사해야 할 때 사용됩니다.</p>
+                <pre><code>score = 85
+if score >= 90:
+    print("A등급")
+elif score >= 80:
+    print("B등급")
+else:
+    print("C등급 이하")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>15. 비교 연산자 (==,!=, >, <, >=, <=)</summary>
+            <div class="details-content">
+                <p>두 값을 비교하여 참(True) 또는 거짓(False)을 결정하는 기호입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 값 비교하기</h3>
+                <p><strong>설명:</strong> 비교 연산자는 두 개의 값을 비교해서 그 결과가 맞는지(True) 틀리는지(False) 알려줘요. [span_103](start_span)[span_103](end_span)[span_104](start_span)[span_104](end_span)[span_105](start_span)[span_105](end_span)</p>
+                <ul>
+                    <li><code>==</code> : 두 값이 같은가?</li>
+                    <li><code>!=</code> : 두 값이 다른가?</li>
+                    <li><code>></code> : 왼쪽 값이 오른쪽 값보다 큰가?</li>
+                </ul>
+                <h3>중학생 수준 (코드와 창작): 비교 연산자</h3>
+                <p><strong>정의:</strong> 비교 연산자(Comparison Operator)는 두 피연산자(operand)의 값을 비교하여 논리적인 참(<code>True</code>) 또는 거짓(<code>False</code>) 값을 반환합니다.</p>
+                <pre><code>x = 10
+y = 5
+print(x > y)   # True</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>16. 불리언 논리 (True/False)</summary>
+            <div class="details-content">
+                <p>'참(맞다)' 또는 '거짓(틀리다)' 두 가지 값만 가지는 데이터 타입입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 참(True) 또는 거짓(False)</h3>
+                <p><strong>설명:</strong> 불리언(Boolean)은 딱 두 가지 값, <code>True</code>(참) 와 <code>False</code>(거짓) 만 가지는 특별한 데이터 타입이에요. [span_53](start_span)[span_53](end_span)[span_55](start_span)[span_55](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 불리언 타입 (<code>bool</code>)</h3>
+                <p><strong>정의:</strong> 불리언(<code>bool</code>)은 논리적인 참(True)과 거짓(False)을 나타내는 데이터 타입입니다.</p>
+                <pre><code>logged_in = True
+if logged_in:
+    print("사용자가 로그인했습니다.")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>17. 논리 연산자 (and, or, not)</summary>
+            <div class="details-content">
+                <p>여러 개의 조건을 연결하거나 조건을 뒤집을 때 사용합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 조건 합치기</h3>
+                <p><strong>설명:</strong> 논리 연산자는 여러 개의 참/거짓(불리언) 조건을 연결해서 더 복잡한 조건을 만들 때 사용해요. [span_106](start_span)[span_106](end_span)[span_107](start_span)[span_107](end_span)</p>
+                <ul>
+                    <li><code>and</code> : 양쪽 조건이 <strong>모두</strong> <code>True</code>일 때만 <code>True</code></li>
+                    <li><code>or</code> : 양쪽 조건 중 <strong>하나라도</strong> <code>True</code>이면 <code>True</code></li>
+                    <li><code>not</code> : 조건의 결과를 <strong>반대로</strong> 뒤집음</li>
+                </ul>
+                <h3>중학생 수준 (코드와 창작): 논리 연산자 (<code>and</code>, <code>or</code>, <code>not</code>)</h3>
+                <p><strong>정의:</strong> 논리 연산자(Logical Operator)는 불리언 값이나 표현식들을 결합하여 새로운 불리언 값을 생성하는 데 사용됩니다.</p>
+                <pre><code>age = 25
+is_student = True
+if age >= 18 and is_student:
+    print("성인 학생입니다.")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>18. 반복 (Loops - General Concept)</summary>
+            <div class="details-content">
+                <p>똑같은 일이나 비슷한 일을 여러 번 하도록 시키는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 코드 반복 실행하기</h3>
+                <p><strong>설명:</strong> 반복문(Loop)은 특정 코드 부분을 여러 번 반복해서 실행하고 싶을 때 사용해요. 파이썬에는 주로 <code>for</code> 반복문과 <code>while</code> 반복문이 있어요. [span_108](start_span)[span_108](end_span)[span_109](start_span)[span_109](end_span)[span_110](start_span)[span_110](end_span)[span_111](start_span)[span_111](end_span)[span_112](start_span)[span_112](end_span)[span_113](start_span)[span_113](end_span)[span_114](start_span)[span_114](end_span)[span_115](start_span)[span_115](end_span)[span_116](start_span)[span_116](end_span)[span_117](start_span)[span_117](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 반복문 (Loops)</h3>
+                <p><strong>정의:</strong> 반복문(Loop)은 특정 조건이 만족되는 동안 또는 정해진 횟수만큼 코드 블록을 반복적으로 실행하는 제어 구조입니다.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>19. for 반복문 (For Loops)</summary>
+            <div class="details-content">
+                <p>정해진 횟수만큼 또는 리스트 같은 목록의 항목 수만큼 반복합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 목록 따라 반복하기</h3>
+                <p><strong>설명:</strong> <code>for</code> 반복문은 리스트나 정해진 범위의 숫자들을 처음부터 끝까지 하나씩 꺼내 보면서 그 개수만큼 코드 블록을 반복 실행해요. [span_118](start_span)[span_118](end_span)[span_119](start_span)[span_119](end_span)[span_120](start_span)[span_120](end_span)[span_121](start_span)[span_121](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>for</code> 루프</h3>
+                <p><strong>정의:</strong> <code>for</code> 루프는 시퀀스(리스트, 튜플, 문자열 등)나 반복 가능한(iterable) 객체의 각 항목을 순회하면서 코드 블록을 실행합니다.</p>
+                <pre><code>fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit.upper())</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>20. while 반복문 (While Loops)</summary>
+            <div class="details-content">
+                <p>어떤 조건이 참(True)인 동안 계속해서 코드를 반복 실행합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 조건이 맞을 동안 반복하기</h3>
+                <p><strong>설명:</strong> <code>while</code> 반복문은 "이 조건이 참(True)인 동안에는 계속 이 코드를 반복 실행해라" 라고 컴퓨터에게 알려줘요. [span_122](start_span)[span_122](end_span)[span_123](start_span)[span_123](end_span)[span_124](start_span)[span_124](end_span)[span_125](start_span)[span_125](end_span)[span_126](start_span)[span_126](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>while</code> 루프</h3>
+                <p><strong>정의:</strong> <code>while</code> 루프는 주어진 조건식이 참(<code>True</code>)으로 평가되는 동안 코드 블록을 계속해서 반복 실행합니다.</p>
+                <pre><code>n = 1
+while n <= 5:
+    print(n)
+    n = n + 1</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>21. 함수 (정의하기)</summary>
+            <div class="details-content">
+                <p>자주 사용하는 코드 묶음에 이름을 붙여놓는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 나만의 명령어 만들기</h3>
+                <p><strong>설명:</strong> 함수는 여러 개의 명령어들을 하나로 묶어서 이름을 붙인 것이에요. 이렇게 만들어 놓으면 필요할 때마다 긴 코드를 다시 쓰지 않고 함수의 이름만 불러서 사용할 수 있어요. [span_127](start_span)[span_127](end_span)[span_128](start_span)[span_128](end_span)[span_129](start_span)[span_129](end_span)[span_130](start_span)[span_130](end_span)[span_131](start_span)[span_131](end_span)[span_132](start_span)[span_132](end_span)[span_133](start_span)[span_133](end_span)[span_134](start_span)[span_134](end_span)[span_135](start_span)[span_135](end_span)[span_136](start_span)[span_136](end_span)[span_137](start_span)[span_137](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 함수 정의 (<code>def</code>)</h3>
+                <p><strong>정의:</strong> 함수(Function)는 특정 작업을 수행하는 코드 블록을 정의하고 이름을 부여한 것입니다. <code>def</code> 키워드를 사용하여 함수를 정의합니다.</p>
+                <pre><code>def greet():
+    print("안녕하세요!")
+    print("파이썬 함수 공부 중입니다.")</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>22. 함수 (호출하기)</summary>
+            <div class="details-content">
+                <p>정의해 놓은 함수(코드 묶음)의 이름을 불러서 실행시키는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 만들어둔 명령어 사용하기</h3>
+                <p><strong>설명:</strong> 함수를 정의해 놓았다면, 이제 그 함수의 이름 뒤에 괄호 <code>()</code> 를 붙여서 부르면(호출하면) 함수 안에 묶어 놓았던 코드들이 실행돼요. [span_60](start_span)[span_60](end_span)[span_63](start_span)[span_63](end_span)[span_66](start_span)[span_66](end_span)[span_69](start_span)[span_69](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 함수 호출 (Function Call)</h3>
+                <p><strong>정의:</strong> 함수 호출(Function Call)은 이전에 <code>def</code>로 정의된 함수의 이름을 사용하여 해당 함수의 코드 블록을 실행하도록 하는 과정입니다.</p>
+                <pre><code>def greet():
+    print("안녕하세요!")
+
+# 함수 호출하기
+greet()</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>23. 함수 (매개변수/인자)</summary>
+            <div class="details-content">
+                <p>함수에게 일을 시킬 때 필요한 추가 정보(값)를 전달하는 방법입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 함수에게 정보 주기</h3>
+                <p><strong>설명:</strong> 함수를 만들 때, 함수가 작동하는 데 필요한 정보를 받을 수 있도록 괄호 <code>()</code> 안에 변수 이름(매개변수)을 적어둘 수 있어요. 함수를 부를(호출할) 때는 이 매개변수에 해당하는 실제 값(인자)을 괄호 안에 넣어줘야 해요. [span_138](start_span)[span_138](end_span)[span_140](start_span)[span_140](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 매개변수(Parameter)와 인자(Argument)</h3>
+                <p><strong>정의:</strong> <strong>매개변수</strong>는 함수를 정의할 때 전달받을 값을 저장하기 위해 선언하는 변수 이름입니다. <strong>인자</strong>는 함수를 호출할 때 매개변수에 실제로 전달되는 값입니다.</p>
+                <pre><code>def greet_someone(name): # name이 매개변수
+    print(f"안녕, {name}!")
+
+greet_someone("철수") # "철수"가 인자</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>24. 함수 (반환값)</summary>
+            <div class="details-content">
+                <p>함수가 일을 마친 후, 그 결과를 돌려주는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 함수가 결과 돌려주기</h3>
+                <p><strong>설명:</strong> 함수는 계산 결과나 만들어진 값을 함수를 호출한 곳으로 돌려줄 수도 있어요. 이때 <code>return</code> 이라는 명령어를 사용해요. [span_139](start_span)[span_139](end_span)[span_141](start_span)[span_141](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>return</code> 문</h3>
+                <p><strong>정의:</strong> <code>return</code> 문은 함수의 실행을 종료하고, 함수를 호출한 지점(caller)으로 값을 반환(돌려줌)하는 데 사용됩니다.</p>
+                <pre><code>def add(a, b):
+    return a + b
+
+sum_value = add(10, 5)
+print(sum_value) # 출력: 15</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>25. 모듈 (불러오기)</summary>
+            <div class="details-content">
+                <p>다른 사람들이 미리 만들어 놓은 코드 묶음(도구 상자)을 가져와 사용하는 것입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 다른 코드 가져오기</h3>
+                <p><strong>설명:</strong> 모듈은 특정 기능들을 모아 놓은 파이썬 파일이에요. <code>import</code> 라는 명령어로 가져와서 그 안에 있는 함수나 변수들을 사용할 수 있어요. [span_142](start_span)[span_142](end_span)[span_143](start_span)[span_143](end_span)[span_144](start_span)[span_144](end_span)[span_145](start_span)[span_145](end_span)[span_146](start_span)[span_146](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 모듈 임포트 (<code>import</code>)</h3>
+                <p><strong>정의:</strong> 모듈(Module)은 파이썬 정의와 문장들을 담고 있는 파일(<code>.py</code> 확장자)입니다. 다른 파이썬 프로그램에서 <code>import</code> 문을 사용하여 모듈의 내용을 가져와 사용할 수 있습니다.</p>
+                <pre><code>import math
+print(math.sqrt(16)) # 4.0
+
+from random import randint
+print(randint(1, 10))</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>26. 터틀 그래픽 (설정 및 전진)</summary>
+            <div class="details-content">
+                <p>컴퓨터 화면에 거북이 로봇을 움직여 그림을 그리는 기능입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 코드로 그림 그리기 시작!</h3>
+                <p><strong>설명:</strong> 파이썬의 <code>turtle</code> 모듈을 사용하면 화면에 나타나는 거북이(커서)를 조종해서 그림을 그릴 수 있어요. <code>forward()</code> 명령어는 거북이를 앞으로 지정한 만큼 움직이게 해요. [span_147](start_span)[span_147](end_span)[span_148](start_span)[span_148](end_span)[span_149](start_span)[span_149](end_span)[span_150](start_span)[span_150](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>turtle</code> 모듈 기초</h3>
+                <p><strong>정의:</strong> <code>turtle</code>은 파이썬 표준 라이브러리에 포함된 그래픽 모듈로, 화면 상의 가상 거북이(커서)를 이동시켜 그림을 그리는 간단하고 직관적인 방법을 제공합니다.</p>
+                <pre><code>import turtle
+t = turtle.Turtle()
+t.forward(100)
+turtle.done()</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>27. 터틀 그래픽 (회전 및 색상)</summary>
+            <div class="details-content">
+                <p>거북이의 방향을 바꾸거나 그리는 선의 색깔을 변경합니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 거북이 조종하기</h3>
+                <p><strong>설명:</strong> 거북이의 방향을 바꿀 때는 <code>left(각도)</code> 또는 <code>right(각도)</code> 명령어를 사용해요. 선의 색깔을 바꾸려면 <code>color("색깔이름")</code> 명령어를 사용해요. [span_151](start_span)[span_151](end_span)[span_152](start_span)[span_152](end_span)[span_153](start_span)[span_153](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): <code>turtle</code> 회전 및 색상 제어</h3>
+                <p><strong>회전:</strong> <code>t.left(angle)</code>, <code>t.right(angle)</code><br><strong>색상:</strong> <code>t.color(color_name)</code>, <code>t.pencolor(color_name)</code></p>
+                <pre><code>import turtle
+t = turtle.Turtle()
+t.color("blue")
+t.forward(100)
+t.left(90)
+t.forward(100)
+turtle.done()</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>28. 오류/버그 (디버깅)</summary>
+            <div class="details-content">
+                <p>프로그램 코드에 있는 실수나 문제점을 찾아 고치는 과정입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 코드 속 실수 찾기</h3>
+                <p><strong>설명:</strong> 코드를 작성하다 보면 오타를 내거나 명령어를 잘못 써서 프로그램이 제대로 작동하지 않을 때가 있어요. 이런 실수를 '버그(bug)'라고 하고, 버그를 찾아서 고치는 과정을 '디버깅(debugging)'이라고 해요. [span_154](start_span)[span_154](end_span)[span_155](start_span)[span_155](end_span)[span_156](start_span)[span_156](end_span)[span_157](start_span)[span_157](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 오류 처리 및 디버깅</h3>
+                <p><strong>정의:</strong> <strong>오류(Error) / 버그(Bug)</strong>는 프로그램이 의도한 대로 작동하지 않게 만드는 코드 상의 결함입니다. <strong>디버깅(Debugging)</strong>은 오류의 원인을 찾아 수정하는 과정입니다.</p>
+                <pre><code># NameError 예시
+# print(my_variable) # 오류!
+my_variable = 10
+print(my_variable) # 정상</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>29. 튜플 (Tuples)</summary>
+            <div class="details-content">
+                <p>리스트와 비슷하지만, 한 번 만들면 내용을 바꿀 수 없는 목록입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 바꿀 수 없는 리스트</h3>
+                <p><strong>설명:</strong> 튜플(Tuple)은 리스트와 매우 비슷하게 여러 항목을 순서대로 저장하지만, 소괄호 <code>()</code> 를 사용해서 만들어요. 한 번 만들고 나면 그 안의 항목을 바꿀 수 없어요. [span_61](start_span)[span_61](end_span)[span_64](start_span)[span_64](end_span)[span_67](start_span)[span_67](end_span)[span_70](start_span)[span_70](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 튜플 데이터 구조 (<code>tuple</code>)</h3>
+                <p><strong>정의:</strong> 튜플(<code>tuple</code>)은 순서가 있는(ordered) 불변(immutable) 시퀀스 자료형입니다. 내용이 변경되어서는 안 되는 데이터 묶음을 안전하게 표현할 때 유용합니다.</p>
+                <pre><code>point = (10, 20) # x, y 좌표
+# point = 15 # TypeError 발생!</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>30. 딕셔너리 (Dictionaries)</summary>
+            <div class="details-content">
+                <p>이름표(키)와 값(내용물)을 짝지어 저장하는 사전과 같은 목록입니다.</p>
+                <h3>초등학생 수준 (탐구와 구축): 이름표로 찾는 정보 상자</h3>
+                <p><strong>설명:</strong> 딕셔너리(Dictionary)는 '키(Key)'라는 이름표와 '값(Value)'이라는 내용물을 짝지어서 저장하는 자료 구조예요. 중괄호 <code>{}</code> 를 사용하고, <code>키: 값</code> 형태로 짝을 지어요. [span_158](start_span)[span_158](end_span)[span_159](start_span)[span_159](end_span)[span_160](start_span)[span_160](end_span)[span_161](start_span)[span_161](end_span)[span_162](start_span)[span_162](end_span)</p>
+                <h3>중학생 수준 (코드와 창작): 딕셔너리 데이터 구조 (<code>dict</code>)</h3>
+                <p><strong>정의:</strong> 딕셔너리(<code>dict</code>)는 키(Key)와 값(Value)을 하나의 쌍(item)으로 묶어 저장하는 컬렉션입니다. 키는 고유해야 하며, 키를 통해 값에 빠르게 접근할 수 있습니다.</p>
+                <pre><code>student = {"이름": "김파이", "나이": 12}
+print(student["이름"]) # 출력: 김파이</code></pre>
+            </div>
+        </details>
+
+        <details>
+            <summary>결론: 다음 단계는?</summary>
+            <div class="details-content">
+                <p>지금까지 파이썬의 가장 기본적인 30가지 개념을 살펴보았습니다. 코딩은 연습할수록 실력이 느는 기술입니다. [span_163](start_span)[span_163](end_span)[span_164](start_span)[span_164](end_span)[span_165](start_span)[span_165](end_span) 오늘 배운 개념들을 잊지 않도록 꾸준히 복습하고, 예제 코드를 직접 입력하고 실행해 보세요. 배운 내용을 바탕으로 터틀 그래픽으로 다양한 도형 그리기 [span_166](start_span)[span_166](end_span)[span_167](start_span)[span_167](end_span), 간단한 숫자 맞히기 게임 만들기 [span_168](start_span)[span_168](end_span)[span_169](start_span)[span_169](end_span) 등 작은 프로젝트에 도전해보는 것도 좋습니다. 호기심을 잃지 않고 꾸준히 나아간다면, 여러분도 파이썬으로 멋진 아이디어를 현실로 만드는 즐거움을 누릴 수 있을 것입니다.</p>
+            </div>
+        </details>
+
+    </div>
+    <footer>
+        <p>&copy; 2025 파이썬 기초 학습 가이드</p>
+    </footer>
+</body>
+</html>
+
