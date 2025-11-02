@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코랩(Colab) ATH 분석 따라하기 - 스마트폰 버전</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background:#f8fafc; margin:0; padding:1rem; line-height:1.6; }
+  h1 { text-align:center; color:#0a0a23; }
+  h2 { color:#1e3a8a; margin-top:1.2em; }
+  details { background:#fff; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin:1rem 0; padding:0.8rem 1rem; }
+  summary { font-weight:bold; cursor:pointer; }
+  table { width:100%; border-collapse:collapse; margin-top:0.6rem; }
+  th, td { border:1px solid #ccc; padding:0.4rem; text-align:center; }
+  th { background:#e2e8f0; }
+  .tip { background:#e0f7e9; border-left:5px solid #10b981; padding:0.8rem; margin:1rem 0; border-radius:8px; }
+  .footer { text-align:center; margin-top:2rem; font-weight:bold; color:#0a0a23; }
+</style>
+</head>
+<body>
+<h1>📱 스마트폰으로 코랩(Colab)에서 ATH 분석하기</h1>
+<p>이 페이지는 스마트폰(갤럭시 기준)에서 Google Colab을 사용해 코스피·S&P500·니케이225의 'ATH(사상 최고가) 이후 단 한 번도 하락하지 않은 구간'을 직접 분석하는 실전 따라하기 가이드입니다.</p><details open>
+  <summary>① CSV란 무엇인가요?</summary>
+  <p>CSV는 엑셀처럼 생긴 <b>주가표 데이터</b>예요. 날짜별로 시가·종가가 들어 있습니다.<br>예: <code>2025-09-10, Open 3280.15, Close 3314.53</code></p>
+</details><details>
+  <summary>② Yahoo Finance에서 CSV 파일 3개 받기</summary>
+  <table>
+    <tr><th>지수</th><th>검색 코드</th><th>링크</th></tr>
+    <tr><td>KOSPI</td><td>^KS11</td><td><a href="https://finance.yahoo.com/quote/%5EKS11/history" target="_blank">바로가기</a></td></tr>
+    <tr><td>S&amp;P500</td><td>^GSPC</td><td><a href="https://finance.yahoo.com/quote/%5EGSPC/history" target="_blank">바로가기</a></td></tr>
+    <tr><td>Nikkei225</td><td>^N225</td><td><a href="https://finance.yahoo.com/quote/%5EN225/history" target="_blank">바로가기</a></td></tr>
+  </table>
+  <p>각 링크 → <b>Historical Data</b> 클릭 → 기간: <b>Max</b> → Frequency: <b>Daily</b> → Download.<br>다운로드된 파일 이름은 <code>KS11.csv</code>, <code>GSPC.csv</code>, <code>N225.csv</code> 입니다.</p>
+</details><details>
+  <summary>③ Google Colab 접속</summary>
+  <p>스마트폰 크롬 또는 삼성 인터넷 브라우저에서<br>
+  <a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a> 입력 → 구글 로그인 → <b>+ 새 노트</b> 선택.</p>
+</details><details>
+  <summary>④ CSV 파일 업로드</summary>
+  <p>Colab 왼쪽 세로 메뉴에서 📁 아이콘 클릭 → 'Upload file' 버튼 → <code>KS11.csv</code>, <code>GSPC.csv</code>, <code>N225.csv</code> 올리기.</p>
+</details><details>
+  <summary>⑤ 파이썬 코드 붙여넣기 & ▶ 실행</summary>
+  <p>첫 번째 코드 칸에 파이썬 코드를 붙여넣고 ▶(재생버튼)을 누릅니다.<br>
+  <code>import pandas as pd ... (전체 코드 붙여넣기)</code></p>
+</details><details>
+  <summary>⑥ 결과표 예시</summary>
+  <table>
+    <tr><th>Index</th><th>ATH 날짜</th><th>ATH 종가</th><th>무하회 일수</th><th>진행중</th></tr>
+    <tr><td>KOSPI(^KS11)</td><td>2025-09-10</td><td>3314.53</td><td>50</td><td>True</td></tr>
+    <tr><td>S&amp;P500(^GSPC)</td><td>2013-03-28</td><td>1569.19</td><td>200+</td><td>False</td></tr>
+    <tr><td>Nikkei225(^N225)</td><td>2024-02-22</td><td>39098.68</td><td>60</td><td>False</td></tr>
+  </table>
+</details><details>
+  <summary>⑦ 결과 해석</summary>
+  <ul>
+    <li><b>no_under_days</b>: 그날 이후 하락 없이 유지된 영업일 수</li>
+    <li><b>ongoing=True</b>: 아직도 ATH 아래로 단 하루도 안 내려간 상태</li>
+    <li>KOSPI(2025-09-10)는 50일째 무하회 진행 중</li>
+  </ul>
+</details><details>
+  <summary>⑧ 결과 저장하기</summary>
+  <p>표 오른쪽 위 메뉴 → <b>Download CSV</b> 클릭하면 결과를 엑셀처럼 저장할 수 있습니다.</p>
+</details><div class="tip">
+  💡 팁: 이 HTML은 Acode 앱이나 GitHub Pages에 그대로 올려 웹사이트처럼 볼 수 있습니다.
+</div><div class="footer">🎉 축하합니다! 이제 스마트폰으로도 ATH 분석 성공!</div>
+</body>
+</html>
