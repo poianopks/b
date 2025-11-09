@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김 AI(Kimi) 완전 정복 가이드 - 왕초보를 위한 쉽고 긴 설명</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Apple SD Gothic Neo', '맑은 고딕', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .nav-container {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .toc {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .toc h3 {
+            margin-bottom: 10px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .toc-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .toc-list li {
+            background: #f0f2ff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .toc-list li:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .toc-list a {
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+        }
+
+        .content-card {
+            background: white;
+            margin: 25px 0;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #d6e0ff;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #f5f7ff 100%);
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffeaa7 100%);
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .code-block {
+            background: #1e1e2e;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .step-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .step-box ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        /* 수정된 접기/펼치기 버튼 스타일 */
+        .toggle-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            width: 100%;
+            max-width: 400px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 수정된 collapsible 스타일 - 내용이 충분히 보이게 */
+        .collapsible {
+            max-height: 10000px; /* 아주 큰 값으로 설정하여 내용이 충분히 보이도록 */
+            overflow: hidden;
+            transition: max-height 1.2s ease-in-out; /* 더 부드러운 전환 */
+            margin: 15px auto;
+            width: 100%;
+        }
+
+        .collapsible.collapsed {
+            max-height: 0;
+            margin: 0 auto;
+        }
+
+        .collapsible-content {
+            padding: 25px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            border: 2px solid #667eea;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .emoji-bullet {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        .highlight-yellow {
+            background: linear-gradient(120deg, #ffeb3b 0%, #ffc107 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .highlight-blue {
+            background: linear-gradient(120deg, #64b5f6 0%, #2196f3 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.7em; }
+            .container { padding: 10px; }
+            .content-card { padding: 20px; }
+            .collapsible-content { padding: 15px; }
+        }
+
+        /* 추가 애니메이션 */
+        .highlight-box, .tip-box, .warning-box, .step-box {
+            transition: transform 0.3s ease;
+        }
+
+        .highlight-box:hover, .tip-box:hover, .warning-box:hover, .step-box:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎓 김 AI(Kimi) 완전 정복 가이드</h1>
+            <p class="subtitle">왕초보를 위한 쉽고 자세한 설명 (2025년 11월 기준)</p>
+            <div style="text-align: center; margin: 30px 0; font-size: 4em; animation: bounce 2s infinite;">🚀</div>
+        </div>
+    </header>
+
+    <div class="nav-container">
+        <div class="toc">
+            <h3>📚 빠른 목차 (클릭해서 이동)</h3>
+            <ul class="toc-list">
+                <li><a href="#section1">버전 업그레이드</a></li>
+                <li><a href="#section2">기능 소개</a></li>
+                <li><a href="#section3">AI 비교</a></li>
+                <li><a href="#section4">사용법</a></li>
+                <li><a href="#section5">PC vs 모바일</a></li>
+                <li><a href="#section6">따라하기</a></li>
+                <li><a href="#section7">실수 TOP5</a></li>
+                <li><a href="#section8">학습 로드맵</a></li>
+                <li><a href="#section9">10가지 팁</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 섹션 1: 버전 업그레이드 -->
+        <div class="content-card" id="section1">
+            <h2>🎯 섹션 1: 김 AI 버전 업그레이드 (1.5 → 2025년 현재)</h2>
+            
+            <div class="highlight-box">
+                <strong>중요!</strong> "K2"라고 적으신 것은 "Kimi 2"라는 뜻으로 보입니다. 김 AI는 2024년부터 큰 변화가 있었어요.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>기능 항목</th>
+                        <th>1.5 버전 (예전)</th>
+                        <th>2025년 현재 버전 (새로워진 점)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>대화 능력</td>
+                        <td>일반적인 대화만 가능</td>
+                        <td><span class="highlight-blue">'김리서처(Kimi-Researcher)'</span> 기능 추가 - 스스로 인터넷 검색하고 분석해줌</td>
+                    </tr>
+                    <tr>
+                        <td>파일 업로드</td>
+                        <td>파일 10개까지만 업로드</td>
+                        <td><span class="highlight-yellow">최대 50개 파일</span> 동시 업로드 가능</td>
+                    </tr>
+                    <tr>
+                        <td>답변 형식</td>
+                        <td>텍스트 위주 답변</td>
+                        <td><span class="highlight-blue">표, 그래프, 구조화된 답변</span> 만들어줌</td>
+                    </tr>
+                    <tr>
+                        <td>정보 제공 수준</td>
+                        <td>단순 정보 제공</td>
+                        <td><span class="highlight-yellow">심층 분석 + 해결책 제시 + 실행 계획</span>까지 한 번에</td>
+                    </tr>
+                    <tr>
+                        <td>문서 처리</td>
+                        <td>한 번에 20만자 정도 읽기</td>
+                        <td><span class="highlight-blue">더 긴 문서도 빠르게</span> 이해하고 요약</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>쉽게 말하면</strong>: 옛날에는 "선생님, 이거 알려주세요" 하면 "네, 이래요"라고만 답했는데, 이제는 "선생님, 이거 알려주세요" 하면 "네, 이래요. 그리고 이렇게 쓰면 되고, 여기에 더 궁금한 점이 있으면 이거 보세요, 마지막으로 이렇게 실행하면 돼요"라고 <strong>옆에서 끝까지 도와주는 스마트한 조교</strong>가 된 거예요!
+            </div>
+        </div>
+
+        <!-- 섹션 2: 기능 소개 -->
+        <div class="content-card" id="section2">
+            <h2>🔧 섹션 2: 김 AI의 주요 기능 (코딩/주식/URL/유튜브/파일)</h2>
+            
+            <h3>코딩 도움 (프로그래밍)</h3>
+            <div class="step-box">
+                <strong>예시 상황</strong>: "초보자인데 파이썬으로 주식 차트 그리고 싶어요!"
+                <ol>
+                    <li><strong>코드 짜기</strong>: "아래 코드를 복사해서 붙여넣으세요"라며 <strong>완전한 코드</strong>를 만들어줌</li>
+                    <li><strong>설명하기</strong>: "이 줄은 뭐고, 저 줄은 뭐야"라고 <strong>한 줄씩 쉽게 설명</strong></li>
+                    <li><strong>에러 고치기</strong>: 오류 메시지 복사해서 붙이면 "아, 여기 세미콜론(;) 빠졌어요!"라며 <strong>해결법 알려줌</strong></li>
+                    <li><strong>개선하기</strong>: "이 코드를 더 빠르게 만들려면 이렇게 하세요"라며 <strong>최적화 방법</strong> 제시</li>
+                </ol>
+            </div>
+            <div class="code-block">
+# 실제 김 AI가 만들어주는 코드 예시
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# 주식 데이터 만들기 (예시)
+data = {
+    '날짜': ['2025-11-01', '2025-11-02', '2025-11-03'],
+    '가격': [50000, 51000, 49500]
+}
+
+df = pd.DataFrame(data)
+df.plot(x='날짜', y='가격', title='주식 차트')
+plt.show()
+            </div>
+
+            <h3>주식 분석 도움</h3>
+            <div class="step-box">
+                <strong>예시 상황</strong>: "삼성전자 주식이 이제 오를까요?"
+                <ol>
+                    <li><strong>실시간 정보 수집</strong>: 김 AI가 <strong>인터넷에서 최신 뉴스, 재무제표, 공시</strong>를 찾아봄</li>
+                    <li><strong>다각도 분석</strong>: "삼성전자의 최근 실적은 이래요, 반도체 산업 전망은 이래요, 경쟁사는 이래요"라며 <strong>10가지 관점에서 분석</strong></li>
+                    <li><strong>리스크 경고</strong>: "하지만 이런 위험도 있으니 조심하세요"라고 <strong>반대 의견도 함께</strong> 알려줌</li>
+                    <li><strong>정리</strong>: "<strong>결론</strong>: 단기는 불확실하지만, 장기는 긍정적. 투자 비중은 전체의 10% 정도가 적당"처럼 <strong>명확한 요약</strong> 제공</li>
+                </ol>
+            </div>
+            <div class="warning-box">
+                <strong>중요한 주의사항</strong>: 김 AI는 <strong>투자 조언을 해주지 않습니다!</strong> 정확히는 "이런 정보가 있어요, 이렇게 분석할 수 있어요"라고 <strong>도구와 정보를 제공</strong>할 뿐, "사라" "팔아라"는 말 안 해요. 투자는 <strong>본인 판단</strong>이 필요해요!
+            </div>
+
+            <h3>사이트 URL 분석</h3>
+            <div class="tip-box">
+                <strong>사용법</strong>:<br>
+                1. 김 AI 창에 <strong>"https://~~~~"</strong> 주소를 그대로 붙여넣기<br>
+                2. 뒤에 <strong>"이 사이트 뭐하는 곳이야? 요약해줘"</strong> 라고 추가<br>
+                3. 전송!
+            </div>
+            <div class="code-block">
+# 사용 예시
+https://www.naver.com 이 사이트는 뭐하는 곳이고, 주요 서비스 5개만 알려줘
+            </div>
+
+            <h3>유튜브 주소 요약</h3>
+            <div class="step-box">
+                <strong>사용법</strong>:
+                <ol>
+                    <li>유튜브에서 <strong>"공유" 버튼</strong> 누르고 <strong>"링크 복사"</strong></li>
+                    <li>김 AI 창에 붙여넣기 + <strong>"이 영상 3줄로 요약해줘"</strong></li>
+                    <li>전송!</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>유용한 팁</strong>:<br>
+                - <strong>"타임스탬프 만들어줘"</strong> 라고 하면 "3분 10초: 이런 내용, 7분 25초: 이런 내용"처럼 <strong>목차 만들어</strong> 줌<br>
+                - <strong>"영상에서 말한 방법으로 실습해볼게. 가이드 만들어줘"</strong> 라고 하면 <strong>실행 가능한 가이드</strong> 제작
+            </div>
+
+            <h3>첨부파일 분석</h3>
+            <div class="highlight-box">
+                <strong>지원 파일</strong>: PDF, Word, TXT, PPT, Excel, 이미지(JPG, PNG, GIF), 코드(Python, Java, C++, HTML), ZIP (안에 위 파일들이 있으면)
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>파일 타입</th>
+                        <th>분석 방법</th>
+                        <th>예시 질문</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PDF 논문</td>
+                        <td>파일 올리고 질문</td>
+                        <td>"이 논문 10페이지인데, 연구 방법 부분만 쉽게 설명해줘. 고등학생도 이해할 수 있게"</td>
+                    </tr>
+                    <tr>
+                        <td>엑셀 주식 데이터</td>
+                        <td>드래그 앤 드롭</td>
+                        <td>"이 엑셀 파일에 있는 삼성전자 주가 데이터를 보고, 3가지 투자 관찰점을 알려줘"</td>
+                    </tr>
+                    <tr>
+                        <td>이미지</td>
+                        <td>사진 찍어서 올리기</td>
+                        <td>"이 사진에 있는 차트 3개를 읽어서 표로 만들어줘"</td>
+                    </tr>
+                    <tr>
+                        <td>코드 파일</td>
+                        <td>.py 파일 직접 업로드</td>
+                        <td>"이 파이썬 코드가 뭘 하는지 모르겠어. 5줄 요약 + 문제점 있으면 알려줘"</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="tip-box">
+                <strong>김 AI의 강점</strong>: 최대 <strong>50개 파일</strong> 동시 분석, 각 파일 <strong>100MB</strong>까지 가능, <strong>200만자</strong>까지 읽을 수 있음 (책 20권 분량), <strong>파일 간 비교</strong>도 가능 ("이 두 보고서 차이점 알려줘")
+            </div>
+        </div>
+
+        <!-- 섹션 3: AI 비교 -->
+        <div class="content-card" id="section3">
+            <h2>⚔️ 섹션 3: 챗GPT, 마누스 AI와 차별점 및 장단점</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">비교 항목</th>
+                        <th style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">김 AI (Kimi)</th>
+                        <th style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);">챗GPT (ChatGPT)</th>
+                        <th style="background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);">마누스 AI (Manus)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>출신</td>
+                        <td>중국 月之暗面(Moonshot AI)</td>
+                        <td>미국 OpenAI</td>
+                        <td>중국 Manus AI</td>
+                    </tr>
+                    <tr>
+                        <td><strong>최대 강점</strong></td>
+                        <td><span class="highlight-yellow">超长 문서 처리</span> (200만자)</td>
+                        <td><span class="highlight-blue">코딩 능력</span> 매우 강함</td>
+                        <td><span class="highlight-yellow">Agent 자율 실행</span> (다른 사이트에서 작업)</td>
+                    </tr>
+                    <tr>
+                        <td>한국어</td>
+                        <td><strong>매우 자연스러움</strong></td>
+                        <td>자연스러움</td>
+                        <td>양호</td>
+                    </tr>
+                    <tr>
+                        <td>파일 분석</td>
+                        <td><span class="highlight-yellow">최대 50개, 100MB</span></td>
+                        <td>제한적 (GPT-4는 32MB)</td>
+                        <td>파일 기능 제한적</td>
+                    </tr>
+                    <tr>
+                        <td>인터넷 검색</td>
+                        <td><span class="highlight-yellow">실시간 검색</span> 매우 강함</td>
+                        <td>일부 버전만 가능</td>
+                        <td>자율 검색 가능</td>
+                    </tr>
+                    <tr>
+                        <td>유튜브 요약</td>
+                        <td><span class="highlight-blue">자막 기반 정밀 요약</span></td>
+                        <td>링크만 인식</td>
+                        <td>제한적</td>
+                    </tr>
+                    <tr>
+                        <td>코딩 품질</td>
+                        <td>매우 좋음</td>
+                        <td><span class="highlight-blue">최고 수준</span></td>
+                        <td>좋음</td>
+                    </tr>
+                    <tr>
+                        <td>주식 분석</td>
+                        <td><span class="highlight-yellow">한국 주식에 최적화</span></td>
+                        <td>일반적</td>
+                        <td>일반적</td>
+                    </tr>
+                    <tr>
+                        <td>사용 방법</td>
+                        <td>웹, 앱, API</td>
+                        <td>웹, 앱, API</td>
+                        <td>초대장 필요</td>
+                    </tr>
+                    <tr>
+                        <td>무료/유료</td>
+                        <td><span class="highlight-yellow">대부분 무료</span></td>
+                        <td>일부 무료, 대부분 유료</td>
+                        <td>현재 무료</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>김 AI 장점 🌟</h3>
+            <ol>
+                <li>📄 <strong>超长 문서</strong>: 200매 보고서도 한 번에 읽어줘요 (챗GPT는 자르고 여러 번 물어봐야 함)</li>
+                <li>🇰🇷 <strong>한국어 강점</strong>: 한국 뉴스, 한국 주식, 한국 문화를 더 잘 이해해요</li>
+                <li>📂 <strong>파일 많이</strong>: 회사 보고서 50개를 한 번에 올려서 "이 중에서만 요약해줘" 할 수 있어요</li>
+                <li>🆓 <strong>무료가 강력</strong>: 대부분 기능이 무료지만 성능은 유료 AI 못지않음</li>
+                <li>🔍 <strong>검색 빠름</strong>: 최신 정보도 10초 안에 찾아서 정리해줘요</li>
+            </ol>
+
+            <h3>김 AI 단점 ⚠️</h3>
+            <ol>
+                <li>💻 <strong>코딩은 챗GPT가 약간 더 낫</strong>: 특히 복잡한 알고리즘 문제</li>
+                <li>🧮 <strong>수학 계산 가끔 틀림</strong>: 계산기보다는 분석에 강함</li>
+                <li>🎨 <strong>이미지 생성 안 됨</strong>: 그림 그려주는 기능 없음</li>
+                <li>🌐 <strong>영어보다 중국어에 최적화</strong>: 중국 웹사이트 검색이 더 잘됨</li>
+            </ol>
+
+            <div class="highlight-box">
+                <strong>챗GPT와의 차이점</strong>: 챗GPT는 <strong>"코딩의 신"</strong>이라면, <strong>김 AI</strong>는 <strong>"문서의 신"</strong>입니다.
+                <ul>
+                    <li>코딩 과제 → 챗GPT가 더 정확</li>
+                    <li>보고서 100쪽 읽기 → 김 AI가 압도적</li>
+                    <li>한국어 대화 → 김 AI가 더 자연스러움</li>
+                    <li>최신 뉴스 분석 → 둘 다 가능하지만 김 AI가 검색을 더 많이 함</li>
+                </ul>
+                <strong>돈 없는 학생/직장인</strong> → <strong class="highlight-yellow">김 AI</strong>가 답<br>
+                <strong>프로그래머</strong> → <strong class="highlight-blue">챗GPT</strong>가 약간 더 나음
+            </div>
+
+            <div class="highlight-box">
+                <strong>마누스 AI와의 차이점</strong>: 마누스 AI는 <strong>"AI 비서"</strong>라면, 김 AI는 <strong>"AI 전문가"</strong>입니다.
+                <ul>
+                    <li>마누스: "주식 분석하라"고 하면 <strong>직접 네이버 금융 가서</strong> 차트 그려줌</li>
+                    <li>김 AI: "주식 분석하라"고 하면 <strong>이론과 데이터를 정리해서</strong> 분석 리포트 써줌</li>
+                </ul>
+                <strong>마누스</strong>는 아직 <strong>초대장 필요</strong>고, <strong>한국어 지원이 약</strong>합니다. <strong>왕초보</strong>에게는 <strong class="highlight-yellow">김 AI가 훨씬 접근성이 좋아요!</strong>
+            </div>
+        </div>
+
+        <!-- 섹션 4: 사용법 -->
+        <div class="content-card" id="section4">
+            <h2>🎮 섹션 4: 누가? 무엇을? 어떻게? 얻으려면?</h2>
+            
+            <h3>단계 1: 김 AI 시작하기 (1분 완성)</h3>
+            <div class="step-box">
+                <strong>PC에서</strong>:
+                <ol>
+                    <li><strong>크롬 브라우저</strong> 켜기</li>
+                    <li>주소창에 <strong class="highlight-blue">kimi.ai</strong> 치고 엔터</li>
+                    <li><strong>"지금 시작하기"</strong> 또는 <strong>"로그인"</strong> 클릭</li>
+                    <li><strong>구글 계정</strong>으로 로그인 (또는 전화번호)</li>
+                    <li>끝!</li>
+                </ol>
+            </div>
+            <div class="step-box">
+                <strong>스마트폰에서</strong>:
+                <ol>
+                    <li><strong>앱스토어</strong>(iPhone) 또는 <strong>플레이스토어</strong>(갤럭시) 켜기</li>
+                    <li><strong>"Kimi"</strong> 검색</li>
+                    <li><strong>"Kimi - AI Assistant"</strong> 앱 다운로드</li>
+                    <li>앱 켜서 <strong>구글 계정</strong>으로 로그인</li>
+                    <li>끝!</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>왕초보 팁</strong>: 로그인 안 해도 쓸 수 있지만, <strong>로그인하면 대화 기록 저장</strong>됩니다. 나중에 "아까 그거 다시 보여줘" 할 수 있어요!
+            </div>
+
+            <h3>단계 2: 내가 뭘 얻고 싶은지 정하기</h3>
+            <p>김 AI에게 물어보기 전에 이렇게 생각해보세요:</p>
+            <div class="code-block">
+"나는 [누구]이고, [무엇을] 얻고 싶어. 어떻게 해야 돼?"
+            </div>
+            <div style="text-align: center; margin: 30px 0; font-size: 4em; animation: bounce 2s infinite;">🤔</div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>누구</th>
+                        <th>무엇을 얻고 싶은지</th>
+                        <th>어떻게 할지 (김 AI에게 물어볼 말)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>고등학생</td>
+                        <td>수학 문제 풀이 방법</td>
+                        <td>"이 수학 문제 풀어줘. 10번 문제인데, 고등학교 1학년 수준으로 쉽게 설명해줘"</td>
+                    </tr>
+                    <tr>
+                        <td>대학생</td>
+                        <td>논문 요약</td>
+                        <td>"이 논문 30쪽 읽어주고, 핵심 3가지만 알려줘" + PDF 파일 올리기</td>
+                    </tr>
+                    <tr>
+                        <td>직장인</td>
+                        <td>회의록 작성</td>
+                        <td>"이 회의 음성 파일 1시간 분량을 1쪽짜리 요약본으로 만들어줘"</td>
+                    </tr>
+                    <tr>
+                        <td>주부</td>
+                        <td>레시피 추천</td>
+                        <td>"냉장고에 닭고기, 버섯, 양파 있는데 30분 안에 만들 수 있는 요리 추천해줘"</td>
+                    </tr>
+                    <tr>
+                        <td>투자자</td>
+                        <td>주식 분석</td>
+                        <td>"삼성전자 재무제표 분석해줘. 2025년 11월 기준으로"</td>
+                    </tr>
+                    <tr>
+                        <td>개발자</td>
+                        <td>코드 오류 해결</td>
+                        <td>"이 파이썬 코드 에러 뜨는데 왜 그런지 알려줘" + 코드 파일 올리기</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>단계 3: 왕초보용 물어보기 템플릿</h3>
+            <div class="warning-box">
+                <strong>절대 이렇게 하지 마세요</strong> ❌: "주식 알려줘" (너무 애매함)
+            </div>
+            <div class="tip-box">
+                <strong>이렇게 하세요</strong> ✅:
+            </div>
+
+            <!-- 수정된 토글 버튼 - 더 크고 명확하게 -->
+            <button class="toggle-btn" onclick="toggleSection('template1', event)">📋 템플릿 1: 정보 얻기 (클릭해서 펼치기)</button>
+            <div id="template1" class="collapsible collapsed">
+                <div class="collapsible-content">
+                    <div class="code-block">
+"나는 [누구]인데, [무엇]을 [어떻게] 알고 싶어. [어떤 조건]으로 설명해줘"
+
+예시: "나는 40대 주부인데, 비상금 100만원으로 주식 투자를 [처음] 해보려고 해. [안전한] 종목 3개만 [초보자도 이해할 수 있게] 설명해줘"
+                    </div>
+                </div>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSection('template2', event)">📋 템플릿 2: 파일 분석 (클릭해서 펼치기)</button>
+            <div id="template2" class="collapsible collapsed">
+                <div class="collapsible-content">
+                    <div class="code-block">
+"이 파일 [어떤 종류]인데, [무슨 부분]을 알려줘. [누가] 보기 좋게 정리해줘"
+
+예시: "이 PDF 50페이지 보고서인데, [결론 부분만] 알려줘. [CEO가] 보기 좋게 1쪽으로 요약해줘"
+                    </div>
+                </div>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSection('template3', event)">📋 템플릿 3: 코딩 (클릭해서 펼치기)</button>
+            <div id="template3" class="collapsible collapsed">
+                <div class="collapsible-content">
+                    <div class="code-block">
+"[무엇을] 하고 싶은데, [어떤 언어]로 코드 만들어줘. [누가] 쓸 거야"
+
+예시: "주식 차트 그리고 싶은데, [파이썬]으로 코드 만들어줘. [코딩 처음 하는 내가] 이해할 수 있게 주석 달아줘"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 섹션 5: PC vs 모바일 -->
+        <div class="content-card" id="section5">
+            <h2>💻📱 섹션 5: PC vs 스마트폰 답변 질 차이</h2>
+            
+            <div class="highlight-box">
+                <strong>결론</strong>: <strong>답변 자체의 질은 거의 같습니다!</strong> 하지만 <strong>사용 경험과 속도는 차이</strong>가 납니다.
+            </div>
+
+            <h3>PC의 장점 💻</h3>
+            <ol>
+                <li><strong>화면 커서</strong> 긴 답변 보기 편함</li>
+                <li><strong>파일 드래그 앤 드롭</strong> 쉬움 (마우스로 끌어다 놓기)</li>
+                <li><strong>코드 복사</strong>하기 편함</li>
+                <li><strong>여러 개 창</strong> 띄워놓고 비교하기 쉬움</li>
+                <li><strong>키보드로 빨리</strong> 타이핑 가능</li>
+            </ol>
+
+            <h3>스마트폰의 장점 📱</h3>
+            <ol>
+                <li><strong>언제 어디서나</strong> 쓸 수 있음</li>
+                <li><strong>음성 입력</strong>으로 말해서 물어볼 수 있음</li>
+                <li><strong>사진 찍어서</strong> 바로 분석 가능 (예: 공식 문제집 찍어서 풀이 요청)</li>
+                <li><strong>알림</strong> 받을 수 있음</li>
+                <li><strong>카톡처럼</strong> 편하게 대화 가능</li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>왕초보 추천 사용법</strong><br>
+                <strong>처음 배울 때</strong>: <strong>PC</strong>로 시작 (화면 크고, 파일 올리기 쉬움)<br>
+                <strong>익숙해지면</strong>: <strong>스마트폰</strong>으로 이동하면서 쓰기 (생활화)
+            </div>
+            <div class="highlight-box">
+                <strong>중요 팁</strong>: <strong>둘 다 같은 계정</strong>으로 로그인하면 <strong>대화 기록 공유</strong>됩니다. PC에서 하던 거 스마트폰에서 이어서 할 수 있어요!
+            </div>
+        </div>
+
+        <!-- 섹션 6: 따라하기 -->
+        <div class="content-card" id="section6">
+            <h2>🎯 섹션 6: 왕초보 초등수준 따라하기 (STEP BY STEP)</h2>
+            
+            <h3>예제 1: "유튜브 영상 요약" 따라하기</h3>
+            <div class="step-box">
+                <strong>상황</strong>: "10분짜리 경제 강의 영상 but 시간 없어요!"
+                <ol>
+                    <li><strong>유튜브 앱</strong> 켜기</li>
+                    <li>영상 밑에 <strong>"공유"</strong> 버튼 누르기 (화살표 모양)</li>
+                    <li><strong>"링크 복사"</strong> 누르기</li>
+                    <li><strong>김 AI 앱</strong> 켜기</li>
+                    <li><strong>검색창</strong> 길게 누르기 → <strong>"붙여넣기"</strong> 누르기</li>
+                    <li><strong>"이 영상 3줄로 요약해줘"</strong> 라고 <strong>한글로</strong> 치기</li>
+                    <li><strong>전송</strong> 버튼 누르기 (↗️ 모양)</li>
+                    <li><strong>10초</strong> 기다리기</li>
+                    <li><strong>요약본</strong> 나오면 <strong>복사</strong>해서 <strong>카톡</strong>으로 친구한테 공유하기</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>왕초보 팁</strong>: 처음엔 영상이 <strong>"자막 지원"</strong>인지 확인하세요. 자막 없으면 요약이 힘들 수 있어요!
+            </div>
+
+            <h3>예제 2: "PDF 보고서 분석" 따라하기</h3>
+            <div class="step-box">
+                <strong>상황</strong>: "회사 보고서 30페이지 but 읽기 싫어요!"
+                <ol>
+                    <li><strong>카카오톡</strong>으로 받은 PDF 파일 <strong>저장</strong>하기</li>
+                    <li><strong>김 AI 웹사이트</strong> (kimi.ai) 열기</li>
+                    <li>화면 중간 <strong>"파일 올리기"</strong> 버튼 클릭</li>
+                    <li><strong>"내 PC"</strong> 클릭 → 방금 저장한 PDF <strong>더블클릭</strong></li>
+                    <li>파일 올라가면 아래에 <strong>"이 보고서 1쪽으로 요약해줘. CEO 보고용으로"</strong> 라고 치기</li>
+                    <li><strong>전송</strong> 버튼 누르기</li>
+                    <li><strong>김 AI가 분석</strong>하는 동안 <strong>커피</strong> 마시기 ☕</li>
+                    <li><strong>완성된 요약본</strong> 복사해서 <strong>워드文档</strong>에 붙여넣기</li>
+                    <li><strong>이름 저장</strong>하고 상사한테 <strong>메일</strong> 보내기</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>초등학생 팁</strong>: 파일 이름을 <strong>"한글"</strong> 로 하면 김 AI가 더 잘 이해해요! 예: "2025년_3분기_실적보고서.pdf"
+            </div>
+
+            <h3>예제 3: "코딩 처음인데 웹사이트 만들기" 따라하기</h3>
+            <div class="step-box">
+                <strong>상황</strong>: "코딩 1도 모르는데 <strong>'나만의 홈페이지'</strong> 만들고 싶어요!"
+                <ol>
+                    <li><strong>김 AI</strong>에게 말하기:
+                        <div class="code-block">
+나는 코딩 1도 모르는 초등학생 6학년이야. 내 이름, 사진, 취미 소개하는 간단한 홈페이지 코드 만들어줘. 파란색 배경이면 좋겠어
+                        </div>
+                    </li>
+                    <li><strong>김 AI가 HTML 코드</strong>를 만들어줌</li>
+                    <li>코드 오른쪽 위 <strong>"복사"</strong> 버튼 누르기</li>
+                    <li><strong>메모장</strong> 열기 → 붙여넣기</li>
+                    <li><strong>저장할 때</strong> → 파일 이름: <strong>"myweb.html"</strong> → <strong>"모든 파일"</strong> 로 저장</li>
+                    <li>그 파일 <strong>더블클릭</strong> → <strong>웹 브라우저</strong>로 열기</li>
+                    <li><strong>내 홈페이지</strong> 완성! 🎉</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>왕초보 팁</strong>: 김 AI한테 <strong>"코드 복사해서 어디에 붙이면 돼?"</strong> 라고 추가로 물어보면 <strong>상세 가이드</strong>까지 줍니다!
+            </div>
+
+            <h3>예제 4: "주식 분석 처음" 따라하기</h3>
+            <div class="step-box">
+                <strong>상황</strong>: "삼성전자 주식 사고 싶은데 뭐부터 봐야할지 모르겠어요!"
+                <ol>
+                    <li><strong>김 AI</strong>에게 물어보기:
+                        <div class="code-block">
+나는 주식 처음 배우는 40세 주부야. 삼성전자 주식 분석하려는데, 뭘 봐야할지 모르겠어. 5가지만 쉽게 알려줘
+                        </div>
+                    </li>
+                    <li><strong>김 AI가 답변</strong>:
+                        <ul>
+                            <li>① 재무제표 보는법</li>
+                            <li>② PER/PBR 뜻</li>
+                            <li>③ 최근 뉴스</li>
+                            <li>④ 위험 요소</li>
+                            <li>⑤ 시작 방법</li>
+                        </ul>
+                    </li>
+                    <li><strong>따라서 실제로</strong> 네이버 금융 들어가서 찾아보기</li>
+                    <li><strong>모르는 용어</strong> 또 김 AI에게 물어보기</li>
+                    <li><strong>종이</strong>에 <strong>메모</strong>해서 <strong>냉장고</strong>에 붙이기</li>
+                </ol>
+            </div>
+            <div class="tip-box">
+                <strong>왕초보 팁</strong>: <strong>"모르면 또 물어봐도 돼요!"</strong> 김 AI는 같은 질문을 100번 해도 화내지 않습니다.
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSection('practice1', event)">🎯 연습 문제 1: 내일 날씨 알아보기 (클릭)</button>
+            <div id="practice1" class="collapsible collapsed">
+                <div class="collapsible-content">
+                    <p><strong>순서</strong>:</p>
+                    <ol>
+                        <li>김 AI 키고 <strong>"내일 서울 날씨 어때?"</strong> 치기</li>
+                        <li><strong>"비 올까?"</strong> 추가로 물어보기</li>
+                        <li><strong>"우산 가져가야 할까?"</strong> 라고 의견 물어보기</li>
+                    </ol>
+                </div>
+            </div>
+
+            <button class="toggle-btn" onclick="toggleSection('practice2', event)">🎯 연습 문제 2: 수학 문제 풀기 (클릭)</button>
+            <div id="practice2" class="collapsible collapsed">
+                <div class="collapsible-content">
+                    <p><strong>순서</strong>:</p>
+                    <ol>
+                        <li>수학 문제 <strong>종이에 쓰기</strong></li>
+                        <li><strong>사진 찍어서</strong> 김 AI에게 올리기</li>
+                        <li><strong>"이 문제 풀어줘. 6학년 수준으로 설명해줘"</strong> 라고 물어보기</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 섹션 7: 실수 TOP 5 -->
+        <div class="content-card" id="section7">
+            <h2>❌ 섹션 7: 왕초보가 가장 많이 하는 실수 TOP 5</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">실수 순위</th>
+                        <th>실수 내용</th>
+                        <th>원인</th>
+                        <th>해결 방법</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; font-size: 1.2em;">1</td>
+                        <td>"답변 질이 왜 낮아요?"</td>
+                        <td>질문이 애매함</td>
+                        <td>"이거 알려줘" → <strong>"이거 [구체적으로] 알려줘"</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; font-size: 1.2em;">2</td>
+                        <td>"왜 안 돼요?"</td>
+                        <td>로그인 안 했거나, 파일 크기가 너무 큼</td>
+                        <td>먼저 김 AI 로그인, 파일은 <strong>100MB 넘지 않게</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; font-size: 1.2em;">3</td>
+                        <td>"답변이 길어서 끊겼어요"</td>
+                        <td>너무 긴 답변을 한 번에 요청</td>
+                        <td><strong>"1단계만 먼저 알려줘"</strong>라고 나눠서 물어보기</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; font-size: 1.2em;">4</td>
+                        <td>"틀린 정보 줬어요!"</td>
+                        <td>김 AI가 인터넷에서 틀린 정보를 가져옴</td>
+                        <td><strong>"이 정보 출처 알려줘"</strong>라고 물어보고, <strong>공식 사이트</strong>에서 다시 확인하기</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; font-weight: bold; font-size: 1.2em;">5</td>
+                        <td>"다음에 또 쓰려니까 기록이 없어요"</td>
+                        <td>로그인 안 하고 씀</td>
+                        <td><strong>무조건 로그인</strong>하고 쓰기! 대화 기록이 클라우드에 저장됨</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>기억하세요!</strong> 김 AI는 <strong>도구</strong>이지 <strong>만능</strong>이 아닙니다. 항상 <strong>본인의 판단</strong>이 필요해요!
+            </div>
+        </div>
+
+        <!-- 섹션 8: 학습 로드맵 -->
+        <div class="content-card" id="section8">
+            <h2>📅 섹션 8: 왕초보 로드맵 (30일 천천히)</h2>
+            
+            <div class="step-box">
+                <h3>1일차: 기본 익히기</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ kimi.ai 접속</li>
+                    <li>✅ 구글 계정 로그인</li>
+                    <li>✅ "안녕? 너 뭐 할 수 있어?" 물어보기</li>
+                    <li>✅ "오늘 날씨 알려줘" → "내일은?" → "모레는?" (계속 대화)</li>
+                    <li>✅ "간단한 메일 써줘" 연습</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <h3>3일차: 파일/URL 연습</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ 유튜브 링크 하나 복사해서 요약 요청</li>
+                    <li>✅ PDF 파일 하나 올려서 요약 요청</li>
+                    <li>✅ 웹사이트 주소 하나 올려서 "이 사이트 뭐하는 곳?" 물어보기</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <h3>7일차: 실전 활용</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ 회사/학교 보고서 1개 올려서 "요약" 요청</li>
+                    <li>✅ "주식 분석" 해보기 (가상으로)</li>
+                    <li>✅ 파이썬 코드 1개 만들어 보기</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <h3>14일차: 고급 활용</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ 파일 5개 동시 올려서 "비교 분석" 요청</li>
+                    <li>✅ "김리서처"로 자동 리서치 요청</li>
+                    <li>✅ 하루 일과 계획 세우기</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <h3>30일차: 김 AI 마스터</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ 업무/학습에 매일 쓰기</li>
+                    <li>✅ 동료/친구에게 김 AI 추천하기</li>
+                    <li>✅ "내가 김 AI로 이렇게 시간 절약했어요" 자랑하기</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <strong>마스터의 길</strong>: 매일 <strong>5분씩</strong>이라도 쓰다 보면 <strong>1달 후</strong>엔 당신도 <strong>김 AI 고수</strong>가 됩니다!
+            </div>
+        </div>
+
+        <!-- 섹션 9: 10가지 팁 -->
+        <div class="content-card" id="section9">
+            <h2>💡 섹션 9: 왕초보가 꼭 알아야 할 10가지 팁</h2>
+            
+            <div class="tip-box">
+                <ol style="list-style: none; padding-left: 0;">
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">1️⃣</span> <strong>"모른다"고 솔직하게 말하기</strong><br>
+                        ❌ "알려줘" <br>✅ "이거 처음이라 하나도 모르는데, 1부터 10까지 쉽게 알려줘"
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">2️⃣</span> <strong>"누구를 위한"지 명확히 말하기</strong><br>
+                        ❌ "요약해줘"<br>✅ "고등학생도 이해할 수 있게 요약해줘" / "CEO 보고용으로 요약해줘"
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">3️⃣</span> <strong>"어떻게" 정확히 말하기</strong><br>
+                        ❌ "코드 줘"<br>✅ "파이썬으로 주식 차트 코드 줘. 주석도 달아줘"
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">4️⃣</span> <strong>"길이" 정하기</strong><br>
+                        ❌ "글 써줘"<br>✅ "블로그 글 500자로 써줘"
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">5️⃣</span> <strong>파일 올리기 전에 "질문" 미리 쓰기</strong><br>
+                        파일 올리고 "이거 뭐야?" 보다는 "이 파일에서 중요한 3가지 찾아줘"라고 먼저 쓰기
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">6️⃣</span> <strong>"계속 대화"하기</strong><br>
+                        김 AI는 <strong>기억력</strong>이 있어요. "아까 그거 다시 설명해줘"라고 하면 이어서 답해줍니다.
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">7️⃣</span> <strong>"반대 의견" 구하기</strong><br>
+                        "이 주식 살까?" 물어본 뒤 <strong>"반대로 생각하면 어떤 리스크가 있어?"</strong> 라고 물어보면 더 정확한 판단 가능
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">8️⃣</span> <strong>"표"나 "목록"으로 달라고 하기</strong><br>
+                        "이 내용 표로 정리해줘"라고 하면 보기 편해요
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">9️⃣</span> <strong>"속도" 조절하기</strong><br>
+                        긴 답변은 <strong>"천천히"</strong> 나오니까 기다리세요. <strong>"아직 분석 중이야"</strong> 라고 뜨면 <strong>절대 새로고침</strong> 하지 마세요!
+                    </li>
+
+                    <li style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                        <span class="emoji-bullet">🔟</span> <strong>"틀린 정보" 체크하기</strong><br>
+                        김 AI가 <strong>"이 정보는 2024년 기준입니다"</strong>라고 하면 <strong>"2025년 11월 현재는 어때?"</strong>라고 다시 물어보기
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 결론 -->
+        <div class="content-card">
+            <h2>🏁 최종 결론: 왕초보, 이제 시작하세요!</h2>
+            
+            <div class="highlight-box">
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    김 AI는 <strong>"아무것도 모르는 당신"</strong>을 위해 만들어진 AI입니다. 
+                    <strong>"어려운 걸 쉽게, 긴 걸 짧게, 복잡한 걸 단순하게"</strong> 만들어주는 
+                    <strong>당신만의 천재 비서</strong>예요.
+                </p>
+            </div>
+
+            <div class="tip-box">
+                <strong>가장 중요한 것</strong>: <strong>"그냥 써보는 거예요!"</strong>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>✅ <strong>틀려도 괜찮아요</strong>: 김 AI는 화내지 않아요</li>
+                    <li>✅ <strong>100번 물어봐도 괜찮아요</strong>: 김 AI는 짜증내지 않아요</li>
+                    <li>✅ <strong>초등학생 수준으로 물어봐도 괜찮아요</strong>: 김 AI는 더 쉽게 설명해줄게요</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0; font-size: 4em; animation: bounce 2s infinite;">🎉</div>
+
+            <div class="step-box">
+                <h3>오늘 당장 할 수 있는 3가지</h3>
+                <ol>
+                    <li>✅ <strong>지금 바로</strong> kimiami 열기</li>
+                    <li>✅ <strong>"안녕? 나 코딩 처음 하는데, '안녕하세요' 뜨는 웹페이지 코드 만들어줘"</strong> 라고 치기</li>
+                    <li>✅ 나온 코드 복사해서 <strong>메모장</strong>에 저장하고 <strong>.html</strong> 로 저장해서 더블클릭하기</li>
+                </ol>
+            </div>
+
+            <div class="highlight-box">
+                <p style="font-size: 1.3em; text-align: center; font-weight: bold; color: #667eea;">
+                    🎯 <strong>이것으로 당신은 이미 김 AI의 마스터입니다!</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <footer style="background: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 30px 20px; margin-top: 50px; border-radius: 20px; font-size: 0.9em;">
+            <p>📖 이 가이드는 <strong>2025년 11월 김 AI 기준</strong>으로 작성되었습니다.</p>
+            <p>💬 궁금한 점이 있다면 언제든 kimiai 에서 "이 가이드대로 했는데 안 돼요"라고 물어보세요!</p>
+            <p>🌟 왕초보님, 이제 두려워마시고 시작하세요!</p>
+            <div style="text-align: center; margin: 20px 0; font-size: 3em; animation: bounce 2s infinite;">🚀</div>
+        </footer>
+    </div>
+
+    <script>
+        // 목차 하이라이트 기능
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.content-card');
+            const navLinks = document.querySelectorAll('.toc-list a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === '#' + current) {
+                    link.parentElement.style.background = '#667eea';
+                    link.parentElement.style.color = 'white';
+                } else {
+                    link.parentElement.style.background = '#f0f2ff';
+                    link.parentElement.style.color = '#333';
+                }
+            });
+        });
+
+        // 스무드 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 수정된 접기/펼치기 기능 - 내용이 충분히 펼쳐지도록
+        function toggleSection(id, event) {
+            const element = document.getElementById(id);
+            element.classList.toggle('collapsed');
+            
+            const button = event.target;
+            if (element.classList.contains('collapsed')) {
+                button.textContent = button.textContent.replace('닫기', '펼치기');
+            } else {
+                button.textContent = button.textContent.replace('펼치기', '닫기');
+            }
+        }
+
+        // 페이지 로드 애니메이션
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.content-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+
+        // 복사 기능 추가
+        document.querySelectorAll('.code-block').forEach(block => {
+            const button = document.createElement('button');
+            button.textContent = '복사';
+            button.style.cssText = 'position: absolute; top: 10px; left: 10px; background: #667eea; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8em;';
+            
+            button.addEventListener('click', function() {
+                navigator.clipboard.writeText(block.textContent).then(() => {
+                    button.textContent = '복사완료!';
+                    setTimeout(() => button.textContent = '복사', 1500);
+                });
+            });
+            
+            block.appendChild(button);
+        });
+
+        // bounce 애니메이션 추가
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-10px); }
+                60% { transform: translateY(-5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
