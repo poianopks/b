@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>퍼플렉시티 코멧 완전 왕초보 따라하기 교재</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050814;
+      --bg2: #0b1020;
+      --accent: #4f9dff;
+      --accent2: #7bffdf;
+      --text: #f5f7ff;
+      --text-sub: #b5bddb;
+      --border: #222941;
+      --code-bg: #111729;
+      --card-bg: #080d19;
+      --shadow: 0 18px 40px rgba(0,0,0,0.65);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(circle at top, #151b3a 0, #050814 55%, #02030a 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* 레이아웃 */
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+    }
+
+    /* 사이드바 */
+    .sidebar {
+      padding: 24px 20px;
+      border-right: 1px solid var(--border);
+      background: linear-gradient(180deg, #050814 0%, #050814ee 40%, #02030a 100%);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 20% 20%, #7bffdf, #4f9dff 50%, #3740ff 100%);
+      box-shadow: 0 0 18px rgba(123,255,223,0.7);
+    }
+    .logo-text-main {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.03em;
+    }
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .sidebar-note {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+    }
+    .sidebar-note strong { color: var(--accent2); }
+
+    .toc-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-sub);
+      margin: 8px 0 4px;
+    }
+    .toc {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 24px;
+      font-size: 14px;
+    }
+    .toc li {
+      margin: 3px 0;
+    }
+    .toc a {
+      color: var(--text-sub);
+      display: block;
+      padding: 4px 0;
+      border-radius: 4px;
+    }
+    .toc a:hover {
+      color: var(--accent2);
+    }
+    .toc .toc-depth-2 {
+      padding-left: 14px;
+      font-size: 13px;
+    }
+
+    .sidebar-tip {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(79,157,255,0.18), transparent 60%);
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .sidebar-tip strong { color: var(--accent); }
+
+    /* 메인 콘텐츠 */
+    .main {
+      padding: 30px 28px 42px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    @media (max-width: 720px) {
+      .main { padding: 18px 16px 32px; }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(79,157,255,0.12);
+      color: var(--accent2);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(79,157,255,0.4);
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #7bffdf, #4f9dff);
+      box-shadow: 0 0 10px rgba(123,255,223,0.8);
+    }
+
+    h1 {
+      margin-top: 14px;
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+    h1 span {
+      color: var(--accent2);
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin-top: 34px;
+      margin-bottom: 10px;
+      font-size: 20px;
+      border-bottom: 1px solid rgba(79,157,255,0.3);
+      padding-bottom: 6px;
+    }
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 6px;
+      font-size: 16px;
+      color: var(--accent2);
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--text);
+      margin: 5px 0 9px;
+    }
+
+    ul, ol {
+      font-size: 14px;
+      padding-left: 20px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+    }
+    li { margin: 3px 0; }
+
+    .card {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(79,157,255,0.14), transparent 60%);
+      box-shadow: var(--shadow);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .step-header {
+      font-weight: 600;
+      color: var(--accent2);
+      margin-bottom: 4px;
+    }
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(79,157,255,0.1);
+      border: 1px solid rgba(79,157,255,0.7);
+      color: var(--accent2);
+      font-size: 11px;
+      margin-right: 6px;
+    }
+
+    .prompt {
+      margin: 6px 0 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: #e1e7ff;
+      white-space: pre-line;
+    }
+    .prompt-label {
+      font-size: 11px;
+      color: var(--accent2);
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+    .hint strong { color: var(--accent2); }
+
+    .kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: #050814;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      color: var(--accent2);
+    }
+
+    .day-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(123,255,223,0.1);
+      border: 1px solid rgba(123,255,223,0.4);
+      font-size: 11px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      margin-top: 26px;
+      padding-top: 10px;
+      font-size: 12px;
+      color: var(--text-sub);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <div>
+        <div class="logo-text-main">Comet Master</div>
+        <div class="logo-text-sub">Daily Training HTML</div>
+      </div>
+    </div>
+    <p class="sidebar-note">
+      이 파일은 <strong>퍼플렉시티 코멧</strong>을 매일 연습하기 위한
+      <strong>왕초보 전용 교재</strong>입니다.[web:1]
+      <br />브라우저에서 이 HTML만 열고, 위에서 아래로 한 줄씩 따라 하면서 연습하면 됩니다.[web:1]
+    </p>
+
+    <div class="toc-title">목차</div>
+    <ul class="toc">
+      <li><a href="#intro">0. 코멧 전체 개념 잡기</a></li>
+      <li><a href="#day1">1일차 · 설치 & 기본 UI</a></li>
+      <li class="toc-depth-2"><a href="#day1-install">설치하기</a></li>
+      <li class="toc-depth-2"><a href="#day1-ui">기본 버튼 익히기</a></li>
+
+      <li><a href="#day2">2일차 · 쿠팡 쇼핑 자동화</a></li>
+      <li><a href="#day3">3일차 · 아이템 비교 & 그래프</a></li>
+      <li><a href="#day4">4일차 · 단축키 & 뉴스 보고서</a></li>
+      <li><a href="#day5">5일차 · 탭 정리 & 오늘 한 일</a></li>
+      <li><a href="#day6">6일차 · PDF 리서치</a></li>
+      <li><a href="#day7">7일차 이후 · 투자/트레이딩 응용</a></li>
+    </ul>
+
+    <div class="sidebar-tip">
+      <strong>사용 팁</strong><br />
+      • 하루에 섹션 하나만 실제로 따라 해 보세요.[web:1]<br />
+      • “따라 쓴 프롬프트 그대로 저장”해서 나중에 재사용하면 좋습니다.[web:1]
+    </div>
+  </aside>
+
+  <!-- 메인 -->
+  <main class="main">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      COMET BROWSER · FOLLOW-ALONG
+    </div>
+    <h1 id="intro">퍼플렉시티 <span>코멧</span> 완전 왕초보 따라하기 교재</h1>
+    <p class="subtitle">
+      크롬처럼 내가 직접 “운전”하는 브라우저가 아니라, 코멧에게 일을 “지시만 하는” 연습을<br />
+      하루에 조금씩 하면, 1주일 안에 충분히 몸에 익힐 수 있습니다.[web:1]
+    </p>
+
+    <!-- 0. 개념 -->
+    <div class="card">
+      <h2>0. 코멧이 무엇인지 개념부터</h2>
+      <p>
+        기존 브라우저(크롬·사파리)는 내가 직접 검색·클릭·복사·붙여넣기를 해야 하는 “수동 자동차”에 가깝습니다.[web:1]
+      </p>
+      <p>
+        코멧은 화면에 보이는 내용을 이해하고, 대신 클릭·입력·요약·정리까지 해 주는
+        “운전기사 딸린 차 + 비서” 같은 AI 브라우저입니다.[web:1]
+      </p>
+      <p>
+        이 HTML은 <strong>1일차~6일차</strong>까지,
+        매일 한 번씩 따라 하면 좋은 루틴을 정리해 둔 교재입니다.[web:1]
+      </p>
+      <p class="hint">
+        핵심: <strong>“내가 직접 하는 작업”을 줄이고, “코멧에게 말로 부탁”하는 습관</strong>을 만드는 것이 목표입니다.[web:1]
+      </p>
+    </div>
+
+    <!-- 1일차 -->
+    <section id="day1">
+      <span class="day-label">DAY 1</span>
+      <h2>1일차 · 설치 & 기본 화면 익히기</h2>
+
+      <article id="day1-install">
+        <h3>1-1. 코멧 설치하기</h3>
+
+        <div class="step-header">
+          <span class="step-label">1</span>크롬에서 설치 페이지 열기
+        </div>
+        <p>
+          1) 크롬을 켜고, 주소창에 <strong>“퍼플렉시티 코멧”</strong>을 검색합니다.[web:1]
+          <br />
+          2) 검색 결과에서 사이트 이름이 영어로 <strong>Perplexity</strong>라고 적힌 공식 사이트를 클릭합니다.[web:1]
+        </p>
+
+        <div class="step-header">
+          <span class="step-label">2</span>다운로드 후 설치
+        </div>
+        <p>
+          3) 사이트 중앙에 보이는 <strong>“Comet 다운로드”</strong> 버튼을 클릭합니다.[web:1]
+          <br />
+          4) 내려받은 설치 파일을 실행하고, 안내에 따라 설치를 완료합니다.[web:1]
+        </p>
+
+        <div class="step-header">
+          <span class="step-label">3</span>로그인
+        </div>
+        <p>
+          5) 코멧을 실행하면 로그인 창이 뜹니다. 평소에 쓰는 이메일이나 구글 계정으로 로그인합니다.[web:1]
+        </p>
+
+        <p class="hint">
+          ※ 나중에 개인정보가 걱정되면, <strong>“코멧 전용 구글 계정”</strong>을 새로 만들어 연결하는 것도 좋습니다.[web:1]
+        </p>
+      </article>
+
+      <article id="day1-ui">
+        <h3>1-2. 기본 UI 버튼 6개만 익히기</h3>
+
+        <div class="card">
+          <h3>상단 왼쪽: 3개 버튼</h3>
+          <ul>
+            <li><strong>돋보기 아이콘</strong> : 일반 검색 모드입니다. 보통 질문할 때 쓰는 기본 모드입니다.[web:1]</li>
+            <li><strong>연구(Research) 아이콘</strong> : 깊은 리서치 모드로, 여러 자료를 묶어서 분석할 때 좋습니다.[web:1]</li>
+            <li><strong>프로젝트 재시작</strong> : 이전에 작업하던 프로젝트나 대화를 다시 불러올 때 사용합니다.[web:1]</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>상단 오른쪽: 3개 버튼</h3>
+          <ul>
+            <li><strong>지구본 아이콘</strong> : 어느 지역·사이트 기준으로 검색할지 지정할 수 있습니다.[web:1]</li>
+            <li><strong>모델 선택</strong> : GPT, Gemini 등 어떤 모델로 대답할지 고르는 곳입니다.[web:1]</li>
+            <li><strong>파일 첨부 / 음성 입력</strong> : PDF나 문서를 넣거나, 목소리로 질문할 때 사용합니다.[web:1]</li>
+          </ul>
+        </div>
+
+        <h3>1-3. 비공식(시크릿) 모드</h3>
+        <p>
+          1) 왼쪽 사이드바에서 본인 계정 아이콘을 클릭합니다.[web:1]
+          <br />
+          2) 아래쪽에 <strong>“비공식”</strong> 메뉴가 보이면 클릭합니다.[web:1]
+          <br />
+          3) 채팅창에 선글라스 쓴 아이콘이 나타나면, <strong>24시간 동안 기록이 저장되지 않는 모드</strong>입니다.[web:1]
+        </p>
+        <p class="hint">
+          민감한 내용을 테스트할 땐, 비공식 모드를 사용하는 습관을 들이면 좋습니다.[web:1]
+        </p>
+      </article>
+    </section>
+
+    <!-- 2일차 -->
+    <section id="day2">
+      <span class="day-label">DAY 2</span>
+      <h2>2일차 · 쿠팡 쇼핑 자동화 따라 하기</h2>
+
+      <div class="card">
+        <h3>목표</h3>
+        <p>
+          오늘의 목표는 <strong>“검색·비교·장바구니 담기”</strong>를 내가 직접 하지 않고,
+          코멧에게 말로 지시해 보는 것입니다.[web:1]
+        </p>
+      </div>
+
+      <h3>2-1. 쿠팡 접속 & 어시스턴트 열기</h3>
+      <p>
+        1) 코멧 주소창에 <strong>coupang.com</strong> 을 입력해 쿠팡으로 들어갑니다.[web:1]
+        <br />
+        2) 우측 상단에 있는 <strong>“어시스턴트”</strong> 버튼을 클릭해서 채팅 패널을 엽니다.[web:1]
+      </p>
+
+      <h3>2-2. 상품 추천 + 이유까지 받기</h3>
+      <div class="prompt-label">입력 예시</div>
+      <div class="prompt">
+쿠팡에서 비타민 C 가루형 제품을 사고 싶은데,
+몇 가지를 골라서 추천해 주고,
+각 제품을 추천하는 이유도 함께 설명해 줘.
+      </div>
+      <p>
+        이렇게 입력하면, 코멧이 쿠팡 안에서 비타민 C 가루형 제품들을 찾아서 몇 개를 추천하고,
+        가격·용량·평점·성분 등을 기준으로 추천 이유를 설명해 줍니다.[web:1]
+      </p>
+
+      <h3>2-3. “네가 해 줘” / “대신 검색해 드릴까요?” 허용</h3>
+      <p>
+        채팅 안에 <strong>“네가 해 줘”</strong> 또는
+        <strong>“도우미가 대신 검색해 드릴까요?”</strong> 같은 버튼이 나타납니다.[web:1]
+      </p>
+      <p>
+        이 버튼은 <strong>“코멧이 직접 쿠팡 화면을 클릭하고 검색하게 허용할까요?”</strong>라는 의미입니다.[web:1]
+      </p>
+      <ul>
+        <li><strong>한 번만 허용</strong> : 이번 한 번만 자동 클릭/탐색을 허용.[web:1]</li>
+        <li><strong>항상 허용</strong> : 앞으로도 계속 자동 탐색을 허용.[web:1]</li>
+      </ul>
+      <p class="hint">
+        처음에는 <strong>“한 번만 허용”</strong>으로 연습해 보다가, 익숙해지면 “항상 허용”으로 바꿔도 좋습니다.[web:1]
+      </p>
+
+      <h3>2-4. 장바구니까지 자동으로 넣기</h3>
+      <div class="prompt-label">추가 입력 예시</div>
+      <div class="prompt">
+방금 추천해 준 제품들 중에서
+가성비가 가장 좋다고 판단되는 제품 하나를 골라서
+장바구니에 넣어 줘.
+      </div>
+      <p>
+        코멧이 직접 쿠팡 화면에서 해당 상품을 클릭하고,
+        옵션을 확인한 뒤 장바구니에 넣어 줍니다.[web:1]
+      </p>
+      <p>
+        사용자는 이 HTML 교재대로 따라 하면서,
+        “검색·비교·담기” 3단계를 <strong>말로만 해결하는 경험</strong>을 만드는 것이 핵심입니다.[web:1]
+      </p>
+    </section>
+
+    <!-- 3일차 -->
+    <section id="day3">
+      <span class="day-label">DAY 3</span>
+      <h2>3일차 · 무신사 아이템 비교 & 기사 그래프 만들기</h2>
+
+      <h3>3-1. 무신사 러닝화 비교</h3>
+      <p>
+        1) 코멧에서 무신사 사이트에 접속합니다.[web:1]
+        <br />
+        2) 마음에 드는 러닝화 상품들을 몇 개 클릭해서, 각각 새 탭으로 열어 둡니다.[web:1]
+      </p>
+
+      <div class="prompt-label">비교 요청 예시</div>
+      <div class="prompt">
+지금 무신사 탭에 열려 있는 러닝화들을 서로 비교해 줘.
+각 상품의 이름, 가격, 특징, 장단점을 표로 정리해 줘.
+      </div>
+      <p>
+        코멧은 여러 탭 중에서 무신사 관련 탭만 인식해서,
+        상품 정보들을 표로 깔끔하게 정리해 줍니다.[web:1]
+      </p>
+
+      <h3>3-2. @로 탭 선택해서 비교하기</h3>
+      <p>
+        채팅 입력창에서 <span class="kbd">@</span> 를 치면,
+        현재 열려 있는 탭 목록이 나타납니다.[web:1]
+      </p>
+      <p>
+        이 중에서 실제로 비교하고 싶은 탭들만 선택한 뒤, 다음처럼 입력해 봅니다.[web:1]
+      </p>
+
+      <div class="prompt-label">@ 탭 지정 예시</div>
+      <div class="prompt">
+@무신사-러닝화A @무신사-러닝화B @무신사-러닝화C
+이 세 상품만 다시 비교해 줘.
+가격, 쿠션감, 무게, 사용 목적(조깅/러닝 등)을 기준으로 정리해 줘.
+      </div>
+
+      <h3>3-3. 기사 표 → 그래프로 만들기</h3>
+      <p>
+        1) 뉴스 사이트에서 <strong>월별 수출 실적/수출액 증가율</strong>이 표로 정리된 기사를 코멧으로 엽니다.[web:1]
+      </p>
+
+      <div class="prompt-label">그래프 요청 예시</div>
+      <div class="prompt">
+이 기사에 있는 월별 수출액 증가율 표를 사용해서
+꺾은선 그래프를 만들어 줘.
+가능하다면 월별 데이터 표도 함께 정리해 줘.
+      </div>
+      <p>
+        코멧이 표 내용을 읽고, 사용할 수 있는 온라인 차트 도구를 찾아 데이터를 입력하고,
+        그래프를 그려 줍니다.[web:1]
+      </p>
+
+      <p>
+        만약 처음에 엉뚱한 그래프를 그리면, 이렇게 다시 요청합니다.[web:1]
+      </p>
+      <div class="prompt">
+표 안에 있는 "월별 수출액 증가율" 숫자만 사용해서
+다시 꺾은선 그래프를 만들어 줘.
+      </div>
+
+      <p class="hint">
+        중간에 “도우미가 대신 검색해 드릴까요?”가 나오면, 꼭 허용을 눌러야 코멧이 외부 차트 도구를 쓸 수 있습니다.[web:1]
+      </p>
+    </section>
+
+    <!-- 4일차 -->
+    <section id="day4">
+      <span class="day-label">DAY 4</span>
+      <h2>4일차 · 단축키 & 뉴스 기사 → 보고서</h2>
+
+      <h3>4-1. 단축키(Shortcut) 만들기</h3>
+      <p>
+        코멧에서는 자주 쓰는 명령을 <strong>단축키(Shortcut)</strong>로 저장해 둘 수 있습니다.[web:1]
+      </p>
+      <p>
+        채팅창에 <span class="kbd">/</span> 를 입력하면 단축키 메뉴가 뜨고,
+        그 중에서 <strong>“단축키 만들기”</strong>를 선택합니다.[web:1]
+      </p>
+
+      <div class="card">
+        <h3>단축키 1 · 한영 번역</h3>
+        <ul>
+          <li>단축키 이름: <strong>한영 번역</strong></li>
+          <li>명령 내용:</li>
+        </ul>
+        <div class="prompt">
+아래에 붙여 넣는 한국어 텍스트를
+자연스러운 업무용 영어로 번역해 줘.
+가능하면 문장 구조는 유지하되,
+어색한 표현은 자연스럽게 고쳐 줘.
+        </div>
+        <p class="hint">
+          저장 후에는, 채팅창에 <span class="kbd">/한영 번역</span> 을 입력하고
+          아래에 한국어 문서를 붙여 넣기만 하면 바로 번역이 됩니다.[web:1]
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>단축키 2 · 유튜브 요약</h3>
+        <ul>
+          <li>단축키 이름: <strong>유튜브 요약</strong></li>
+          <li>명령 내용:</li>
+        </ul>
+        <div class="prompt">
+아래에 붙여 넣는 유튜브 링크의 영상 내용을 요약해 줘.
+핵심 주장, 중요한 숫자, 결론을 중심으로
+5줄 이내로 정리해 줘.
+        </div>
+        <p class="hint">
+          /유튜브 요약 + 유튜브 링크 → 긴 영상을 다 보지 않고
+          핵심만 먼저 확인할 수 있습니다.[web:1]
+        </p>
+      </div>
+
+      <h3>4-2. 뉴스 기사 → 요약 → 회사 보고서</h3>
+      <p>
+        1) 포털에서 읽고 싶은 뉴스를 하나 골라 코멧으로 엽니다.[web:1]
+        <br />
+        2) 오른쪽 위 어시스턴트 버튼을 눌러 패널을 엽니다.[web:1]
+      </p>
+
+      <div class="prompt-label">1단계 · 요약</div>
+      <div class="prompt">
+이 페이지의 내용을 5줄 이내로 요약해 줘.
+핵심 수치와 결론을 포함해서 정리해 줘.
+      </div>
+
+      <div class="prompt-label">2단계 · 회사 보고서 형식으로</div>
+      <div class="prompt">
+방금 요약한 내용을
+회사 내부 보고용 문서 형식으로 다시 정리해 줘.
+
+구조는 다음과 같이 맞춰 줘:
+1) 배경
+2) 현재 상황
+3) 시사점
+4) 내가 취할 수 있는 액션 아이템
+      </div>
+
+      <p class="hint">
+        이 패턴은 “뉴스 → 요약 → 업무 보고서”로 바꾸는 기본 골격입니다.
+        투자 뉴스·경제 기사에도 그대로 쓸 수 있습니다.[web:1]
+      </p>
+    </section>
+
+    <!-- 5일차 -->
+    <section id="day5">
+      <span class="day-label">DAY 5</span>
+      <h2>5일차 · 탭 정리 & 오늘 한 일 자동 기록</h2>
+
+      <h3>5-1. 열려 있는 탭 전체 요약</h3>
+      <p>
+        하루 동안 코멧으로 여러 사이트를 열어 두었다고 가정합니다.[web:1]
+        퇴근 전에 다음 문장을 입력해 봅니다.[web:1]
+      </p>
+
+      <div class="prompt-label">전체 탭 요약</div>
+      <div class="prompt">
+지금 코멧에서 열려 있는 모든 탭의 내용을
+각각 한 줄씩 요약해 줘.
+      </div>
+      <p>
+        코멧은 각 탭의 핵심 내용을 한 줄씩 정리해서 보여 줍니다.[web:1]
+      </p>
+
+      <h3>5-2. 오늘 방문한 사이트 분류</h3>
+      <div class="prompt-label">사이트 분류</div>
+      <div class="prompt">
+오늘 내가 방문한 사이트들을
+뉴스 / 쇼핑 / 리서치 / 기타 등으로 카테고리화해서 정리해 줘.
+각 카테고리별로 어떤 사이트를 방문했는지도 알려 줘.
+      </div>
+      <p>
+        코멧이 하루 동안 방문한 사이트들을 분류하고,
+        <strong>가장 오래 머문 사이트</strong>도 함께 알려 줍니다.[web:1]
+      </p>
+
+      <h3>5-3. 탭 닫기 & 다시 열기</h3>
+      <div class="prompt-label">예시 1 · 뉴스만 남기고 닫기</div>
+      <div class="prompt">
+뉴스 관련 탭만 남기고
+나머지 탭은 모두 닫아 줘.
+      </div>
+
+      <div class="prompt-label">예시 2 · 쿠팡 탭 다시 살리기</div>
+      <div class="prompt">
+아까 닫았던 쿠팡 관련 탭을
+다시 열어 줘.
+      </div>
+
+      <p class="hint">
+        “여러 둔 탭 정리해 줘.” 한 문장만 써도,
+        코멧이 브라우저를 대신 관리해 주는 느낌을 바로 받을 수 있습니다.[web:1]
+      </p>
+    </section>
+
+    <!-- 6일차 -->
+    <section id="day6">
+      <span class="day-label">DAY 6</span>
+      <h2>6일차 · PDF 리서치 & 키워드 분석</h2>
+
+      <p>
+        오늘은 정부 보고서, 논문, 기업 리포트 같은 PDF를 코멧에 던져 놓고,
+        기관명 추출·단어 빈도 확인을 자동으로 해 보는 날입니다.[web:1]
+      </p>
+
+      <h3>6-1. PDF 첨부 후 기관명 추출</h3>
+      <p>
+        1) 새 채팅을 열고, PDF 파일(보고서·논문 등)을 첨부합니다.[web:1]
+      </p>
+
+      <div class="prompt-label">기관명 추출</div>
+      <div class="prompt">
+이 PDF 문서에서 등장하는 기관 이름(정부 부처, 기관, 회사 등)만
+모두 추출해서 리스트 형태로 정리해 줘.
+      </div>
+      <p>
+        코멧은 본문·각주·표까지 읽어서 기관명을 깔끔하게 정리해 줍니다.[web:1]
+      </p>
+
+      <h3>6-2. 특정 단어 출현 횟수 세기</h3>
+      <div class="prompt-label">단어 빈도</div>
+      <div class="prompt">
+이 문서에서 "대책"이라는 단어가
+몇 번 등장하는지 세어 줘.
+비슷한 의미의 단어(예: 대응, 방안)가 있다면
+그것들도 각각 몇 번씩 나오는지 함께 알려 줘.
+      </div>
+      <p>
+        이렇게 하면, 문서의 “관심 포인트”가 어디에 집중되어 있는지 빠르게 파악할 수 있습니다.[web:1]
+      </p>
+    </section>
+
+    <!-- 7일차 이후 -->
+    <section id="day7">
+      <span class="day-label">DAY 7+</span>
+      <h2>7일차 이후 · 투자/트레이딩 루틴으로 확장</h2>
+
+      <p>
+        이제 여기부터는 사용자의 본업(투자·트레이딩)에 맞게 프롬프트를 조합해서
+        <strong>“나만의 코멧 루틴”</strong>을 만드는 단계입니다.[web:1]
+      </p>
+
+      <div class="card">
+        <h3>예시 · 아침 시장 체크</h3>
+        <div class="prompt">
+오늘 나온 한국 증시와 미국 증시 관련 주요 기사 중에서
+상위 10개만 골라 핵심 내용을 요약해 줘.
+
+각 기사마다
+1) 어떤 지수/섹터/종목에 대한 기사인지
+2) 시장이 긍정/부정 어느 쪽에 가깝게 반응할 수 있는지
+간단히 적어 줘.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>예시 · 종목별 뉴스 모음</h3>
+        <div class="prompt">
+오늘 하루 동안 삼성전자와 관련해서 나온 주요 기사와 리포트만 모아서
+제목과 핵심 내용을 요약해 줘.
+
+중요한 이벤트(실적 발표, 규제, 대형 수주 등)가 있다면
+별표를 붙여서 표시해 줘.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>예시 · 유튜브 투자 채널 분석</h3>
+        <div class="prompt">
+아래에 붙여 넣는 유튜브 투자 영상 링크의 내용을 요약해 줘.
+특히,
+1) 상승/하락 근거로 제시하는 지표나 데이터
+2) 리스크 요인
+3) 결론과 투자자에게 주는 메시지
+를 중심으로 정리해 줘.
+        </div>
+      </div>
+
+      <p class="hint">
+        필요하다면, 위 예시들을 단축키로 만들어 두고
+        매일 아침/저녁 루틴으로 돌리면,
+        “뉴스 수집 + 요약 + 정리”에 쓰던 시간이 크게 줄어들 수 있습니다.[web:1]
+      </p>
+    </section>
+
+    <div class="footer">
+      이 HTML 파일은 퍼플렉시티 코멧 관련 여러 한국어 영상들에서 소개한 기능
+      (쇼핑 자동화, 아이템 비교, 표·그래프 생성, 메일/기사 요약, 단축키, PDF 리서치, 탭 관리 등)을
+      왕초보 입장에서 “하루 하나씩 따라 하기”용으로 재구성한 학습용 노트입니다.[web:1]
+    </div>
+  </main>
+</div>
+</body>
+</html>
