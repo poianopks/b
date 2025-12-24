@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC 왕초보를 위한 Browser Operator 완전 따라하기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 2;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.4em;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin: 50px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 35px 0 20px 0;
+        }
+        
+        h4 {
+            color: #555;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        
+        p {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        
+        .step-box {
+            background: #f8f9fa;
+            border-left: 6px solid #667eea;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .sub-step {
+            background: white;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 20px 0 20px 30px;
+            border-radius: 8px;
+        }
+        
+        .sub-step-number {
+            display: inline-block;
+            background: #764ba2;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 5px solid #667eea;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .tip-box {
+            background: #e7f3ff;
+            border: 2px solid #2196F3;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+        
+        .tip-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+        
+        .screenshot-placeholder {
+            background: #e9ecef;
+            border: 3px dashed #6c757d;
+            padding: 60px;
+            text-align: center;
+            margin: 25px 0;
+            border-radius: 10px;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+        
+        .button-example {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 15px 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            font-size: 1.1em;
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 40px;
+            font-size: 1.2em;
+        }
+        
+        li {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1.1em;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        thead tr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        th, td {
+            padding: 18px 20px;
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tbody tr:nth-of-type(even) {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background: #e9ecef;
+        }
+        
+        .keyboard-key {
+            display: inline-block;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            padding: 5px 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 5px;
+        }
+        
+        .mouse-action {
+            background: #e7f3ff;
+            border: 2px solid #2196F3;
+            border-radius: 8px;
+            padding: 10px 20px;
+            display: inline-block;
+            margin: 10px 5px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            header p {
+                font-size: 1.1em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 1.8em;
+            }
+            
+            .step-number {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💻 PC 왕초보를 위한<br>Browser Operator 완전 따라하기</h1>
+            <p>PC를 켜는 것부터 Browser Operator로 일을 시키는 것까지<br>한 걸음씩 천천히 따라해보세요!</p>
+            <p style="font-size: 1em; margin-top: 20px; opacity: 0.9;">⏱️ 예상 소요 시간: 30분~1시간</p>
+        </header>
+        
+        <div class="content">
+            <div class="highlight-box">
+                <h3 style="margin-top: 0;">🎯 이 가이드를 마치면 할 수 있는 것</h3>
+                <ul style="font-size: 1.1em;">
+                    <li>✅ Browser Operator를 PC에 설치하고 연결하기</li>
+                    <li>✅ 네이버, 구글 등 웹사이트에 자동으로 로그인하기</li>
+                    <li>✅ AI에게 "네이버에서 삼성전자 주가 찾아줘" 같은 명령하기</li>
+                    <li>✅ 복잡한 웹 작업을 AI가 대신하게 만들기</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <h4 style="margin-top: 0;">⚠️ 시작하기 전에 준비할 것</h4>
+                <ul>
+                    <li><strong>PC (컴퓨터)</strong> - 윈도우 10 이상 또는 맥OS</li>
+                    <li><strong>인터넷 연결</strong> - 와이파이 또는 유선</li>
+                    <li><strong>이메일 주소</strong> - Manus 계정 만들기용</li>
+                    <li><strong>30분~1시간의 시간</strong> - 천천히 따라하세요</li>
+                </ul>
+            </div>
+            
+            <h2>📚 전체 과정 미리보기</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>단계</th>
+                        <th>할 일</th>
+                        <th>소요 시간</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1단계</strong></td>
+                        <td>PC 켜고 Chrome 브라우저 열기</td>
+                        <td>5분</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2단계</strong></td>
+                        <td>Manus 계정 만들기</td>
+                        <td>5분</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3단계</strong></td>
+                        <td>Browser Operator 확장 프로그램 설치</td>
+                        <td>5분</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4단계</strong></td>
+                        <td>Manus와 Browser Operator 연결</td>
+                        <td>5분</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5단계</strong></td>
+                        <td>네이버에 로그인하기</td>
+                        <td>5분</td>
+                    </tr>
+                    <tr>
+                        <td><strong>6단계</strong></td>
+                        <td>Browser Operator 작동 테스트</td>
+                        <td>5분</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>🚀 1단계: PC 켜고 Chrome 브라우저 열기</h2>
+            
+            <div class="step-box">
+                <div class="step-number">1-1</div>
+                <h3 style="margin-top: 0;">PC 전원 켜기</h3>
+                <p>PC의 전원 버튼을 눌러서 컴퓨터를 켜세요.</p>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> 전원 버튼은 보통 PC 본체 앞면이나 노트북 키보드 위쪽에 있어요. 동그란 모양이거나 전원 표시(⏻)가 그려져 있어요.
+                </div>
+                
+                <p><strong>기다리기:</strong> PC가 완전히 켜질 때까지 1~2분 정도 기다려주세요. 윈도우 로고나 로그인 화면이 나타나면 준비된 거예요!</p>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">1-2</div>
+                <h3 style="margin-top: 0;">윈도우에 로그인하기</h3>
+                <p>비밀번호를 입력하거나 PIN 번호를 입력해서 윈도우에 로그인하세요.</p>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>비밀번호 입력:</strong> 키보드로 비밀번호를 천천히 입력하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Enter 누르기:</strong> 키보드에서 <span class="keyboard-key">Enter</span> 키를 눌러주세요.
+                </div>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> 비밀번호를 잊어버렸다면? 화면 아래에 "비밀번호를 잊으셨나요?" 또는 "암호 재설정" 버튼을 찾아서 클릭하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">1-3</div>
+                <h3 style="margin-top: 0;">Chrome 브라우저가 있는지 확인하기</h3>
+                <p>Chrome 브라우저가 이미 설치되어 있는지 확인해볼게요.</p>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>바탕화면 확인:</strong> 바탕화면에 Chrome 아이콘(빨강/노랑/초록/파랑 동그라미)이 있나요?
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>있으면:</strong> <span class="mouse-action">더블클릭</span> (빠르게 두 번 클릭)해서 Chrome을 열어주세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>없으면:</strong> 다음 단계(1-4)로 넘어가서 Chrome을 설치해주세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">1-4</div>
+                <h3 style="margin-top: 0;">Chrome 브라우저 설치하기 (없는 경우만)</h3>
+                <p>Chrome이 없다면 지금 설치해볼게요!</p>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Edge 브라우저 열기:</strong> 윈도우에는 기본적으로 Edge 브라우저가 설치되어 있어요. 화면 아래 작업 표시줄에서 파란색 "e" 모양 아이콘을 찾아서 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Chrome 다운로드 페이지 접속:</strong> 주소창(위쪽 긴 네모 칸)을 클릭하고, 다음 주소를 입력하세요:
+                    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        https://www.google.com/chrome
+                    </div>
+                    입력 후 <span class="keyboard-key">Enter</span> 키를 누르세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>"Chrome 다운로드" 버튼 클릭:</strong> 페이지가 열리면 큰 파란색 버튼에 "Chrome 다운로드"라고 써있을 거예요. 그 버튼을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>다운로드 기다리기:</strong> 파일이 다운로드될 때까지 30초~1분 정도 기다려주세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">⑤</span>
+                    <strong>설치 파일 실행:</strong> 다운로드가 끝나면 화면 아래쪽이나 왼쪽 아래에 "ChromeSetup.exe" 파일이 나타날 거예요. 그것을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">⑥</span>
+                    <strong>설치 진행:</strong> "예" 또는 "설치" 버튼이 나오면 클릭하세요. Chrome이 자동으로 설치됩니다. 2~3분 정도 기다려주세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">⑦</span>
+                    <strong>Chrome 열기:</strong> 설치가 끝나면 Chrome이 자동으로 열릴 거예요!
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">✅ 1단계 완료!</h4>
+                <p>이제 Chrome 브라우저가 열려 있나요? 그렇다면 다음 단계로 넘어갈 준비가 되었어요!</p>
+            </div>
+            
+            <h2>👤 2단계: Manus 계정 만들기</h2>
+            
+            <div class="step-box">
+                <div class="step-number">2-1</div>
+                <h3 style="margin-top: 0;">Manus 웹사이트 접속하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>주소창 클릭:</strong> Chrome 브라우저 위쪽에 있는 긴 네모 칸(주소창)을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Manus 주소 입력:</strong> 다음 주소를 천천히 입력하세요:
+                    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        https://manus.im
+                    </div>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>Enter 누르기:</strong> <span class="keyboard-key">Enter</span> 키를 눌러서 Manus 웹사이트로 이동하세요.
+                </div>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> 주소를 입력할 때 대문자/소문자는 구분하지 않아도 돼요. "manus.im"이라고만 입력해도 자동으로 "https://"가 붙어요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">2-2</div>
+                <h3 style="margin-top: 0;">회원가입 시작하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>"Sign Up" 또는 "회원가입" 버튼 찾기:</strong> Manus 웹사이트가 열리면 화면 오른쪽 위에 "Sign Up" 또는 "회원가입" 버튼이 있을 거예요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>버튼 클릭:</strong> 그 버튼을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">2-3</div>
+                <h3 style="margin-top: 0;">정보 입력하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>이메일 주소 입력:</strong> 본인의 이메일 주소를 입력하세요. 예: yourname@gmail.com
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>비밀번호 만들기:</strong> 기억하기 쉬운 비밀번호를 만들어서 입력하세요. 
+                    <div class="warning-box" style="margin-top: 15px;">
+                        <strong>⚠️ 비밀번호 규칙:</strong>
+                        <ul>
+                            <li>8자 이상</li>
+                            <li>영문 대문자와 소문자 포함</li>
+                            <li>숫자 포함</li>
+                            <li>특수문자 포함 (예: !, @, #, $)</li>
+                        </ul>
+                        <strong>예시:</strong> MyPassword123!
+                    </div>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>비밀번호 확인:</strong> 같은 비밀번호를 한 번 더 입력하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>"가입" 또는 "Sign Up" 버튼 클릭:</strong> 모든 정보를 입력했으면 버튼을 클릭하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">2-4</div>
+                <h3 style="margin-top: 0;">이메일 인증하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>이메일 확인:</strong> 방금 입력한 이메일 주소로 Manus에서 인증 이메일을 보냈을 거예요. 이메일을 확인하러 가세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>새 탭 열기:</strong> Chrome에서 <span class="keyboard-key">Ctrl</span> + <span class="keyboard-key">T</span> 키를 동시에 눌러서 새 탭을 여세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>이메일 사이트 접속:</strong> Gmail을 사용한다면 "gmail.com"을 입력하고 <span class="keyboard-key">Enter</span>를 누르세요. 다른 이메일을 사용한다면 해당 사이트로 가세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>Manus 이메일 찾기:</strong> 받은 편지함에서 "Manus" 또는 "manus.im"에서 온 이메일을 찾으세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">⑤</span>
+                    <strong>인증 링크 클릭:</strong> 이메일을 열고, 안에 있는 "이메일 인증" 또는 "Verify Email" 버튼을 클릭하세요.
+                </div>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> 이메일이 안 보인다면? 스팸 메일함을 확인해보세요. 그래도 없다면 5분 정도 기다렸다가 다시 확인하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">2-5</div>
+                <h3 style="margin-top: 0;">Manus에 로그인하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Manus 탭으로 돌아가기:</strong> Chrome 위쪽에 있는 탭들 중에서 "Manus" 탭을 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>로그인 정보 입력:</strong> 이메일 주소와 비밀번호를 입력하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>"로그인" 또는 "Sign In" 버튼 클릭:</strong> 버튼을 클릭해서 Manus에 로그인하세요.
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">✅ 2단계 완료!</h4>
+                <p>Manus 계정이 만들어졌고 로그인도 완료되었어요! 이제 Browser Operator를 설치할 준비가 되었습니다.</p>
+            </div>
+            
+            <h2>🔧 3단계: Browser Operator 확장 프로그램 설치</h2>
+            
+            <div class="step-box">
+                <div class="step-number">3-1</div>
+                <h3 style="margin-top: 0;">Browser Operator 페이지로 이동하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Manus 웹사이트에서 찾기:</strong> Manus에 로그인한 상태에서, 화면 위쪽 메뉴에서 "Browser Operator" 또는 "기능" 메뉴를 찾으세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>또는 직접 접속:</strong> 새 탭을 열고 다음 주소를 입력하세요:
+                    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        https://manus.im/features/manus-browser-operator
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">3-2</div>
+                <h3 style="margin-top: 0;">"Install Extension" 버튼 클릭하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>버튼 찾기:</strong> Browser Operator 페이지에서 "Install Extension" 또는 "확장 프로그램 설치" 버튼을 찾으세요. 보통 페이지 위쪽에 큰 버튼으로 있어요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>버튼 클릭:</strong> 그 버튼을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>Chrome 웹 스토어로 이동:</strong> 자동으로 Chrome 웹 스토어 페이지가 열릴 거예요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">3-3</div>
+                <h3 style="margin-top: 0;">Chrome 웹 스토어에서 설치하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>"Chrome에 추가" 버튼 클릭:</strong> Chrome 웹 스토어 페이지에서 파란색 "Chrome에 추가" 버튼을 찾아서 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>확인 팝업:</strong> "Manus Browser Operator를 추가하시겠습니까?"라는 작은 창이 나타날 거예요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>"확장 프로그램 추가" 클릭:</strong> 그 창에서 "확장 프로그램 추가" 버튼을 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>설치 기다리기:</strong> 10~20초 정도 기다리면 설치가 완료됩니다.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">3-4</div>
+                <h3 style="margin-top: 0;">설치 확인하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>확장 프로그램 아이콘 찾기:</strong> Chrome 오른쪽 위에 퍼즐 조각 모양 아이콘이 있어요. 그것을 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Manus Browser Operator 확인:</strong> 목록에서 "Manus Browser Operator"가 보이나요? 보인다면 설치 성공!
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>고정하기 (선택사항):</strong> "Manus Browser Operator" 옆에 있는 핀 📌 아이콘을 클릭하면, Chrome 오른쪽 위에 항상 표시됩니다.
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">✅ 3단계 완료!</h4>
+                <p>Browser Operator 확장 프로그램이 설치되었어요! 이제 Manus와 연결할 차례입니다.</p>
+            </div>
+            
+            <h2>🔗 4단계: Manus와 Browser Operator 연결</h2>
+            
+            <div class="step-box">
+                <div class="step-number">4-1</div>
+                <h3 style="margin-top: 0;">Manus 채팅 페이지 열기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>새 탭 열기:</strong> <span class="keyboard-key">Ctrl</span> + <span class="keyboard-key">T</span> 키를 동시에 눌러서 새 탭을 여세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Manus 채팅 접속:</strong> 주소창에 다음을 입력하세요:
+                    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        https://manus.im/chat
+                    </div>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>Enter 누르기:</strong> <span class="keyboard-key">Enter</span> 키를 눌러서 Manus 채팅 페이지로 이동하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">4-2</div>
+                <h3 style="margin-top: 0;">Browser Operator 연결 시작하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>채팅창 확인:</strong> Manus 채팅 페이지가 열리면, 화면 중앙에 채팅창이 보일 거예요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Browser Operator 아이콘 클릭:</strong> Chrome 오른쪽 위에 있는 Manus Browser Operator 아이콘을 클릭하세요. (퍼즐 조각 아이콘을 먼저 클릭한 후 Manus를 찾아야 할 수도 있어요)
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>작은 창 열림:</strong> Browser Operator 아이콘을 클릭하면 작은 창이 나타날 거예요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>"Connect" 또는 "연결" 버튼 클릭:</strong> 그 작은 창에서 "Connect" 또는 "연결" 버튼을 찾아서 클릭하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">4-3</div>
+                <h3 style="margin-top: 0;">연결 확인하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>연결 상태 확인:</strong> Browser Operator 아이콘을 다시 클릭해보세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>"Connected" 또는 "연결됨" 표시:</strong> 작은 창에 "Connected" 또는 "연결됨"이라고 표시되면 성공!
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>초록색 불빛:</strong> Browser Operator 아이콘에 초록색 불빛이나 체크 표시가 나타나면 연결된 거예요.
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">✅ 4단계 완료!</h4>
+                <p>Manus와 Browser Operator가 연결되었어요! 이제 Manus AI가 내 브라우저를 조종할 수 있습니다.</p>
+            </div>
+            
+            <h2>🔐 5단계: 네이버에 로그인하기</h2>
+            
+            <div class="info-box">
+                <h4 style="margin-top: 0;">📌 왜 네이버에 로그인하나요?</h4>
+                <p>Browser Operator를 테스트하기 위해 네이버에 로그인해둘 거예요. 나중에 Manus AI에게 "네이버에서 삼성전자 주가 찾아줘"라고 명령하면, AI가 이미 로그인된 네이버 계정을 사용해서 자동으로 찾아줍니다!</p>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">5-1</div>
+                <h3 style="margin-top: 0;">네이버 접속하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>새 탭 열기:</strong> <span class="keyboard-key">Ctrl</span> + <span class="keyboard-key">T</span> 키를 동시에 눌러서 새 탭을 여세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>네이버 주소 입력:</strong> 주소창에 다음을 입력하세요:
+                    <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                        https://www.naver.com
+                    </div>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>Enter 누르기:</strong> <span class="keyboard-key">Enter</span> 키를 눌러서 네이버로 이동하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">5-2</div>
+                <h3 style="margin-top: 0;">네이버 로그인하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>"로그인" 버튼 찾기:</strong> 네이버 메인 페이지 오른쪽 위에 "로그인" 버튼이 있어요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>"로그인" 클릭:</strong> 그 버튼을 <span class="mouse-action">클릭</span>하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>아이디 입력:</strong> 네이버 아이디를 입력하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>비밀번호 입력:</strong> 네이버 비밀번호를 입력하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">⑤</span>
+                    <strong>"로그인" 버튼 클릭:</strong> 초록색 "로그인" 버튼을 클릭하세요.
+                </div>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> 네이버 계정이 없다면? "회원가입" 버튼을 클릭해서 먼저 네이버 계정을 만드세요. 5분 정도 걸려요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">5-3</div>
+                <h3 style="margin-top: 0;">로그인 상태 유지하기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>"로그인 상태 유지" 체크:</strong> 로그인 페이지에 "로그인 상태 유지" 체크박스가 있다면 체크하세요. 이렇게 하면 다음에 네이버를 열 때 자동으로 로그인됩니다.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>로그인 확인:</strong> 로그인이 완료되면 네이버 메인 페이지 오른쪽 위에 내 아이디가 표시될 거예요.
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">✅ 5단계 완료!</h4>
+                <p>네이버에 로그인했어요! 이제 Manus AI가 이 로그인 상태를 사용해서 네이버에서 정보를 찾아줄 수 있습니다.</p>
+            </div>
+            
+            <h2>🎮 6단계: Browser Operator 작동 테스트</h2>
+            
+            <div class="step-box">
+                <div class="step-number">6-1</div>
+                <h3 style="margin-top: 0;">Manus 채팅 페이지로 돌아가기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Manus 탭 찾기:</strong> Chrome 위쪽 탭들 중에서 "Manus" 또는 "manus.im/chat" 탭을 찾으세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>탭 클릭:</strong> 그 탭을 클릭해서 Manus 채팅 페이지로 돌아가세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">6-2</div>
+                <h3 style="margin-top: 0;">첫 번째 명령 내리기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>채팅창 클릭:</strong> Manus 채팅 페이지 아래쪽에 있는 채팅 입력창을 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>명령 입력:</strong> 다음 명령을 입력하세요:
+                    <div style="background: #e7f3ff; border: 2px solid #2196F3; padding: 20px; border-radius: 10px; margin: 15px 0; font-size: 1.2em;">
+                        네이버에서 삼성전자 현재 주가를 찾아줘
+                    </div>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>Enter 누르기:</strong> <span class="keyboard-key">Enter</span> 키를 눌러서 명령을 보내세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">6-3</div>
+                <h3 style="margin-top: 0;">AI가 일하는 모습 지켜보기</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Browser Operator 작동:</strong> 명령을 보내면, Manus AI가 Browser Operator를 통해 자동으로 작업을 시작합니다!
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>브라우저 자동 조작:</strong> Chrome 브라우저가 자동으로 움직이는 것을 볼 수 있어요:
+                    <ul style="margin-top: 10px;">
+                        <li>새 탭이 자동으로 열림</li>
+                        <li>네이버 검색창에 "삼성전자 주가"가 자동으로 입력됨</li>
+                        <li>검색 버튼이 자동으로 클릭됨</li>
+                        <li>주가 정보가 자동으로 수집됨</li>
+                    </ul>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>결과 확인:</strong> 10~30초 후에 Manus 채팅창에 삼성전자 주가 정보가 나타날 거예요!
+                </div>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡</span>
+                    <strong>팁:</strong> AI가 일하는 동안 브라우저를 만지지 마세요! AI가 작업을 완료할 때까지 기다려주세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <div class="step-number">6-4</div>
+                <h3 style="margin-top: 0;">더 많은 명령 시도해보기</h3>
+                
+                <p>이제 Browser Operator가 작동하는 것을 확인했으니, 다른 명령도 시도해보세요!</p>
+                
+                <div class="highlight-box">
+                    <h4>🎯 시도해볼 만한 명령 예시:</h4>
+                    
+                    <div class="sub-step">
+                        <strong>1. 날씨 확인:</strong>
+                        <div style="background: #e7f3ff; border: 2px solid #2196F3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            네이버에서 서울 날씨를 찾아줘
+                        </div>
+                    </div>
+                    
+                    <div class="sub-step">
+                        <strong>2. 뉴스 검색:</strong>
+                        <div style="background: #e7f3ff; border: 2px solid #2196F3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            네이버에서 "AI 뉴스" 최신 기사 3개를 찾아줘
+                        </div>
+                    </div>
+                    
+                    <div class="sub-step">
+                        <strong>3. 제품 검색:</strong>
+                        <div style="background: #e7f3ff; border: 2px solid #2196F3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            네이버 쇼핑에서 "무선 이어폰" 인기 제품 5개를 찾아줘
+                        </div>
+                    </div>
+                    
+                    <div class="sub-step">
+                        <strong>4. 지도 검색:</strong>
+                        <div style="background: #e7f3ff; border: 2px solid #2196F3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            네이버 지도에서 강남역 근처 맛집을 찾아줘
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-box">
+                <h4 style="margin-top: 0;">🎉 6단계 완료!</h4>
+                <p>축하합니다! Browser Operator가 정상적으로 작동하고 있어요. 이제 복잡한 웹 작업을 AI에게 맡길 수 있습니다!</p>
+            </div>
+            
+            <h2>💡 Browser Operator ON 상태 유지하기</h2>
+            
+            <div class="info-box">
+                <h4 style="margin-top: 0;">📌 Browser Operator를 계속 사용하려면?</h4>
+                <p>Browser Operator는 Chrome 브라우저가 열려 있고, Manus에 로그인되어 있으면 자동으로 연결 상태를 유지합니다.</p>
+            </div>
+            
+            <div class="step-box">
+                <h3 style="margin-top: 0;">✅ ON 상태 확인 방법</h3>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Browser Operator 아이콘 확인:</strong> Chrome 오른쪽 위에 있는 Manus Browser Operator 아이콘을 클릭하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>연결 상태 확인:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>초록색 불빛 또는 "Connected":</strong> ON 상태 ✅</li>
+                        <li><strong>회색 불빛 또는 "Disconnected":</strong> OFF 상태 ❌</li>
+                    </ul>
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>OFF 상태라면?</strong> "Connect" 또는 "연결" 버튼을 다시 클릭하세요.
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3 style="margin-top: 0;">🔄 다음에 PC를 켤 때</h3>
+                
+                <p>PC를 끄고 다음에 다시 켤 때는 다음 단계만 하면 돼요:</p>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">①</span>
+                    <strong>Chrome 열기:</strong> Chrome 브라우저를 실행하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">②</span>
+                    <strong>Manus 접속:</strong> manus.im/chat으로 접속하세요.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">③</span>
+                    <strong>자동 로그인:</strong> 이전에 "로그인 상태 유지"를 체크했다면 자동으로 로그인됩니다.
+                </div>
+                
+                <div class="sub-step">
+                    <span class="sub-step-number">④</span>
+                    <strong>Browser Operator 자동 연결:</strong> 대부분의 경우 Browser Operator가 자동으로 연결됩니다. 안 되면 아이콘을 클릭해서 "Connect"를 누르세요.
+                </div>
+            </div>
+            
+            <h2>🎓 Browser Operator 활용 팁</h2>
+            
+            <div class="highlight-box">
+                <h3 style="margin-top: 0;">💡 효과적으로 사용하는 방법</h3>
+                
+                <div class="sub-step">
+                    <h4>1. 명확한 명령 내리기</h4>
+                    <p><strong>좋은 예:</strong> "네이버에서 삼성전자 현재 주가와 전일 대비 변동률을 찾아줘"</p>
+                    <p><strong>나쁜 예:</strong> "주가 좀" (무엇을 찾아야 할지 불명확)</p>
+                </div>
+                
+                <div class="sub-step">
+                    <h4>2. 단계별로 명령하기</h4>
+                    <p>복잡한 작업은 여러 단계로 나눠서 명령하세요.</p>
+                    <p><strong>예:</strong></p>
+                    <ol style="margin-top: 10px;">
+                        <li>먼저: "네이버에서 삼성전자 주가를 찾아줘"</li>
+                        <li>그 다음: "이제 SK하이닉스 주가도 찾아줘"</li>
+                        <li>마지막: "두 회사의 주가를 비교해줘"</li>
+                    </ol>
+                </div>
+                
+                <div class="sub-step">
+                    <h4>3. 로그인 상태 유지하기</h4>
+                    <p>자주 사용하는 웹사이트(네이버, 구글, 페이스북 등)는 미리 로그인해두세요. Browser Operator가 그 로그인 상태를 사용해서 더 많은 일을 할 수 있어요.</p>
+                </div>
+                
+                <div class="sub-step">
+                    <h4>4. AI가 일하는 동안 기다리기</h4>
+                    <p>Browser Operator가 작동 중일 때는 브라우저를 만지지 마세요. AI가 작업을 완료할 때까지 기다려주세요.</p>
+                </div>
+            </div>
+            
+            <h2>❓ 자주 묻는 질문 (FAQ)</h2>
+            
+            <div class="step-box">
+                <h4 style="margin-top: 0;">Q1: Browser Operator가 연결되지 않아요</h4>
+                <p><strong>해결 방법:</strong></p>
+                <ol>
+                    <li>Chrome을 완전히 종료하고 다시 여세요</li>
+                    <li>Manus에 다시 로그인하세요</li>
+                    <li>Browser Operator 아이콘을 클릭하고 "Connect" 버튼을 다시 누르세요</li>
+                    <li>그래도 안 되면 확장 프로그램을 제거하고 다시 설치하세요</li>
+                </ol>
+            </div>
+            
+            <div class="step-box">
+                <h4 style="margin-top: 0;">Q2: AI가 명령을 이해하지 못해요</h4>
+                <p><strong>해결 방법:</strong></p>
+                <ol>
+                    <li>명령을 더 명확하게 다시 작성하세요</li>
+                    <li>"네이버에서", "구글에서" 같이 어디서 찾을지 명시하세요</li>
+                    <li>한 번에 하나의 작업만 요청하세요</li>
+                </ol>
+            </div>
+            
+            <div class="step-box">
+                <h4 style="margin-top: 0;">Q3: 브라우저가 자동으로 움직이지 않아요</h4>
+                <p><strong>해결 방법:</strong></p>
+                <ol>
+                    <li>Browser Operator 연결 상태를 확인하세요 (초록색 불빛)</li>
+                    <li>로그인이 필요한 사이트라면 먼저 수동으로 로그인하세요</li>
+                    <li>팝업 차단이 켜져 있다면 끄세요</li>
+                </ol>
+            </div>
+            
+            <div class="step-box">
+                <h4 style="margin-top: 0;">Q4: 보안이 걱정돼요</h4>
+                <p><strong>안심하세요:</strong></p>
+                <ul>
+                    <li>Browser Operator는 내 PC에서만 작동합니다</li>
+                    <li>내 로그인 정보는 내 브라우저에만 저장되고, Manus 서버로 전송되지 않습니다</li>
+                    <li>언제든지 Browser Operator를 끄거나 제거할 수 있습니다</li>
+                </ul>
+            </div>
+            
+            <div class="step-box">
+                <h4 style="margin-top: 0;">Q5: 스마트폰에서도 사용할 수 있나요?</h4>
+                <p><strong>답변:</strong></p>
+                <p>Browser Operator는 PC 전용입니다. 하지만 Manus AI의 다른 기능(Wide Research, 웹사이트 빌더 등)은 스마트폰에서도 사용할 수 있어요!</p>
+            </div>
+            
+            <h2>🎉 축하합니다!</h2>
+            
+            <div class="success-box">
+                <h3 style="margin-top: 0;">✨ 모든 단계를 완료했어요!</h3>
+                <p style="font-size: 1.2em;">이제 당신은 Browser Operator를 사용할 수 있는 Manus AI 전문가입니다! 🎓</p>
+                
+                <h4 style="margin-top: 30px;">이제 할 수 있는 것:</h4>
+                <ul style="font-size: 1.1em;">
+                    <li>✅ 웹사이트 자동 검색 및 정보 수집</li>
+                    <li>✅ 복잡한 웹 작업 자동화</li>
+                    <li>✅ 여러 웹사이트를 동시에 조작</li>
+                    <li>✅ 반복적인 웹 작업을 AI에게 맡기기</li>
+                </ul>
+                
+                <h4 style="margin-top: 30px;">다음 단계 추천:</h4>
+                <ol style="font-size: 1.1em;">
+                    <li>더 많은 웹사이트에 로그인해두기 (구글, 페이스북, 쇼핑몰 등)</li>
+                    <li>복잡한 작업을 Browser Operator로 자동화해보기</li>
+                    <li>Manus AI의 다른 기능(Wide Research, 웹사이트 빌더)도 사용해보기</li>
+                </ol>
+            </div>
+            
+            <div class="info-box">
+                <h4 style="margin-top: 0;">📚 더 배우고 싶다면?</h4>
+                <p>Manus 공식 문서를 방문하세요:</p>
+                <div style="background: #2c3e50; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 1.1em;">
+                    https://manus.im/docs
+                </div>
+                <p>또는 Manus 커뮤니티에서 다른 사용자들과 팁을 공유하세요!</p>
+            </div>
+        </div>
+        
+        <footer>
+            <h3 style="margin-bottom: 15px;">💻 PC 왕초보를 위한 Browser Operator 완전 따라하기</h3>
+            <p>2025년 11월 최신 정보 기준</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">이 가이드는 Manus AI 공식 문서를 바탕으로 왕초보도 이해할 수 있도록 작성되었습니다.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">궁금한 점이 있다면 Manus 고객 지원팀에 문의하세요: https://help.manus.im</p>
+        </footer>
+    </div>
+</body>
+</html>
