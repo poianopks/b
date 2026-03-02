@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>챗GPT & 파이썬으로 주식 데이터 자동화 완전 가이드</title>
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --secondary: #0e9f6e;
+            --accent: #ff5a1f;
+            --bg: #f9fafb;
+            --card-bg: #ffffff;
+            --text: #111827;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --code-bg: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1a56db 60%, #0e9f6e 100%);
+            color: white;
+            padding: 60px 24px 50px;
+            text-align: center;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 999px;
+            padding: 4px 16px;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: clamp(1.6rem, 4vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            font-size: 1.05rem;
+            opacity: 0.88;
+            max-width: 640px;
+            margin: 0 auto 24px;
+        }
+        .hero a.yt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ff0000;
+            color: white;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .hero a.yt-btn:hover { background: #cc0000; }
+
+        /* ── Nav tabs ── */
+        .tab-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px 16px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eff6ff;
+        }
+
+        /* ── Sections ── */
+        .section { display: none; max-width: 900px; margin: 0 auto; padding: 40px 20px 60px; }
+        .section.active { display: block; }
+
+        /* ── Service header ── */
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .icon-blue { background: #dbeafe; }
+        .icon-green { background: #d1fae5; }
+        .icon-orange { background: #ffedd5; }
+
+        .service-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .service-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card p { margin-bottom: 12px; color: #374151; }
+        .card p:last-child { margin-bottom: 0; }
+
+        /* ── Table ── */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+            margin: 16px 0;
+        }
+        .styled-table th {
+            background: #eff6ff;
+            color: var(--primary-dark);
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #bfdbfe;
+        }
+        .styled-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+        .styled-table tr:last-child td { border-bottom: none; }
+        .styled-table tr:hover td { background: #f8fafc; }
+
+        /* ── Steps ── */
+        .steps { counter-reset: step; }
+        .step-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            align-items: flex-start;
+        }
+        .step-num {
+            counter-increment: step;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-content h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .step-content p { font-size: 0.93rem; color: #374151; margin-bottom: 8px; }
+
+        /* ── Code block ── */
+        .code-block {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            margin: 12px 0;
+            position: relative;
+        }
+        .code-block .comment { color: #94a3b8; }
+        .code-block .keyword { color: #93c5fd; }
+        .code-block .string { color: #86efac; }
+        .code-block .func { color: #fde68a; }
+        .code-block .var { color: #f9a8d4; }
+
+        .inline-code {
+            background: #f1f5f9;
+            color: #be185d;
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.88em;
+        }
+
+        /* ── Tip / Alert boxes ── */
+        .tip-box {
+            border-left: 4px solid var(--secondary);
+            background: #f0fdf4;
+            padding: 14px 18px;
+            border-radius: 0 10px 10px 0;
+            margin: 14px 0;
+            font-size: 0.93rem;
+        }
+        .tip-box strong { color: var(--secondary); }
+
+        .warn-box {
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+            padding: 14px 18px;
+            border-radius: 0 10px 10px 0;
+            margin: 14px 0;
+            font-size: 0.93rem;
+        }
+        .warn-box strong { color: #d97706; }
+
+        /* ── FAQ / Q&A ── */
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .faq-q {
+            background: #f8fafc;
+            padding: 16px 20px;
+            font-weight: 700;
+            font-size: 0.97rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-q .q-badge {
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            padding: 2px 9px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .faq-a {
+            padding: 16px 20px;
+            font-size: 0.93rem;
+            color: #374151;
+            line-height: 1.75;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Cost table ── */
+        .cost-free {
+            display: inline-block;
+            background: #d1fae5;
+            color: #065f46;
+            border-radius: 6px;
+            padding: 2px 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<div class="hero">
+    <div class="badge">📺 유튜브 영상 완전 분석</div>
+    <h1>챗GPT & 파이썬으로<br>주식 2,500 종목 데이터 자동화</h1>
+    <p>감이 아닌 데이터로 투자하세요. 왕초보도 따라 할 수 있는 완전 가이드 3종 세트입니다.</p>
+    <a class="yt-btn" href="https://youtu.be/dl5ni5iieMk" target="_blank">
+        ▶ 원본 영상 보기 (YunjiTV)
+    </a>
+</div>
+
+<!-- ══════════════════ TAB NAV ══════════════════ -->
+<nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('s1')">📚 서비스 1 · 상세 학습</button>
+    <button class="tab-btn" onclick="showTab('s2')">🛠 서비스 2 · 왕초보 따라하기</button>
+    <button class="tab-btn" onclick="showTab('s3')">💡 서비스 3 · 핵심 팁 요약</button>
+</nav>
+
+<!-- ══════════════════ SERVICE 1 ══════════════════ -->
+<section id="s1" class="section active">
+    <div class="service-header">
+        <div class="service-icon icon-blue">📚</div>
+        <div>
+            <h2>서비스 1 · 상세 학습 설명</h2>
+            <p>개념부터 원리까지, 처음 배우는 분을 위한 완전 해설</p>
+        </div>
+    </div>
+
+    <!-- 개요 -->
+    <div class="card">
+        <h3>🎯 이 영상은 무엇을 다루나요?</h3>
+        <p>이 영상은 IT 전문가이자 베스트셀러 작가인 <strong>최원영</strong>과 함께 <strong>챗GPT(ChatGPT)</strong>와 <strong>파이썬(Python)</strong>을 이용하여 주식 투자에 필요한 정보를 자동으로 수집하고 엑셀 파일로 정리하는 방법을 시연합니다.</p>
+        <p>핵심은 금융 정보 사이트인 <strong>인베스팅닷컴(investing.com)</strong>에서 약 <strong>1,000개~2,500개 종목</strong>의 기술적 분석(매수·매도·중립) 데이터를 <strong>웹 크롤링</strong>으로 자동 수집하여, 날짜와 함께 엑셀 파일에 저장하는 전 과정을 보여주는 것입니다.</p>
+        <p>영상에서는 코드 파일과 2,500개 종목의 분석 결과 엑셀 파일을 무료로 제공하며, 비전공자도 이해할 수 있도록 쉽게 설명합니다.</p>
+    </div>
+
+    <!-- 핵심 개념 -->
+    <div class="card">
+        <h3>🧩 핵심 개념 4가지</h3>
+        <table class="styled-table">
+            <thead>
+                <tr><th>개념</th><th>한 줄 정의</th><th>이 영상에서의 역할</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>웹 크롤링</strong><br>(Web Crawling)</td>
+                    <td>자동화 프로그램이 웹사이트를 돌아다니며 정보를 수집하는 기술</td>
+                    <td>인베스팅닷컴에서 종목별 기술적 분석 데이터를 자동으로 긁어옴</td>
+                </tr>
+                <tr>
+                    <td><strong>파이썬</strong><br>(Python)</td>
+                    <td>배우기 쉽고 강력한 프로그래밍 언어</td>
+                    <td>크롤링 코드 작성 + 데이터 정리 + 엑셀 저장 전 과정을 담당</td>
+                </tr>
+                <tr>
+                    <td><strong>챗GPT</strong><br>(ChatGPT)</td>
+                    <td>코드 작성, 디버깅, 아이디어 제안을 도와주는 AI 비서</td>
+                    <td>파이썬 크롤링 코드를 대신 작성해주는 역할</td>
+                </tr>
+                <tr>
+                    <td><strong>기술적 분석</strong><br>(Technical Analysis)</td>
+                    <td>과거 가격·거래량 데이터로 미래 주가를 예측하는 방법</td>
+                    <td>인베스팅닷컴의 '적극 매수/매도' 의견이 수집 대상 데이터</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 자동화 프로세스 -->
+    <div class="card">
+        <h3>⚙️ 자동화 프로세스 5단계</h3>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>목표 설정</h4>
+                    <p>분석할 주식 종목 목록을 정합니다. 영상에서는 코스피·코스닥 전체 종목(약 2,500개)을 대상으로 합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>데이터 소스 확인</h4>
+                    <p>인베스팅닷컴의 기술적 분석 페이지 구조를 파악합니다. 브라우저의 '개발자 도구'로 원하는 정보가 어떤 HTML 태그에 담겨 있는지 확인합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>챗GPT로 코드 작성</h4>
+                    <p>챗GPT에게 목표를 설명하고 파이썬 코드를 생성받습니다. 처음에는 단일 종목, 이후 전체 종목으로 점진적으로 발전시킵니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h4>크롤링 실행</h4>
+                    <p>작성된 코드를 실행하면 프로그램이 각 종목 페이지에 순차적으로 접속하여 기술적 분석 의견을 자동으로 수집합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                    <h4>엑셀로 저장 및 분석</h4>
+                    <p>수집된 데이터(종목명, 날짜, 기술적 분석 의견)를 엑셀 파일로 저장합니다. 이를 통해 한눈에 시장 전체를 조망하고 투자 대상을 선별할 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 기대 효과 -->
+    <div class="card">
+        <h3>🚀 이 시스템의 기대 효과</h3>
+        <p>이 자동화 시스템을 구축하면 수천 개 종목의 정보를 수동으로 확인하는 데 드는 막대한 시간을 절약할 수 있습니다. 모든 종목을 동일한 데이터 기준으로 평가하므로 특정 종목에 대한 감정적 편향을 배제하고 <strong>객관적인 투자 판단</strong>을 내릴 수 있습니다.</p>
+        <p>또한 매일 데이터를 축적하면 전반적인 시장 흐름이나 특정 섹터의 동향을 파악하는 데도 활용할 수 있습니다. 이는 단순한 정보 수집을 넘어, <strong>데이터 기반 투자 습관</strong>을 형성하는 첫걸음이 됩니다.</p>
+    </div>
+</section>
+
+<!-- ══════════════════ SERVICE 2 ══════════════════ -->
+<section id="s2" class="section">
+    <div class="service-header">
+        <div class="service-icon icon-green">🛠</div>
+        <div>
+            <h2>서비스 2 · 왕초보 따라하기 가이드</h2>
+            <p>1번부터 순서대로 따라 하면 누구나 완성할 수 있습니다</p>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <strong>이 가이드를 시작하기 전에:</strong> 코딩 경험이 전혀 없어도 괜찮습니다. 정해진 순서대로 블록을 조립하듯 따라 하기만 하면 됩니다.
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="card">
+        <h3>🔧 1단계 · 필수 프로그램 설치</h3>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>파이썬(Python) 설치</h4>
+                    <p><a href="https://www.python.org/downloads/" target="_blank" style="color:var(--primary)">python.org/downloads</a>에 접속하여 최신 버전을 다운로드합니다.</p>
+                    <div class="warn-box"><strong>⚠️ 중요:</strong> 설치 화면에서 <strong>"Add Python to PATH"</strong> 체크박스를 반드시 체크하고 설치하세요. 이 옵션이 없으면 파이썬이 제대로 동작하지 않습니다.</div>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>VS Code 설치</h4>
+                    <p><a href="https://code.visualstudio.com/" target="_blank" style="color:var(--primary)">code.visualstudio.com</a>에서 Visual Studio Code를 다운로드하여 설치합니다. 코드를 작성하고 실행하는 작업 공간입니다. 완전 무료입니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>파이썬 라이브러리 설치</h4>
+                    <p>VS Code를 열고 상단 메뉴 <strong>터미널(Terminal) → 새 터미널(New Terminal)</strong>을 클릭합니다. 화면 하단에 나타난 터미널 창에 아래 명령어를 한 줄씩 입력하고 엔터를 누릅니다.</p>
+                    <div class="code-block">pip install requests
+pip install beautifulsoup4
+pip install pandas
+pip install openpyxl</div>
+                    <table class="styled-table" style="margin-top:12px">
+                        <thead><tr><th>라이브러리</th><th>역할</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="inline-code">requests</span></td><td>웹사이트에 접속 요청을 보내는 역할</td></tr>
+                            <tr><td><span class="inline-code">beautifulsoup4</span></td><td>HTML에서 원하는 정보만 뽑아내는 역할</td></tr>
+                            <tr><td><span class="inline-code">pandas</span></td><td>데이터를 표 형태로 깔끔하게 정리하는 역할</td></tr>
+                            <tr><td><span class="inline-code">openpyxl</span></td><td>정리된 데이터를 엑셀 파일로 저장하는 역할</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card">
+        <h3>🤖 2단계 · 챗GPT에게 코드 부탁하기</h3>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>챗GPT 접속 및 로그인</h4>
+                    <p><a href="https://chat.openai.com/" target="_blank" style="color:var(--primary)">chat.openai.com</a>에 접속하여 회원가입 및 로그인합니다. 기본 무료 버전으로 충분합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>명확하게 요청하기</h4>
+                    <p>챗GPT 대화창에 아래 내용을 그대로 복사하여 붙여넣고 전송합니다.</p>
+                    <div class="code-block" style="background:#1e3a5f; color:#bfdbfe;">investing.com 웹사이트에서 삼성전자 주식의 기술적 분석 요약 정보(예: '적극 매수', '매도')를 가져오는 파이썬 코드를 만들어줘. requests와 beautifulsoup4 라이브러리를 사용하고, 결과를 엑셀 파일로 저장해줘.</div>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>코드 복사하기</h4>
+                    <p>챗GPT가 코드를 생성해주면, 코드 블록 우측 상단의 <strong>"Copy"</strong> 버튼을 클릭하여 복사합니다. 처음에는 코드 내용을 완전히 이해하지 못해도 괜찮습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card">
+        <h3>🔍 3단계 · 정보 위치 찾기 (개발자 도구 활용)</h3>
+        <p>웹 크롤링은 웹사이트에서 원하는 정보의 정확한 위치를 파악해야 합니다. 아래 순서를 따라 해보세요.</p>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>인베스팅닷컴 접속</h4>
+                    <p>크롬 브라우저에서 <a href="https://kr.investing.com/" target="_blank" style="color:var(--primary)">kr.investing.com</a>에 접속하여 분석하고 싶은 주식(예: 삼성전자)을 검색합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>'기술 분석' 탭 클릭</h4>
+                    <p>해당 종목 페이지에서 상단 탭 중 <strong>'기술 분석'</strong>을 클릭합니다. '요약' 항목에 '적극 매수', '매도' 등의 의견이 표시됩니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>개발자 도구로 위치 확인</h4>
+                    <p>수집하고 싶은 텍스트(예: '적극 매수') 위에서 마우스 오른쪽 버튼 클릭 → <strong>'검사'</strong>를 선택합니다. 오른쪽에 나타난 HTML 코드에서 해당 텍스트를 감싸고 있는 태그와 class 이름을 확인합니다. 이 정보를 챗GPT에게 알려주면 더 정확한 코드를 받을 수 있습니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="card">
+        <h3>💻 4단계 · 코드 붙여넣기 및 실행</h3>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h4>새 파일 만들기</h4>
+                    <p>VS Code에서 <span class="inline-code">Ctrl + N</span> (맥: <span class="inline-code">Cmd + N</span>)을 눌러 새 파일을 만들고, <span class="inline-code">stock_crawler.py</span>라는 이름으로 저장합니다.</p>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h4>코드 붙여넣기</h4>
+                    <p>아래는 핵심 로직을 담은 예시 코드입니다. 챗GPT가 생성한 코드 또는 아래 예시를 파일에 붙여넣으세요.</p>
+                    <div class="code-block"><span class="keyword">import</span> requests
+<span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> datetime <span class="keyword">import</span> datetime
+
+<span class="comment"># 분석할 종목 목록 (종목명: 인베스팅닷컴 URL 코드)</span>
+<span class="var">STOCK_CODES</span> = {
+    <span class="string">'삼성전자'</span>: <span class="string">'samsung-electronics-co-ltd'</span>,
+    <span class="string">'SK하이닉스'</span>: <span class="string">'sk-hynix-inc'</span>,
+}
+
+<span class="var">results</span> = []
+<span class="var">headers</span> = {<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0'</span>}
+
+<span class="keyword">for</span> name, code <span class="keyword">in</span> STOCK_CODES.items():
+    <span class="keyword">try</span>:
+        url = <span class="string">f'https://kr.investing.com/equities/{code}-technical'</span>
+        response = requests.<span class="func">get</span>(url, headers=headers)
+        soup = BeautifulSoup(response.text, <span class="string">'html.parser'</span>)
+
+        <span class="comment"># 기술적 분석 요약 값 추출</span>
+        summary_el = soup.<span class="func">find</span>(<span class="string">'span'</span>, {<span class="string">'data-test'</span>: <span class="string">'summary-value'</span>})
+        summary = summary_el.text.<span class="func">strip</span>() <span class="keyword">if</span> summary_el <span class="keyword">else</span> <span class="string">'정보 없음'</span>
+
+        today = datetime.<span class="func">now</span>().<span class="func">strftime</span>(<span class="string">'%Y-%m-%d'</span>)
+        results.<span class="func">append</span>([name, today, summary])
+        <span class="func">print</span>(<span class="string">f'{name}: {summary}'</span>)
+
+    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:
+        <span class="func">print</span>(<span class="string">f'{name} 오류: {e}'</span>)
+
+<span class="comment"># 엑셀 파일로 저장</span>
+df = pd.<span class="func">DataFrame</span>(results, columns=[<span class="string">'종목명'</span>, <span class="string">'날짜'</span>, <span class="string">'기술적 분석'</span>])
+df.<span class="func">to_excel</span>(<span class="string">'stock_results.xlsx'</span>, index=<span class="keyword">False</span>)
+<span class="func">print</span>(<span class="string">'완료! stock_results.xlsx 파일을 확인하세요.'</span>)</div>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h4>실행하기</h4>
+                    <p>VS Code 터미널에서 아래 명령어를 입력하고 엔터를 누릅니다.</p>
+                    <div class="code-block">python stock_crawler.py</div>
+                    <p>터미널에 종목별 분석 결과가 출력되면 성공입니다!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="card">
+        <h3>📊 5단계 · 결과 확인</h3>
+        <p>코드가 모두 실행되면 <span class="inline-code">stock_crawler.py</span> 파일이 있는 폴더에 <span class="inline-code">stock_results.xlsx</span> 엑셀 파일이 생성됩니다. 파일을 열면 아래와 같은 형태로 데이터가 정리되어 있습니다.</p>
+        <table class="styled-table">
+            <thead><tr><th>종목명</th><th>날짜</th><th>기술적 분석</th></tr></thead>
+            <tbody>
+                <tr><td>삼성전자</td><td>2026-03-02</td><td>적극 매수</td></tr>
+                <tr><td>SK하이닉스</td><td>2026-03-02</td><td>매수</td></tr>
+                <tr><td>LG에너지솔루션</td><td>2026-03-02</td><td>중립</td></tr>
+            </tbody>
+        </table>
+        <div class="tip-box">
+            <strong>다음 단계:</strong> STOCK_CODES 딕셔너리에 더 많은 종목을 추가하면 한 번에 수백, 수천 개 종목을 분석할 수 있습니다. 영상에서 제공하는 2,500개 종목 코드 파일을 활용해보세요.
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════ SERVICE 3 ══════════════════ -->
+<section id="s3" class="section">
+    <div class="service-header">
+        <div class="service-icon icon-orange">💡</div>
+        <div>
+            <h2>서비스 3 · 핵심 팁 요약</h2>
+            <p>6가지 핵심 질문으로 이 시스템을 완전히 이해하세요</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q1</span> 이게 정확히 무엇인가요?</div>
+        <div class="faq-a">
+            <strong>챗GPT와 파이썬을 이용해 수많은 주식 종목의 투자 정보를 자동으로 수집하고 엑셀 파일로 정리해주는 개인용 자동화 시스템</strong>입니다. 금융 정보 사이트 인베스팅닷컴의 기술적 분석 데이터를 예시로 사용하며, 한 번 만들어두면 버튼 클릭 한 번으로 수천 개 종목의 최신 '매수/매도' 의견을 순식간에 취합할 수 있습니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q2</span> 왜 필요한가요?</div>
+        <div class="faq-a">
+            성공적인 투자를 위해서는 <strong>개인의 감이나 근거 없는 소문이 아닌, 객관적인 데이터에 기반한 판단</strong>이 필수적이기 때문입니다. 하지만 수천 개 종목의 데이터를 매일 사람이 직접 확인하는 것은 현실적으로 불가능합니다. 이 자동화 시스템은 그 불가능을 가능하게 만들어, 투자자가 더 넓은 시야로 시장을 보고 합리적인 의사결정을 내릴 수 있도록 돕습니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q3</span> 어떤 도움이 되나요?</div>
+        <div class="faq-a">
+            <table class="styled-table">
+                <thead><tr><th>혜택</th><th>설명</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>압도적인 시간 절약</strong></td><td>수천 개 종목 정보 수집을 단 몇 분 만에 완료</td></tr>
+                    <tr><td><strong>객관성 확보</strong></td><td>모든 종목을 동일한 기준으로 평가, 감정적 편향 제거</td></tr>
+                    <tr><td><strong>새로운 기회 발견</strong></td><td>평소 관심 없던 종목에서도 좋은 신호 포착 가능</td></tr>
+                    <tr><td><strong>투자 습관 개선</strong></td><td>'감' 투자에서 데이터 기반 투자 루틴으로 전환</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q4</span> 작동하고 실행하기 어렵지 않나요?</div>
+        <div class="faq-a">
+            <strong>왕초보도 충분히 따라 할 수 있습니다.</strong> 영상의 핵심 메시지는 전문 개발자가 아니더라도 챗GPT와 같은 인공지능의 도움을 받으면 누구나 자신에게 필요한 프로그램을 만들 수 있다는 것입니다. 어려운 수학 문제를 푸는 것이 아니라, 정해진 순서대로 블록을 조립하는 것에 가깝습니다. 위의 '왕초보 따라하기 가이드(서비스 2)'를 그대로 따라 하면 됩니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q5</span> 돈이 많이 드나요?</div>
+        <div class="faq-a">
+            <strong>아니요, 영상에서 사용된 모든 도구는 완전 무료입니다.</strong>
+            <table class="styled-table" style="margin-top:12px">
+                <thead><tr><th>도구</th><th>비용</th><th>비고</th></tr></thead>
+                <tbody>
+                    <tr><td>파이썬(Python)</td><td><span class="cost-free">무료</span></td><td>오픈소스 프로그래밍 언어</td></tr>
+                    <tr><td>VS Code</td><td><span class="cost-free">무료</span></td><td>마이크로소프트 제공 코드 편집기</td></tr>
+                    <tr><td>챗GPT (기본)</td><td><span class="cost-free">무료</span></td><td>GPT-3.5 기반 무료 버전으로 충분</td></tr>
+                    <tr><td>파이썬 라이브러리</td><td><span class="cost-free">무료</span></td><td>requests, pandas 등 모두 오픈소스</td></tr>
+                    <tr><td>인베스팅닷컴</td><td><span class="cost-free">무료</span></td><td>기본 기술적 분석 데이터 무료 제공</td></tr>
+                </tbody>
+            </table>
+            즉, 추가적인 비용 지출 없이 개인 컴퓨터만 있으면 시스템을 구축하고 실행할 수 있습니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q"><span class="q-badge">Q6</span> 어디서 실행하는 건가요?</div>
+        <div class="faq-a">
+            이 시스템은 <strong>사용자 개인의 컴퓨터(PC 또는 노트북)에서 직접 실행</strong>됩니다. 클라우드 서버나 별도의 호스팅 서비스가 필요 없습니다. '왕초보 따라하기 가이드'에 따라 파이썬과 VS Code를 설치한 여러분의 컴퓨터가 바로 이 강력한 분석 도구의 실행 환경이 됩니다. 인터넷만 연결되어 있다면 언제 어디서든 실행할 수 있습니다.
+        </div>
+    </div>
+
+    <!-- 한눈에 보기 요약 -->
+    <div class="card" style="margin-top:28px; background: linear-gradient(135deg, #eff6ff, #f0fdf4);">
+        <h3>📋 한눈에 보기 최종 요약</h3>
+        <table class="styled-table">
+            <thead><tr><th>항목</th><th>내용</th></tr></thead>
+            <tbody>
+                <tr><td><strong>무엇인가</strong></td><td>챗GPT + 파이썬으로 주식 2,500종목 기술적 분석 데이터 자동 수집 시스템</td></tr>
+                <tr><td><strong>왜 필요한가</strong></td><td>감이 아닌 데이터 기반 투자 판단, 시간 절약, 객관성 확보</td></tr>
+                <tr><td><strong>어떤 도움</strong></td><td>시간 절약 + 객관성 + 새 기회 발견 + 건강한 투자 습관</td></tr>
+                <tr><td><strong>어렵지 않은가</strong></td><td>왕초보도 가능, 챗GPT가 코드 작성을 도와줌</td></tr>
+                <tr><td><strong>비용</strong></td><td>전부 무료 (파이썬, VS Code, 챗GPT 기본, 라이브러리 모두 무료)</td></tr>
+                <tr><td><strong>실행 장소</strong></td><td>개인 PC/노트북, 인터넷 연결만 있으면 OK</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+    <p>본 문서는 유튜브 영상 <a href="https://youtu.be/dl5ni5iieMk" target="_blank" style="color:var(--primary)">주식 사? 팔아? 감 말고 데이터로 투자하세요 (YunjiTV)</a>를 기반으로 작성되었습니다.</p>
+    <p style="margin-top:6px">Manus AI · 2026</p>
+</footer>
+
+<script>
+    function showTab(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        event.target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
